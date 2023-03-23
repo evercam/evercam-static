@@ -19,14 +19,14 @@ defineProps({ blok: Object })
             <div class="container">
                 <div class="row">
                     <div class="col-md-3">
-                        <a class="logo" href="https://evercam.io">
+                        <a class="logo" href="/">
                             <img class="sticky-logo" src="https://evercam.io/wp-content/themes/evercam/img/section-1-logo2.png" alt="Logo">
                         </a>
                         <span id="menu-btn"></span></div>
                     <div class="col-md-9" id="main-menu">
                         <nav>
                             <div id="navbar">
-                                <ul class="nav-list"><li id="li-1502" class="dropdown active"><a href="https://evercam.io/projects">Projects</a></li>
+                                <ul class="nav-list"><li id="li-1502" class="dropdown active"><a href="/project">Projects</a></li>
 <li id="li-29119" class="dropdown"><a href="/features/">Features</a>
 <ul class="dropdown-menu">
 <li id="li-30278" class="dropdown1"><a href="https://evercam.io/features/construction-time-lapse">Time-lapse</a></li>
@@ -36,7 +36,7 @@ defineProps({ blok: Object })
 <li id="li-29118" class="dropdown1"><a href="https://evercam.io/features/x-ray-tool-for-construction-site-projects">X-Ray</a></li>
 <li id="li-29383" class="dropdown1"><a href="https://evercam.io/features/evercam-construction-project-management-software-integrations">Integrations</a></li>
 <li id="li-34534" class="dropdown1"><a href="https://evercam.io/features/drone-view">Drone View</a></li>
-<li id="li-29112" class="dropdown1"><a href="https://evercam.io/features">All features</a></li>
+<li id="li-29112" class="dropdown1"><a href="/features">All features</a></li>
 <li id="li-35131" class="dropdown1"><a href="https://evercam.io/construction-camera-specs">Camera Specs</a></li>
 </ul>
 </li>
