@@ -1,0 +1,7 @@
+header.bg-header {
+    background-color: #111C27;
+}
+
+header #navbar>ul>li a {
+    color: white;
+}
