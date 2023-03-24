@@ -195,12 +195,12 @@ defineProps({ blok: Object })
                                 </div>
                                 <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
                                     <div class="card-body">
-                                        <ul class=""><li id="li-376" class="dropdown"><a href="https://evercam.io/terms">Terms &amp; Conditions</a></li>
-<li id="li-34950" class="dropdown"><a href="https://evercam.io/trust">Trust</a></li>
+                                        <ul class=""><li id="li-376" class="dropdown"><a href="/terms">Terms &amp; Conditions</a></li>
+<li id="li-34950" class="dropdown"><a href="/trust">Trust</a></li>
 <li id="li-30377" class="dropdown"><a href="https://jobs.evercam.io/jobs/Careers" target="_blank">Job Opportunities</a></li>
-<li id="li-24896" class="dropdown"><a href="https://evercam.io/about">About</a></li>
+<li id="li-24896" class="dropdown"><a href="/about">About</a></li>
 <li id="li-29228" class="dropdown"><a href="https://jobs.evercam.io/jobs/Careers">Careers</a></li>
-<li id="li-31853" class="dropdown"><a href="https://evercam.io/testimonials">Testimonials</a></li>
+<li id="li-31853" class="dropdown"><a href="/testimonials">Testimonials</a></li>
 </ul>                                    </div>
                                 </div>
                             </div>
@@ -209,39 +209,39 @@ defineProps({ blok: Object })
                     <div class="col-md-3 d-md-block d-none slideLeft">
                         <h3>Construction Cameras</h3>
                         <ul class=""><li id="li-405" class="dropdown"><a href="https://evercam.io/pricing">Pricing</a></li>
-<li id="li-568" class="dropdown"><a href="https://evercam.io/blog">Blog</a></li>
-<li id="li-406" class="dropdown"><a href="https://evercam.io/contact">Contact Us</a></li>
-<li id="li-559" class="dropdown"><a href="https://evercam.io/tutorials">Tutorials</a></li>
+<li id="li-568" class="dropdown"><a href="/blog">Blog</a></li>
+<li id="li-406" class="dropdown"><a href="/contact">Contact Us</a></li>
+<li id="li-559" class="dropdown"><a href="/tutorials">Tutorials</a></li>
 </ul>                        <h3>Productivity</h3>
-                        <ul class=""><li id="li-29063" class="dropdown"><a href="https://evercam.io/features/evercam-construction-project-management-software-integrations">Software Integrations</a></li>
-<li id="li-29064" class="dropdown"><a href="https://evercam.io/project-management">Project Management</a></li>
-<li id="li-29065" class="dropdown"><a href="https://evercam.io/marketing">Marketing</a></li>
-<li id="li-29066" class="dropdown"><a href="https://evercam.io/machine-learning-for-construction">A.I. for Construction</a></li>
+                        <ul class=""><li id="li-29063" class="dropdown"><a href="/features/evercam-construction-project-management-software-integrations">Software Integrations</a></li>
+<li id="li-29064" class="dropdown"><a href="/project-management">Project Management</a></li>
+<li id="li-29065" class="dropdown"><a href="/marketing">Marketing</a></li>
+<li id="li-29066" class="dropdown"><a href="/machine-learning-for-construction">A.I. for Construction</a></li>
 </ul>                    </div>
                     <div class="col-md-3 d-md-block d-none slideUp">
                         <h3>About</h3>
-                        <ul class=""><li id="li-376" class="dropdown"><a href="https://evercam.io/terms">Terms &amp; Conditions</a></li>
-<li id="li-34950" class="dropdown"><a href="https://evercam.io/trust">Trust</a></li>
+                        <ul class=""><li id="li-376" class="dropdown"><a href="/terms">Terms &amp; Conditions</a></li>
+<li id="li-34950" class="dropdown"><a href="/trust">Trust</a></li>
 <li id="li-30377" class="dropdown"><a href="https://jobs.evercam.io/jobs/Careers" target="_blank">Job Opportunities</a></li>
-<li id="li-24896" class="dropdown"><a href="https://evercam.io/about">About</a></li>
+<li id="li-24896" class="dropdown"><a href="/about">About</a></li>
 <li id="li-29228" class="dropdown"><a href="https://jobs.evercam.io/jobs/Careers">Careers</a></li>
-<li id="li-31853" class="dropdown"><a href="https://evercam.io/testimonials">Testimonials</a></li>
+<li id="li-31853" class="dropdown"><a href="/testimonials">Testimonials</a></li>
 </ul>                        <h3>Partners</h3>
-                        <ul class=""><li id="li-25747" class="dropdown"><a href="https://evercam.io/become-an-installer">Become An Installer</a></li>
-<li id="li-1705" class="dropdown"><a href="https://evercam.io/partners">Find An Installer</a></li>
+                        <ul class=""><li id="li-25747" class="dropdown"><a href="/become-an-installer">Become An Installer</a></li>
+<li id="li-1705" class="dropdown"><a href="/partners">Find An Installer</a></li>
 </ul>                        <!-- <h3>OTHER</h3>
                          -->                    </div>
                     <div class="col-md-3 d-md-block d-none slideUp">
                         <h3>Features</h3>
-                        <ul class=""><li id="li-29056" class="dropdown"><a href="https://evercam.io/features/construction-time-lapse">Time-lapse</a></li>
-<li id="li-29057" class="dropdown"><a href="https://evercam.io/features/live-view-of-construction-site">Live View</a></li>
-<li id="li-29058" class="dropdown"><a href="https://evercam.io/features/recordings-with-evercam-construction-site-security-cameras">Recordings</a></li>
-<li id="li-28138" class="dropdown"><a href="https://evercam.io/features/gate-report">Gate Report</a></li>
-<li id="li-29059" class="dropdown"><a href="https://evercam.io/features/x-ray-tool-for-construction-site-projects">X-Ray</a></li>
-<li id="li-492" class="dropdown"><a href="https://evercam.io/bim-time-lapse-integration">BIM Integration</a></li>
-<li id="li-29060" class="dropdown"><a href="https://evercam.io/features/the-measuring-tool">Measuring Tool</a></li>
-<li id="li-29062" class="dropdown"><a href="https://evercam.io/features/the-compare-tool-for-construction-sites">Compare Tool</a></li>
-<li id="li-29061" class="dropdown"><a href="https://evercam.io/features/edit-tool">Edit Tool</a></li>
+                        <ul class=""><li id="li-29056" class="dropdown"><a href="/features/construction-time-lapse">Time-lapse</a></li>
+<li id="li-29057" class="dropdown"><a href="/features/live-view-of-construction-site">Live View</a></li>
+<li id="li-29058" class="dropdown"><a href="/features/recordings-with-evercam-construction-site-security-cameras">Recordings</a></li>
+<li id="li-28138" class="dropdown"><a href="/features/gate-report">Gate Report</a></li>
+<li id="li-29059" class="dropdown"><a href="/features/x-ray-tool-for-construction-site-projects">X-Ray</a></li>
+<li id="li-492" class="dropdown"><a href="/bim-time-lapse-integration">BIM Integration</a></li>
+<li id="li-29060" class="dropdown"><a href="/features/the-measuring-tool">Measuring Tool</a></li>
+<li id="li-29062" class="dropdown"><a href="/features/the-compare-tool-for-construction-sites">Compare Tool</a></li>
+<li id="li-29061" class="dropdown"><a href="/features/edit-tool">Edit Tool</a></li>
 </ul>                    </div>
                 </div>
             </div>
