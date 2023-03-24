@@ -40,9 +40,9 @@ defineProps({ blok: Object })
 <li id="li-35131" class="dropdown1"><a href="https://evercam.io/construction-camera-specs">Camera Specs</a></li>
 </ul>
 </li>
-<li id="li-350" class="dropdown"><a href="https://evercam.io/pricing">Pricing</a></li>
-<li id="li-569" class="dropdown"><a href="https://evercam.io/blog">Blog</a></li>
-<li id="li-351" class="dropdown"><a href="https://evercam.io/contact">Contact</a></li>
+<li id="li-350" class="dropdown"><a href="/pricing">Pricing</a></li>
+<li id="li-569" class="dropdown"><a href="/blog">Blog</a></li>
+<li id="li-351" class="dropdown"><a href="/contact">Contact</a></li>
 </ul>                                        <div class="sign-in-and-phone"><a href="https://dash.evercam.io/v2/users/signin" target="_blank" rel="noopener">Sign in</a> <span>|</span> <a href="tel:+35319194500">+353 1 919 4500</a></div>
                                 <div class="language-dropdown">
                                     <a href="#" class="glob-icon country" id="language-dropdown">

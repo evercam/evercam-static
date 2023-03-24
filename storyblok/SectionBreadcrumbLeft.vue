@@ -6,13 +6,16 @@ defineProps({ blok: Object })
     <div v-editable="blok" class="breadcrumbs-wrapper">
         <div class="container">
             <div class="row">
-                <div class="col-6 align-self-center">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item active">Projects</li>
-                    </ol>
+                <div class="col-md-7 align-self-center">
+                    <!-- {{blok}} -->
+                    <h1>{{ blok.page_name }}</h1>
                 </div>
-                <div class="col-6 align-self-center">
+                <div class="col-md-12 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">{{ blok.page_url }}</li>
+                    </ol>
                 </div>
             </div>
         </div>

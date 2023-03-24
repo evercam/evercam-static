@@ -3,8 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h1>Evercam<br>
-Features</h1>
+                    <h1>{{ blok.name }}</h1>
 <p>{{blok.description}}</p>
 <p><a class="btn-style" href="#ask-us">Book a demo</a></p>
                 </div>
