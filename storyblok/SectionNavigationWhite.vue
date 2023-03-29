@@ -14,7 +14,7 @@ defineProps({ blok: Object })
 </script>
 
 <template>
-    <header v-editable="blok" class="new-design-header inner-page-menu">
+    <header v-editable="blok" class="new-design-header inner-page-menu sticky">
         <div class="menu-bar">
             <div class="container">
                 <div class="row">
@@ -25,7 +25,7 @@ defineProps({ blok: Object })
                         <span id="menu-btn"></span></div>
                     <div class="col-md-9" id="main-menu">
                         <nav>
-                            <div id="navbar">
+                            <div id="navbar-revision">
                                 <ul class="nav-list"><li id="li-1502" class="dropdown active"><a href="/project">Projects</a></li>
 <li id="li-29119" class="dropdown"><a href="/features/">Features</a>
 <ul class="dropdown-menu">

@@ -306,14 +306,14 @@ defineProps({ blok: Object })
                         </div>
                         <div class="col-md-4 align-self-center slideRight mobile-social-icons">
                             <ul class="social-links">
-                                                                                                            <li><a href="https://wa.me/353894481651" target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i> <span class="sr-only">Whatsapp </span></a></li>
-                                                                            <li><a href="https://github.com/evercam" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> <span class="sr-only">Github </span></a></li>
-                                                                            <li><a href="https://www.linkedin.com/company/evercam" target="_blank" rel="noopener"><i class="fab fa-linkedin-in" aria-hidden="true"></i> <span class="sr-only">Linkedin </span></a></li>
-                                                                            <li><a href="https://twitter.com/evrcm" target="_blank" rel="noopener"><i class="fab fa-twitter" aria-hidden="true"></i> <span class="sr-only">Twitter </span></a></li>
-                                                                            <li><a href="https://www.facebook.com/evrcm/" target="_blank" rel="noopener"><i class="fab fa-facebook-f" aria-hidden="true"></i> <span class="sr-only">Facebook </span></a></li>
-                                                                            <li><a href="https://vimeo.com/evercam" target="_blank" rel="noopener"><i class="fab fa-vimeo-v" aria-hidden="true"></i> <span class="sr-only">Vimeo </span></a></li>
-                                                                            <li><a href="https://www.youtube.com/user/evrcm" target="_blank" rel="noopener"><i class="fab fa-youtube" aria-hidden="true"></i> <span class="sr-only">Youtube </span></a></li>
-                                                                            <li><a href="https://www.instagram.com/EvercamConstructionCameras/" target="_blank" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i> <span class="sr-only">Instagram </span></a></li>
+                                                                                                            <li><a href="https://wa.me/353894481651" target="_blank" rel="noopener"><font-awesome-icon  :icon="['fab', 'whatsapp']" /> <span class="sr-only">Whatsapp </span></a></li>
+                                                                            <li><a href="https://github.com/evercam" target="_blank" rel="noopener"><font-awesome-icon  :icon="['fab', 'github']" /><span class="sr-only">Github </span></a></li>
+                                                                            <li><a href="https://www.linkedin.com/company/evercam" target="_blank" rel="noopener"><font-awesome-icon  :icon="['fab', 'linkedin']" /> <span class="sr-only">Linkedin </span></a></li>
+                                                                            <li><a href="https://twitter.com/evrcm" target="_blank" rel="noopener"><font-awesome-icon  :icon="['fab', 'twitter']" /> <span class="sr-only">Twitter </span></a></li>
+                                                                            <li><a href="https://www.facebook.com/evrcm/" target="_blank" rel="noopener"><font-awesome-icon  :icon="['fab', 'facebook']" /> <span class="sr-only">Facebook </span></a></li>
+                                                                            <li><a href="https://vimeo.com/evercam" target="_blank" rel="noopener"><font-awesome-icon  :icon="['fab', 'vimeo']" /> <span class="sr-only">Vimeo </span></a></li>
+                                                                            <li><a href="https://www.youtube.com/user/evrcm" target="_blank" rel="noopener"><font-awesome-icon  :icon="['fab', 'youtube']" /> <span class="sr-only">Youtube </span></a></li>
+                                                                            <li><a href="https://www.instagram.com/EvercamConstructionCameras/" target="_blank" rel="noopener"><font-awesome-icon  :icon="['fab', 'instagram']" /> <span class="sr-only">Instagram </span></a></li>
                                                                                                     </ul>
                         </div>
                     </div>

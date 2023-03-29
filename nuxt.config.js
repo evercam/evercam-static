@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     css: [
         // CSS file in the project
         '@/assets/css/main.css',
+        '@fortawesome/fontawesome-svg-core/styles.css',
       ],
     // nitro: {
     // prerender: {
@@ -29,8 +30,8 @@ export default defineNuxtConfig({
             charset: 'utf-8',
             viewport: 'width=device-width, initial-scale=1',
             link: [
-                { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css', integrity: 'sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor', crossorigin: 'anonymous' },
-                { rel: 'stylesheet', href: 'https://evercam.io/wp-content/themes/evercam/css/main.css?id=2165878 '},
+                // { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css', integrity: 'sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor', crossorigin: 'anonymous' },
+                // { rel: 'stylesheet', href: 'https://evercam.io/wp-content/themes/evercam/css/main.css?id=2165878 '},
                 { rel: 'stylesheet', href: 'https://evercam.io/wp-content/themes/evercam/css/main.css?id=3162236'},
                 { rel: 'stylesheet', href: 'https://evercam.io/wp-content/themes/evercam/fontawesome/css/all.min.css'},
                 { rel: 'icon', type: 'image/x-icon', href: 'https://evercam.io/favicon.ico' }

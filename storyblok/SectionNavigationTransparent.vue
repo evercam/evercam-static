@@ -14,7 +14,7 @@ defineProps({ blok: Object })
 </script>
 
 <template>
-    <header v-editable="blok" class="new-design-header bg-header">
+    <header v-editable="blok" class="new-design-header bg-header sticky">
         <div class="menu-bar">
             <div class="container">
                 <div class="row">
