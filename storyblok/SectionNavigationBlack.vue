@@ -49,7 +49,7 @@ defineProps({ blok: Object })
                                     <!--  <a href="#" class="glob-icon" id="language-dropdown">
                                             <span class="sr-only">Language Dropdown</span>
                                         </a>-->
-                                    <a href="#" class="glob-icon country white-country" id="language-dropdown">
+                                    <a href="#" class="glob-icon country lang-black" id="language-dropdown">
                                         <span>
                                             IE
                                         </span>
