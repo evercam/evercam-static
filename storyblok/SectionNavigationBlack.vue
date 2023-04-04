@@ -27,7 +27,7 @@ defineProps({ blok: Object })
                     <div class="col-md-9" id="main-menu">
                         <nav>
                             <div id="navbar">
-                                <ul class="nav-list"><li id="li-1502" class="dropdown"><a href="/project">Projects</a></li>
+                                <ul class="nav-list"><li id="li-1502" class="dropdown"><a href="/projects">Projects</a></li>
 <li id="li-29119" class="dropdown"><a href="/features/">Features</a>
 <ul class="dropdown-menu">
 <li id="li-30278" class="dropdown1"><a href="https://evercam.io/features/construction-time-lapse">Time-lapse</a></li>
