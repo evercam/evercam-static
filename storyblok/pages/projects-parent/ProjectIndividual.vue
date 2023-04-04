@@ -1,7 +1,7 @@
 <script>
 import SectionNavigationWhite from '@/storyblok/SectionNavigationWhite.vue';
 import SectionBreadcrumbLeftAll from '@/storyblok/SectionBreadcrumbLeftAll.vue';
-import SectionChatBox from '@/storyblok/SectionChatBox.vue';
+import SectionChatbox from '@/storyblok/SectionChatbox.vue';
 import SectionFooter from '@/storyblok/SectionFooter.vue';
 import SectionRelatedProject from '@/storyblok/SectionRelatedProject.vue';
 // import VueCompareImage from 'vue-compare-image';
@@ -11,7 +11,7 @@ export default {
     components: {
       SectionNavigationWhite,
       SectionBreadcrumbLeftAll,
-      SectionChatBox,
+      SectionChatbox,
       SectionFooter,
       SectionRelatedProject,
       // VueCompareImage,
@@ -28,7 +28,7 @@ const resolvedRichText = computed(() => renderRichText(props.blok.content));
 
 <template>
   <SectionNavigationWhite/>
-  <SectionChatBox/>
+  <SectionChatbox/>
   <SectionBreadcrumbLeftAll/>
   <section class="single-blog projects-single" id="page-34491">
     <div class="container">
