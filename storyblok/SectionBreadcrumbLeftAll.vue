@@ -1,7 +1,19 @@
 <script setup>
 defineProps({ blok: Object });
 const urlPath = useRoute().path;
-const urlRaw = urlPath.replace("/projects/", "").replace(/-/g, " ");
+const isProjects = urlPath.includes("/projects/");
+const isFeatures = urlPath.includes("/features/");
+
+function checkUrl(urlPath) {
+  if (isProjects) {
+    return urlPath.replace("/projects/", "").replace(/-/g, " ");
+  } 
+  if (isFeatures) {
+    return urlPath.replace("/features/", "").replace(/-/g, " ");
+  }
+}
+
+const urlRaw = checkUrl(urlPath);
 
 function toTitleCase(str) {
   return str.replace(/\w\S*/g, function (txt) {

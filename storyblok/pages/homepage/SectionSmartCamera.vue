@@ -10,11 +10,11 @@ defineProps({ blok: Object })
         <div class="row row-eq-height justify-content-center">
                             <div class="col-lg-4">
                     <div class="wrapper feature-item">
-                        <a href="https://evercam.io/features/construction-time-lapse-creator" class="icon-image"> <span class="image-wrapper"><img class=" lazyloaded" src="https://evercam.io/wp-content/uploads/2021/05/TimeLapse.png" data-src="https://evercam.io/wp-content/uploads/2021/05/TimeLapse.png" alt="Time-Lapse"></span>
+                        <a href="/features/construction-time-lapse-creator" class="icon-image"> <span class="image-wrapper"><img class=" lazyloaded" src="https://evercam.io/wp-content/uploads/2021/05/TimeLapse.png" data-src="https://evercam.io/wp-content/uploads/2021/05/TimeLapse.png" alt="Time-Lapse"></span>
 
-                                                    </a>                        <h3><a href="https://evercam.io/features/construction-time-lapse-creator"> Time-Lapse</a> </h3>
+                                                    </a>                        <h3><a href="/features/construction-time-lapse-creator"> Time-Lapse</a> </h3>
                         <p>Make beautiful time-lapse videos of your construction project.</p>
-                                                    <a href="https://evercam.io/features/construction-time-lapse-creator" class="btn-link">Learn More</a>
+                                                    <a href="/features/construction-time-lapse-creator" class="btn-link">Learn More</a>
                                                 </div>
                 </div>
                             <div class="col-lg-4">
