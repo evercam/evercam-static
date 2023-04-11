@@ -43,69 +43,69 @@ defineProps({ blok: Object });
               <div id="navbar">
                 <ul class="nav-list">
                   <li id="li-1503" class="dropdown">
-                    <a href="https://evercam.io/projects">Projects</a>
+                    <a href="/projects">Projects</a>
                   </li>
                   <li id="li-29119" class="dropdown">
                     <a href="/features/">Features</a>
                     <ul class="dropdown-menu">
                       <li id="li-30278" class="dropdown1">
                         <a
-                          href="https://evercam.io/features/construction-time-lapse"
+                          href="/features/construction-time-lapse"
                           >Time-lapse</a
                         >
                       </li>
                       <li id="li-29114" class="dropdown1">
                         <a
-                          href="https://evercam.io/features/live-view-of-construction-site"
+                          href="/features/live-view-of-construction-site"
                           >Live View</a
                         >
                       </li>
                       <li id="li-29117" class="dropdown1">
                         <a
-                          href="https://evercam.io/features/recordings-with-evercam-construction-site-security-cameras"
+                          href="/features/recordings-with-evercam-construction-site-security-cameras"
                           >Recordings</a
                         >
                       </li>
                       <li id="li-29116" class="dropdown1">
-                        <a href="https://evercam.io/features/gate-report"
+                        <a href="/features/gate-report"
                           >Gate Report</a
                         >
                       </li>
                       <li id="li-29118" class="dropdown1">
                         <a
-                          href="https://evercam.io/features/x-ray-tool-for-construction-site-projects"
+                          href="/features/x-ray-tool-for-construction-site-projects"
                           >X-Ray</a
                         >
                       </li>
                       <li id="li-29383" class="dropdown1">
                         <a
-                          href="https://evercam.io/features/evercam-construction-project-management-software-integrations"
+                          href="/features/evercam-construction-project-management-software-integrations"
                           >Integrations</a
                         >
                       </li>
                       <li id="li-34534" class="dropdown1">
-                        <a href="https://evercam.io/features/drone-view"
+                        <a href="/features/drone-view"
                           >Drone View</a
                         >
                       </li>
                       <li id="li-29112" class="dropdown1">
-                        <a href="https://evercam.io/features">All features</a>
+                        <a href="/features">All features</a>
                       </li>
                       <li id="li-35131" class="dropdown1">
-                        <a href="https://evercam.io/construction-camera-specs"
+                        <a href="/construction-camera-specs"
                           >Camera Specs</a
                         >
                       </li>
                     </ul>
                   </li>
                   <li id="li-351" class="dropdown">
-                    <a href="https://evercam.io/pricing">Pricing</a>
+                    <a href="/pricing">Pricing</a>
                   </li>
                   <li id="li-570" class="dropdown">
-                    <a href="https://evercam.io/blog">Blog</a>
+                    <a href="/blog">Blog</a>
                   </li>
                   <li id="li-352" class="dropdown">
-                    <a href="https://evercam.io/contact">Contact</a>
+                    <a href="/contact">Contact</a>
                   </li>
                 </ul>
                 <div class="sign-in-and-phone">
@@ -135,7 +135,7 @@ defineProps({ blok: Object });
                     >
                       <span class="country"> IE </span>
                     </a>
-                    <!--                                            <a href="https://evercam.io" class="active">IE</a>-->
+                    <!--                                            <a href="" class="active">IE</a>-->
                     <a href="https://evercam.uk">UK</a>
                     <a href="https://evercam.sg">SG</a>
                     <a href="https://evercam.com.au">AU</a>
@@ -145,7 +145,7 @@ defineProps({ blok: Object });
                 </div>
 
                 <div class="language-bar d-block d-sm-none">
-                  <!--                                        <a href="https://evercam.io" class="active">IE</a>-->
+                  <!--                                        <a href="" class="active">IE</a>-->
                   <a href="https://evercam.uk">UK</a>
                   <a href="https://evercam.sg">SG</a>
                   <a href="https://evercam.com.au">AU</a>
