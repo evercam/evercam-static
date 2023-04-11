@@ -4,6 +4,7 @@ import SectionBreadcrumbLeftAll from "@/storyblok/SectionBreadcrumbLeftAll.vue";
 import SectionChatbox from "@/storyblok/SectionChatbox.vue";
 import SectionFooter from "@/storyblok/SectionFooter.vue";
 import SectionAskUs from "@/storyblok/SectionAskUs.vue";
+import OtherFeaturesCard from "./OtherFeaturesCard.vue";
 // import FeaturesListInternal from "./FeaturesListInternal.vue";
 
 export default {
@@ -13,17 +14,43 @@ export default {
     SectionChatbox,
     SectionAskUs,
     SectionFooter,
-    // FeaturesListInternal
-  },
+    OtherFeaturesCard
+},
 };
 </script>
 
 <script setup>
 const props = defineProps({ blok: Object });
+const urlPath = useRoute().path;
 
 const resolvedContentDescription = computed(() =>
   renderRichText(props.blok.content_description)
 );
+
+const resolvedContentAdditionalDescription = computed(() =>
+  renderRichText(props.blok.full_additional_section[0].content_description)
+);
+
+const features = ref(null);
+const storyblokApi = useStoryblokApi();
+const { data } = await storyblokApi.get("cdn/stories", {
+  version: useRoute().query._storyblok ? "draft" : "published",
+  starts_with: "features",
+  is_startpage: false,
+});
+features.value = data.stories;
+
+
+/** 
+ * TODO: 
+ * Only show other Feature
+ *  */
+const otherFeature = computed(() => {
+  return features.value.find( feature => !urlPath.includes(feature.full_slug) ) !== undefined
+})
+console.log("This is the other feature list", features.value)
+console.log("This is the full slug", urlPath)
+console.log("Is this other feature", otherFeature)
 
 // console.log("This is the feature card list Heading", props.blok.feature_list_card.heading)
 
@@ -41,7 +68,6 @@ const resolvedContentDescription = computed(() =>
 const videoSource = ["vimeo", "youtube", "mp4", ".mp4"];
 const imageSource = ["webp", "png", "jpg", "jpeg", "gif"];
 const assetSource = props.blok.asset_heading.filename;
-// const assetSourceFeatureContainer = props.blok.asset_heading.filename;
 let isVideo = false;
 if (
   videoSource.some(function (v) {
@@ -94,6 +120,7 @@ const imageBackground = props.blok.image_features.filename;
       </p>
     </div>
   </div>
+  <!-- Heading section -->
   <section
     v-if="blok.content_name"
     id="marketing-up"
@@ -126,12 +153,10 @@ const imageBackground = props.blok.image_features.filename;
       </div> -->
     </div>
   </section>
+  <!-- Video or Image Heading -->
   <section v-if="!isVideo" id="bmi-image" class="d-none d-md-block">
     <div class="container">
-      <img
-        :src="blok.asset_heading.filename"
-        alt="Image"
-      />
+      <img :src="blok.asset_heading.filename" alt="Image" />
     </div>
   </section>
   <section v-if="isVideo" id="bmi-video" class="d-none d-md-block">
@@ -146,6 +171,7 @@ const imageBackground = props.blok.image_features.filename;
       </div>
     </div>
   </section>
+  <!-- Feature List 1st -->
   <div v-if="blok.feature_list_section">
     <div v-for="feature in blok.feature_list_section">
       <section
@@ -154,14 +180,24 @@ const imageBackground = props.blok.image_features.filename;
       >
         <div class="container">
           <div class="row">
-            <div v-if="imageSource.some(el => feature.asset.filename.includes(el))" class="col-md-7 order-md-2">
+            <div
+              v-if="
+                imageSource.some((el) => feature.asset.filename.includes(el))
+              "
+              class="col-md-7 order-md-2"
+            >
               <img
                 :src="feature.asset.filename"
                 class="lazyloaded"
                 alt="image"
               />
             </div>
-            <div v-if="videoSource.some(el => feature.asset.filename.includes(el))" class="col-md-7 order-md-2">
+            <div
+              v-if="
+                videoSource.some((el) => feature.asset.filename.includes(el))
+              "
+              class="col-md-7 order-md-2"
+            >
               <div class="embed-responsive embed-responsive-16by9">
                 <iframe
                   class="embed-responsive-item lazyloaded"
@@ -172,8 +208,7 @@ const imageBackground = props.blok.image_features.filename;
                 ></iframe>
               </div>
             </div>
-            <div v-else class="col-md-7 order-md-2">
-            </div>
+            <div v-else class="col-md-7 order-md-2"></div>
             <div class="col-md-5">
               <h2>{{ feature.name }}</h2>
               <p>{{ feature.description }}</p>
@@ -194,7 +229,6 @@ const imageBackground = props.blok.image_features.filename;
                 :data-src="feature.asset.filename"
                 alt="image"
               />
-
             </div>
             <div class="col-md-5 text-md-right">
               <h2 style="text-align: left">{{ feature.name }}</h2>
@@ -207,6 +241,62 @@ const imageBackground = props.blok.image_features.filename;
       </section>
     </div>
   </div>
+
+  <!-- Heading 2nd section -->
+  <section
+    v-if="blok.full_additional_section"
+    id="marketing-up"
+    class="project-management"
+  >
+    <div
+      v-for="blok in blok.full_additional_section"
+      class="container text-center"
+    >
+      <h2>{{ blok.content_name }}</h2>
+      <div v-html="resolvedContentAdditionalDescription"></div>
+      <div class="box-shadow">
+        <div
+          v-if="videoSource.some((el) => blok.asset.filename.includes(el))"
+          class="embed-responsive embed-responsive-16by9"
+        >
+          <iframe
+            class="embed-responsive-item lazyloaded"
+            allowfullscreen="allowfullscreen"
+            :src="blok.asset.filename"
+          ></iframe>
+        </div>
+        <div
+          v-if="imageSource.some((el) => blok.asset.filename.includes(el))"
+          class="embed-responsive embed-responsive-16by9"
+        >
+          <img
+            :src="blok.asset.filename"
+            class="lazyloaded"
+            :data-src="blok.asset.filename"
+            alt="image"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      v-for="blok in blok.full_additional_section.feature_list_card"
+      class="container tick-image text-center"
+    >
+      <div class="row">
+        <div v-for="card in blok.full_additional_section" class="col-md-4">
+          <img :src="card.image.filename" alt="" />
+          <h3>
+            {{ card.heading }}
+          </h3>
+          <p>
+            {{ card.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature List 2nd -->
   <div v-if="blok.feature_list_section_2">
     <div v-for="feature in blok.feature_list_section_2">
       <section
@@ -215,14 +305,24 @@ const imageBackground = props.blok.image_features.filename;
       >
         <div class="container">
           <div class="row">
-            <div v-if="imageSource.some(el => feature.asset.filename.includes(el))" class="col-md-7 order-md-2">
+            <div
+              v-if="
+                imageSource.some((el) => feature.asset.filename.includes(el))
+              "
+              class="col-md-7 order-md-2"
+            >
               <img
                 :src="feature.asset.filename"
                 class="lazyloaded"
                 alt="image"
               />
             </div>
-            <div v-if="videoSource.some(el => feature.asset.filename.includes(el))" class="col-md-7 order-md-2">
+            <div
+              v-if="
+                videoSource.some((el) => feature.asset.filename.includes(el))
+              "
+              class="col-md-7 order-md-2"
+            >
               <div class="embed-responsive embed-responsive-16by9">
                 <iframe
                   class="embed-responsive-item lazyloaded"
@@ -233,8 +333,7 @@ const imageBackground = props.blok.image_features.filename;
                 ></iframe>
               </div>
             </div>
-            <div v-else class="col-md-7 order-md-2">
-            </div>
+            <div v-else class="col-md-7 order-md-2"></div>
             <div class="col-md-5">
               <h2>{{ feature.name }}</h2>
               <p>{{ feature.description }}</p>
@@ -255,7 +354,6 @@ const imageBackground = props.blok.image_features.filename;
                 :data-src="feature.asset.filename"
                 alt="image"
               />
-
             </div>
             <div class="col-md-5 text-md-right">
               <h2 style="text-align: left">{{ feature.name }}</h2>
@@ -269,5 +367,57 @@ const imageBackground = props.blok.image_features.filename;
     </div>
   </div>
   <SectionAskUs />
+  <section id="add-ons">
+    <div class="container">
+      <h2 class="slide-up">Other Features</h2>
+      <div class="row">
+        <OtherFeaturesCard
+          v-for="feature in features"
+          :key="feature.uuid"
+          :feature="feature.content"
+          :slug="feature.full_slug"
+        />
+        <!-- <div class="col-md-4">
+          <div class="wrapper slide-up">
+            <div class="image-wrapper">
+              <img
+                src="https://evercam.io/wp-content/uploads/2021/03/share.jpg"
+                alt="Add on"
+              />
+            </div>
+            <h3>Sharing</h3>
+          </div>
+        </div> -->
+        <div class="col-md-4">
+          <div class="wrapper slide-up">
+            <a
+              href="https://evercam.io/features/snapmail"
+              class="image-wrapper"
+            >
+              <img
+                src="https://evercam.io/wp-content/uploads/2021/03/snapmail-1.jpg"
+                alt="Add on"
+              />
+            </a>
+            <h3>Snapmail</h3>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="wrapper slide-up">
+            <a
+              href="https://evercam.io/features/gate-report"
+              class="image-wrapper"
+            >
+              <img
+                src="https://evercam.io/wp-content/uploads/2021/03/gate-report.jpg"
+                alt="Add on"
+              />
+            </a>
+            <h3>Gate Report</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <SectionFooter />
 </template>
