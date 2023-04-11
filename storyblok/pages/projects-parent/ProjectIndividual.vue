@@ -1,23 +1,23 @@
 <script>
-import SectionNavigationWhite from '@/storyblok/SectionNavigationWhite.vue';
-import SectionBreadcrumbLeftAll from '@/storyblok/SectionBreadcrumbLeftAll.vue';
-import SectionChatbox from '@/storyblok/SectionChatbox.vue';
-import SectionFooter from '@/storyblok/SectionFooter.vue';
-import SectionRelatedProject from '@/storyblok/SectionRelatedProject.vue';
+import SectionNavigationWhite from "@/storyblok/SectionNavigationWhite.vue";
+import SectionBreadcrumbLeftAll from "@/storyblok/SectionBreadcrumbLeftAll.vue";
+import SectionChatbox from "@/storyblok/SectionChatbox.vue";
+import SectionFooter from "@/storyblok/SectionFooter.vue";
+import SectionRelatedProject from "@/storyblok/SectionRelatedProject.vue";
+import ProjectDetailsList from "./ProjectDetailsList.vue";
 // import VueCompareImage from 'vue-compare-image';
 // import SectionCompareImages from '@/storyblok/SectionCompareImages.vue';
 
 export default {
-    components: {
-      SectionNavigationWhite,
-      SectionBreadcrumbLeftAll,
-      SectionChatbox,
-      SectionFooter,
-      SectionRelatedProject,
-      // VueCompareImage,
-      // SectionCompareImages
-    }
-}
+  components: {
+    SectionNavigationWhite,
+    SectionBreadcrumbLeftAll,
+    SectionChatbox,
+    SectionFooter,
+    SectionRelatedProject,
+    ProjectDetailsList
+},
+};
 </script>
 
 <script setup>
@@ -27,10 +27,14 @@ const resolvedRichText = computed(() => renderRichText(props.blok.content));
 </script>
 
 <template>
-  <SectionNavigationWhite/>
-  <SectionChatbox/>
-  <SectionBreadcrumbLeftAll/>
-  <section class="single-blog projects-single" id="page-34491">
+  <SectionNavigationWhite />
+  <SectionChatbox />
+  <SectionBreadcrumbLeftAll />
+  <section
+    class="single-blog projects-single"
+    v-editable="blok"
+    id="page-34491"
+  >
     <div class="container">
       <div class="top-content">
         <div class="embed-responsive embed-responsive-16by9">
@@ -55,51 +59,32 @@ const resolvedRichText = computed(() => renderRichText(props.blok.content));
         <div class="col-md-4 right-sidebar">
           <h3>Project Details</h3>
           <table class="table">
-            <tbody>
-              <tr>
-                <td>Client:</td>
+            <tbody v-if="blok.project_details">
+              <tr v-for="list in blok.project_details">
+                <td>{{ list.name }}:</td>
                 <td>
-                  <p>
-                    <a :href="blok.client_link"
-                      >{{blok.client_name}}</a
-                    >
+                  <p v-if="!list.description_link.url">
+                    {{ list.description }}
+                  </p>
+                  <p v-else>
+                    <a :href="list.description_link.url">
+                      {{ list.description }}
+                    </a>
                   </p>
                 </td>
               </tr>
-              <tr>
-                <td>Contractor:</td>
-                <td>
-                  <p>
-                    <a :href="blok.contractor_link"
-                      >{{blok.contractor_name}}</a
-                    >
-                  </p>
-                </td>
-              </tr>
-              <tr>
-                <td>Steel Erection:</td>
-                <td>
-                  <p>
-                    <a :href="blok.other_link"
-                      >{{blok.other_name}}</a
-                    >
-                  </p>
-                </td>
-              </tr>
-              <tr>
-                <td>Construction Type:</td>
-                <td><p>{{blok.construction_type}}</p></td>
-              </tr>
+              <!-- <ProjectDetailsList 
+                v-for="list in blok.project_details"
+                :list="list.content"
+                :name="list.content.name"
+              /> -->
             </tbody>
           </table>
-          <iframe
-            :src="blok.maps"
-            style="border: 0"
-          ></iframe>
+          <iframe :src="blok.maps" style="border: 0"></iframe>
         </div>
       </div>
     </div>
   </section>
-  <SectionRelatedProject/>
-  <SectionFooter/>
+  <SectionRelatedProject />
+  <SectionFooter />
 </template>

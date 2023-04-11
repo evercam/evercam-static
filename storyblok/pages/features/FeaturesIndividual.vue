@@ -48,9 +48,9 @@ features.value = data.stories;
 const otherFeature = computed(() => {
   return features.value.find( feature => !urlPath.includes(feature.full_slug) ) !== undefined
 })
-console.log("This is the other feature list", features.value)
-console.log("This is the full slug", urlPath)
-console.log("Is this other feature", otherFeature)
+// console.log("This is the other feature list", features.value)
+// console.log("This is the full slug", urlPath)
+// console.log("Is this other feature", otherFeature)
 
 // console.log("This is the feature card list Heading", props.blok.feature_list_card.heading)
 
@@ -75,10 +75,10 @@ if (
   })
 ) {
   isVideo = true;
-  console.log("It's Video", assetSource);
+  // console.log("It's Video", assetSource);
 } else {
   // assetSource = false;
-  console.log("It's Image", assetSource);
+  // console.log("It's Image", assetSource);
 }
 
 /**
