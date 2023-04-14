@@ -1,8 +1,6 @@
 <script>
 import SectionNavigationWhite from "@/storyblok/SectionNavigationWhite.vue";
 import SectionBreadcrumbLeftAll from "@/storyblok/SectionBreadcrumbLeftAll.vue";
-import SectionChatbox from "@/storyblok/SectionChatbox.vue";
-import SectionFooter from "@/storyblok/SectionFooter.vue";
 import SectionRelatedProject from "@/storyblok/SectionRelatedProject.vue";
 import ProjectDetailsList from "./ProjectDetailsList.vue";
 // import VueCompareImage from 'vue-compare-image';
@@ -12,8 +10,6 @@ export default {
   components: {
     SectionNavigationWhite,
     SectionBreadcrumbLeftAll,
-    SectionChatbox,
-    SectionFooter,
     SectionRelatedProject,
     ProjectDetailsList
 },

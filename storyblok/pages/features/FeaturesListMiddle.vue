@@ -6,13 +6,13 @@ const resolvedDescription = computed(() => renderRichText(props.blok.description
 <template v-editable="blok">
   <div class="col-md-4">
     <img
-      class="icon"
+      class="icon-big"
       :src="blok.image.filename"
       alt=""
     />
-    <h3>
+    <h3 class="text-center">
       {{ blok.heading }}
     </h3>
-    <div v-html="resolvedDescription"></div>
+    <div class="text-center" v-html="resolvedDescription"></div>
   </div>
 </template>

@@ -3,7 +3,8 @@ import SectionNavigationTransparent from "@/storyblok/SectionNavigationTranspare
 import SectionBreadcrumbLeftAll from "@/storyblok/SectionBreadcrumbLeftAll.vue";
 import SectionAskUs from "@/storyblok/SectionAskUs.vue";
 import OtherFeaturesCard from "./OtherFeaturesCard.vue";
-import SectionContainerContent from "../../SectionContainerContent.vue";
+import SectionFeatureRightImageLeft from "../../SectionFeatureRightImageLeft.vue";
+// import FeaturesListInternal from "./FeaturesListInternal.vue";
 
 export default {
   components: {
@@ -11,8 +12,8 @@ export default {
     SectionBreadcrumbLeftAll,
     SectionAskUs,
     OtherFeaturesCard,
-    SectionContainerContent
-},
+    SectionFeatureRightImageLeft
+  },
 };
 </script>
 
@@ -24,23 +25,30 @@ const resolvedContentDescription = computed(() =>
   renderRichText(props.blok.content_description)
 );
 
+const resolvedContentAdditionalDescription = computed(() =>
+  renderRichText(props.blok.full_additional_section[0].content_description)
+);
+
+// feature in blok.feature_list_section_2
 const features = ref(null);
 const storyblokApi = useStoryblokApi();
 const { data } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
-  starts_with: "features",
+  starts_with: "marketing",
   is_startpage: false,
 });
 features.value = data.stories;
 
-
-/** 
- * TODO: 
+/**
+ * TODO:
  * Only show other Feature
  *  */
 const otherFeature = computed(() => {
-  return features.value.find( feature => !urlPath.includes(feature.full_slug) ) !== undefined
-})
+  return (
+    features.value.find((feature) => !urlPath.includes(feature.full_slug)) !==
+    undefined
+  );
+});
 
 /** Todo
  * Check the type of Features Content, if it's
@@ -51,16 +59,21 @@ const otherFeature = computed(() => {
 
 const videoSource = ["vimeo", "youtube", "mp4", ".mp4"];
 const imageSource = ["webp", "png", "jpg", "jpeg", "gif"];
-const assetSource = props.blok.asset_heading ? props.blok.asset_heading.filename : "https://a.storyblok.com/f/208852/1920x1083/82ba327790/asset-heading_placeholder.jpg";
+// const assetSource = computed(() =>
+//   props.blok.asset_heading.filename
+// );
 
-console.log("This is the asset", assetSource)
-
+const assetSource = props.blok.asset_heading
+  ? props.blok.asset_heading.filename
+  : "https://a.storyblok.com/f/208852/1920x932/f9ba743fd2/bim-compare-bentley-4d-view.webp/m/250x0?cv=1681284255111";
+// const assetSource = "https://a.storyblok.com/f/208852/1920x932/f9ba743fd2/bim-compare-bentley-4d-view.webp/m/250x0?cv=1681284255111";
+console.log(assetSource);
+// console.log(blok.asset_heading.filename)
 let isVideo = false;
 
 /**
  * Check if Youtube and make it embed
  */
-
 const fromYoutube = "www.youtube.com/watch";
 let isYoutube = assetSource.includes(fromYoutube);
 let assetCheck = "";
@@ -88,47 +101,44 @@ if (assetSource) {
   }
 }
 
-
-/**
- * Build a function to check Feature Section with isVideo
- * const isVideo => function to check and pass true or false
- */
-
-const imageBackground = props.blok.image_features ? props.blok.image_features.filename : "https://a.storyblok.com/f/208852/1920x1083/a5457bd6d0/image-features_placeholder.jpg";
+const imageBackground = props.blok.image_features
+  ? props.blok.image_features.filename
+  : "https://a.storyblok.com/f/208852/1920x932/f9ba743fd2/bim-compare-bentley-4d-view.webp/m/250x0?cv=1681284255111";
+console.log("This is the Background", imageBackground);
 
 /**
  * Check if Heading Background Image is Light or Dark
  * And change the font color of content to be contrast
  */
- onNuxtReady(async () => {
+onNuxtReady(async () => {
   const testHello = "Hello!";
   console.log("This component running on client", testHello);
   const img = imageBackground;
   console.log("This is the image that calculated", img);
 
   const getImageBrightness = (imgSrc, callback) => {
-    let img = document.createElement("img");
+    var img = document.createElement("img");
     img.src = imgSrc;
     img.crossOrigin = "Anonymous";
     img.style.display = "none";
     document.body.appendChild(img);
 
-    let colorSum = 0;
+    var colorSum = 0;
 
     img.onload = function () {
       // create canvas
-      let canvas = document.createElement("canvas");
+      var canvas = document.createElement("canvas");
       canvas.width = this.width;
       canvas.height = this.height;
 
-      let ctx = canvas.getContext("2d");
+      var ctx = canvas.getContext("2d");
       ctx.drawImage(this, 0, 0);
 
-      let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      let data = imageData.data;
-      let r, g, b, avg;
+      var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      var data = imageData.data;
+      var r, g, b, avg;
 
-      for (let x = 0, len = data.length; x < len; x += 4) {
+      for (var x = 0, len = data.length; x < len; x += 4) {
         r = data[x];
         g = data[x + 1];
         b = data[x + 2];
@@ -137,7 +147,7 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
         colorSum += avg;
       }
 
-      let brightness = Math.floor(colorSum / (this.width * this.height));
+      var brightness = Math.floor(colorSum / (this.width * this.height));
       callback(brightness);
     };
   };
@@ -165,15 +175,13 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
   <SectionChatbox />
   <div
     v-editable="blok"
+    v-if="imageBackground"
     id="marketing-banner"
     class="trust-banner"
     :style="{
       backgroundImage: 'url(' + imageBackground + ')',
       noRepeat: 'center',
       backgroundSize: 'cover',
-      minHeight: '50vh',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
     }"
   >
     <div class="container">
@@ -195,7 +203,7 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
       <div v-html="resolvedContentDescription"></div>
     </div>
     <div class="container tick-image text-center">
-      <div class="row">
+      <div v-if="feature.component === 'feature-list-internal'" class="row">
         <FeaturesListInternal
           v-for="feature in blok.feature_list_card"
           :key="feature.uuid"
@@ -205,7 +213,6 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
       </div>
     </div>
   </section>
-  
   <!-- Video or Image Heading -->
   <section v-if="!isVideo" id="bmi-image" class="d-none d-md-block">
     <div class="container">
@@ -225,7 +232,6 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
       </div>
     </div>
   </section>
-
   <!-- Feature List 1st -->
   <div v-if="blok.feature_list_section">
     <div v-for="feature in blok.feature_list_section">
@@ -258,18 +264,43 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
     id="marketing-up"
     class="project-management"
   >
-    <SectionContainerContent
+    <div
       v-for="blok in blok.full_additional_section"
-      :blok="blok"
-      :key="blok.uuid"
-    />
+      class="container text-center"
+    >
+      <h2>{{ blok.content_name }}</h2>
+      <div v-html="resolvedContentAdditionalDescription"></div>
+      <div v-if="blok.asset.filename" class="box-shadow">
+        <div
+          v-if="videoSource.some((el) => blok.asset.filename.includes(el))"
+          class="embed-responsive embed-responsive-16by9"
+        >
+          <iframe
+            class="embed-responsive-item lazyloaded"
+            allowfullscreen="allowfullscreen"
+            :src="blok.asset.filename"
+          ></iframe>
+        </div>
+        <div
+          v-if="imageSource.some((el) => blok.asset.filename.includes(el))"
+          class="embed-responsive embed-responsive-16by9"
+        >
+          <img
+            :src="blok.asset.filename"
+            class="lazyloaded"
+            :data-src="blok.asset.filename"
+            alt="image"
+          />
+        </div>
+      </div>
+    </div>
     <div
       v-for="blok in blok.full_additional_section.feature_list_card"
       class="container tick-image text-center"
     >
       <div class="row">
         <div v-for="card in blok.full_additional_section" class="col-md-4">
-          <img :src="card.image.filename" alt="" />
+          <img v-if="card.image.filename" :src="card.image.filename" alt="" />
           <h3>
             {{ card.heading }}
           </h3>
@@ -308,14 +339,12 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
     <div class="container">
       <h2 class="slide-up">Other Features</h2>
       <div class="row">
-        <!-- Other Features Card is broken -->
-        <!-- <div v-for="feature in features" class="col-md-4">
-          <OtherFeaturesCard
-            :key="feature.uuid"
-            :blok="feature.content"
-            :slug="feature.full_slug"
-          />
-        </div> -->
+        <OtherFeaturesCard
+          v-for="feature in features"
+          :key="feature.uuid"
+          :feature="feature.content"
+          :slug="feature.full_slug"
+        />
         <div class="col-md-4">
           <div class="wrapper slide-up">
             <a
@@ -347,4 +376,5 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
       </div>
     </div>
   </section>
+  <SectionFooter />
 </template>

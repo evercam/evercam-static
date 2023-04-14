@@ -1,22 +1,60 @@
 <script setup>
-defineProps({ blok: Object });
+const props = defineProps({ blok: Object });
+const resolvedFeatureName = computed(() => renderRichText(props.blok.name));
+const resolvedDescription = computed(() =>
+  renderRichText(props.blok.description)
+);
+
+const videoSource = ["vimeo.com", "youtube.com", "mp4", ".mp4"];
+let assetSource = props.blok.asset.filename;
+let assetCheck = "";
+let isVideo = false;
+const fromYoutube = "www.youtube.com/watch";
+let isYoutube = assetSource.includes(fromYoutube);
+// console.log("isYoutube", isYoutube)
+
+if (isYoutube) {
+  assetCheck = assetSource.replace("watch?v=", "embed/");
+} else {
+  assetCheck = assetSource;
+}
+// console.log("This is the asset", assetCheck);
+if (
+  videoSource.some(function (v) {
+    return assetCheck.indexOf(v) > -1;
+  })
+) {
+  isVideo = true;
+}
 </script>
 
 <template>
   <section class="bottom-content-section">
     <div class="container">
       <div class="row">
-        <div class="col-md-7 order-md-2">
+        <div v-if="!isVideo" class="col-md-7 order-md-2">
           <img
-            :src="blok.image.filename"
+            :src="blok.asset.filename"
             class="lazyloaded"
             data-src="https://evercam.io/wp-content/uploads/2022/02/BIM-compare-Bentley-4d-view.jpg"
             alt="image"
           />
         </div>
+        <div v-else class="col-md-7 order-md-2">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe
+              class="embed-responsive-item"
+              :src="assetCheck"
+              allowfullscreen=""
+            ></iframe>
+          </div>
+        </div>
         <div class="col-md-5">
-          <h2>{{ blok.name }}</h2>
-          <p>{{ blok.description }}</p>
+          <div v-html="resolvedFeatureName"></div>
+          <div
+            class="section-left-and-right"
+            v-html="resolvedDescription"
+          ></div>
         </div>
       </div>
     </div>

@@ -459,3 +459,51 @@ background-position:center;
         margin-top: -70px;
     }
 }
+
+.section-left-and-right p {
+    font-size: 18px !important;
+    line-height: 35px !important;
+    font-weight: 300;
+    color: #000;
+}
+
+.icon {
+    height: 50px;
+    width: auto;
+}
+
+.icon-left {
+    height: 60px;
+    width: auto;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+.icon-big {
+    height: 81px;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+h1.h1-heading.background--light,
+p.p-heading.background--light {
+    color: black;
+  }
+  
+h1.h1-heading.background--dark,
+p.p-heading.background--dark {
+color: white;
+}
+
+.button-red {
+    color: #fff;
+    background-color: #c4161c;
+    border-radius: 9999px;
+    box-shadow: none;
+    text-decoration: none;
+    padding: calc(.667em + 2px) calc(1.333em + 2px);
+    font-size: 1.125em;
+}
+  
