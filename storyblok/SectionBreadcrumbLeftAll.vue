@@ -35,7 +35,8 @@ const titleAndPath = toTitleCase(urlRaw);
             <div class="col-md-12 align-self-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
+                <li v-if="isProjects" class="breadcrumb-item"><a href="/projects">Projects</a></li>
+                <li v-if="isFeatures" class="breadcrumb-item"><a href="/features">Features</a></li>
                 <li v-if="titleAndPath" class="breadcrumb-item active">
                 {{ titleAndPath }}
                 </li>

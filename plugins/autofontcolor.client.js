@@ -52,7 +52,6 @@ export default defineNuxtPlugin(() => {
         // });
 
         const img = document.getElementsByClassName("h1-heading");
-        console.log("This is the image that calculated", img)
 
         const getImageBrightness = (imgSrc, callback) => {
             var img = document.createElement("img");

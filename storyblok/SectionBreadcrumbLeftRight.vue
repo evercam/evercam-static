@@ -1,7 +1,23 @@
 <script setup>
 defineProps({ blok: Object })
-const urlPath = useRoute().path
-const urlRaw = urlPath.replace('/projects/', '').replace(/-/g, ' ');
+const urlPath = useRoute().path;
+const isProjects = urlPath.includes("/projects/");
+const isFeatures = urlPath.includes("/features/");
+const isBlog = urlPath.includes("/blog/");
+
+function checkUrl(urlPath) {
+  if (isProjects) {
+    return urlPath.replace("/projects/", "").replace(/-/g, " ");
+  } 
+  if (isFeatures) {
+    return urlPath.replace("/features/", "").replace(/-/g, " ");
+  }
+  if (isBlog) {
+    return urlPath.replace("/blog/", "").replace(/-/g, " ");
+  }
+}
+
+const urlRaw = checkUrl(urlPath);
 
 function toTitleCase(str) {
   return str.replace(
@@ -27,6 +43,9 @@ const titleAndPath = toTitleCase(urlRaw);
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a>
                         </li>
+                        <li v-if="isProjects" class="breadcrumb-item"><a href="/projects">Projects</a></li>
+                        <li v-else-if="isFeatures" class="breadcrumb-item"><a href="/features">Features</a></li>
+                        <li v-else-if="isBlog" class="breadcrumb-item"><a href="/blog">Blog</a></li>
                         <li v-if="titleAndPath" class="breadcrumb-item active">{{ titleAndPath }}</li>
                         <li v-else class="breadcrumb-item active">Pages url Needed</li>
                     </ol>    

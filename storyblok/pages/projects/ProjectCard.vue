@@ -1,5 +1,9 @@
 <script setup>
-defineProps({ project: Object, slug: String });
+const props = defineProps({ project: Object, slug: String });
+
+const imageThumbnail = props.project.image_thumbnail
+  ? props.project.image_thumbnail.filename
+  : "https://a.storyblok.com/f/208852/674x380/538e670581/image_thumbnail.jpg";
 </script>
 
 <template>
@@ -10,8 +14,8 @@ defineProps({ project: Object, slug: String });
             v-editable="project"
         >  
         <div class="wrapper">
-            <nuxt-img class="img-responsive" :src="project.image_thumbnail.filename"/>
-        </div>
+            <nuxt-img class="img-responsive" v-if="imageThumbnail" :src="imageThumbnail"/>
+            <nuxt-img class="img-responsive" v-else src="https://a.storyblok.com/f/208852/674x380/bf71efc381/image_thumbnail.jpg"/>          </div>
         </NuxtLink>
       <div class="content-wrapper">
         <h3>
