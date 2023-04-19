@@ -8,7 +8,7 @@
 <p><a class="btn-style" href="#ask-us">Book a demo</a></p>
                 </div>
                 <div class="col-md-6">
-                    <img src="https://evercam.io/wp-content/uploads/2023/02/features-image.jpg" alt="image">
+                    <img v-if="blok.image" :src="blok.image.filename" alt="image">
                 </div>
             </div>
         </div>

@@ -1,5 +1,18 @@
 <script setup>
 defineProps({ blok: Object });
+
+const projects = ref(null);
+const storyblokApi = useStoryblokApi();
+const { data } = await storyblokApi.get("cdn/stories", {
+  version: useRoute().query._storyblok ? "draft" : "published",
+  starts_with: "projects",
+  is_startpage: false,
+});
+projects.value = data.stories;
+
+// const imageThumbnail = props.project.image_thumbnail
+//   ? props.project.image_thumbnail.filename
+//   : "https://a.storyblok.com/f/208852/674x380/538e670581/image_thumbnail.jpg";
 </script>
 
 <template>
@@ -14,238 +27,14 @@ defineProps({ blok: Object });
         <div class="owl-stage-outer">
           <div
             class="owl-stage"
-            style="
-              /* transform: translate3d(-2160px, 0px, 0px); */
-              transition: all 0s ease 0s;
-              width: 3360px;
-            "
+            style="transition: all 0s ease 0s; width: 3360px"
           >
-          <div
-              class="owl-item cloned active"
-              style="width: 300px; margin-right: 30px"
-            >
-              <a
-                href="https://evercam.io/projects/technimark-longford"
-                class="item"
-              >
-                <div class="inner">
-                  <img
-                    class="owl-lazy"
-                    data-src="https://evercam.io/wp-content/uploads/2022/09/Technimark-Longford-2-672x372.jpg"
-                    alt="Technimark Longford"
-                    src="https://evercam.io/wp-content/uploads/2022/09/Technimark-Longford-2-672x372.jpg"
-                    style="opacity: 1"
-                  />
-                  <div class="text">
-                    <strong>Technimark Longford</strong>
-                    <p>
-                      Technimark has been in business in Longford for over 50
-                      years, previously operating as Longford Tool and
-                      Plastic.&nbsp; The company was bought by a major US firm
-                      that specialises in […]
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="owl-item cloned active"
-              style="width: 300px; margin-right: 30px"
-            >
-              <a
-                href="https://evercam.io/projects/college-square-crane-installation-ie-evercam"
-                class="item"
-              >
-                <div class="inner">
-                  <img
-                    class="owl-lazy"
-                    data-src="https://evercam.io/wp-content/uploads/2022/08/College-Square-–-Crane-Installation-IE-672x372.jpg"
-                    alt="College Square - Crane Installation, IE | Evercam"
-                    src="https://evercam.io/wp-content/uploads/2022/08/College-Square-–-Crane-Installation-IE-672x372.jpg"
-                    style="opacity: 1"
-                  />
-                  <div class="text">
-                    <strong
-                      >College Square - Crane Installation, IE | Evercam</strong
-                    >
-                    <p>
-                      Walls Construction Limited is proud to have the first
-                      Raimondi Cranes Luffing Jib Crane in Ireland on the
-                      College Square site delivering another large-scale project
-                      for Marlet Property Group. The […]
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="owl-item cloned active"
-              style="width: 300px; margin-right: 30px"
-            >
-              <a
-                href="https://evercam.io/projects/actavo-gorey-school-development"
-                class="item"
-              >
-                <div class="inner">
-                  <img
-                    class="owl-lazy"
-                    data-src="https://evercam.io/wp-content/uploads/2022/07/PE-Gorey-ETSS-672x372.jpg"
-                    alt="Actavo Gorey School Development"
-                    src="https://evercam.io/wp-content/uploads/2022/07/PE-Gorey-ETSS-672x372.jpg"
-                    style="opacity: 1"
-                  />
-                  <div class="text">
-                    <strong>Actavo Gorey School Development</strong>
-                    <p>
-                      Actavo Modular, the modular buildings division of Actavo
-                      Group, has been awarded the contract for the manufacture
-                      of seven new steel-framed modular education buildings for
-                      Gorey Educate Together Secondary School […]
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="owl-item cloned"
-              style="width: 300px; margin-right: 30px"
-            >
-              <a
-                href="https://evercam.io/projects/sky-offices-burlington-plaza-ireland"
-                class="item"
-              >
-                <div class="inner">
-                  <img
-                    class="owl-lazy"
-                    data-src="https://evercam.io/wp-content/uploads/2022/06/Sky-offices-2-672x372.jpg"
-                    alt="Sky Offices – Burlington Plaza, Ireland"
-                    src="https://evercam.io/wp-content/uploads/2022/06/Sky-offices-2-672x372.jpg"
-                    style="opacity: 1"
-                  />
-                  <div class="text">
-                    <strong>Sky Offices – Burlington Plaza, Ireland</strong>
-                    <p>
-                      Sky employs just under 1000 people in Ireland, over 750 of
-                      those based at its Head Office in Burlington Road in
-                      Dublin. Sky wanted the campus to provide the right […]
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="owl-item cloned active"
-              style="width: 300px; margin-right: 30px"
-            >
-              <a
-                href="https://evercam.io/projects/technimark-longford"
-                class="item"
-              >
-                <div class="inner">
-                  <img
-                    class="owl-lazy"
-                    data-src="https://evercam.io/wp-content/uploads/2022/09/Technimark-Longford-2-672x372.jpg"
-                    alt="Technimark Longford"
-                    src="https://evercam.io/wp-content/uploads/2022/09/Technimark-Longford-2-672x372.jpg"
-                    style="opacity: 1"
-                  />
-                  <div class="text">
-                    <strong>Technimark Longford</strong>
-                    <p>
-                      Technimark has been in business in Longford for over 50
-                      years, previously operating as Longford Tool and
-                      Plastic.&nbsp; The company was bought by a major US firm
-                      that specialises in […]
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="owl-item cloned active"
-              style="width: 300px; margin-right: 30px"
-            >
-              <a
-                href="https://evercam.io/projects/college-square-crane-installation-ie-evercam"
-                class="item"
-              >
-                <div class="inner">
-                  <img
-                    class="owl-lazy"
-                    data-src="https://evercam.io/wp-content/uploads/2022/08/College-Square-–-Crane-Installation-IE-672x372.jpg"
-                    alt="College Square - Crane Installation, IE | Evercam"
-                    src="https://evercam.io/wp-content/uploads/2022/08/College-Square-–-Crane-Installation-IE-672x372.jpg"
-                    style="opacity: 1"
-                  />
-                  <div class="text">
-                    <strong
-                      >College Square - Crane Installation, IE | Evercam</strong
-                    >
-                    <p>
-                      Walls Construction Limited is proud to have the first
-                      Raimondi Cranes Luffing Jib Crane in Ireland on the
-                      College Square site delivering another large-scale project
-                      for Marlet Property Group. The […]
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="owl-item cloned active"
-              style="width: 300px; margin-right: 30px"
-            >
-              <a
-                href="https://evercam.io/projects/actavo-gorey-school-development"
-                class="item"
-              >
-                <div class="inner">
-                  <img
-                    class="owl-lazy"
-                    data-src="https://evercam.io/wp-content/uploads/2022/07/PE-Gorey-ETSS-672x372.jpg"
-                    alt="Actavo Gorey School Development"
-                    src="https://evercam.io/wp-content/uploads/2022/07/PE-Gorey-ETSS-672x372.jpg"
-                    style="opacity: 1"
-                  />
-                  <div class="text">
-                    <strong>Actavo Gorey School Development</strong>
-                    <p>
-                      Actavo Modular, the modular buildings division of Actavo
-                      Group, has been awarded the contract for the manufacture
-                      of seven new steel-framed modular education buildings for
-                      Gorey Educate Together Secondary School […]
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="owl-item cloned"
-              style="width: 300px; margin-right: 30px"
-            >
-              <a
-                href="https://evercam.io/projects/sky-offices-burlington-plaza-ireland"
-                class="item"
-              >
-                <div class="inner">
-                  <img
-                    class="owl-lazy"
-                    data-src="https://evercam.io/wp-content/uploads/2022/06/Sky-offices-2-672x372.jpg"
-                    alt="Sky Offices – Burlington Plaza, Ireland"
-                    src="https://evercam.io/wp-content/uploads/2022/06/Sky-offices-2-672x372.jpg"
-                    style="opacity: 1"
-                  />
-                  <div class="text">
-                    <strong>Sky Offices – Burlington Plaza, Ireland</strong>
-                    <p>
-                      Sky employs just under 1000 people in Ireland, over 750 of
-                      those based at its Head Office in Burlington Road in
-                      Dublin. Sky wanted the campus to provide the right […]
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
+            <ProjectCard
+              v-for="project in projects"
+              :key="project.uuid"
+              :project="project.content"
+              :slug="project.full_slug"
+            />
           </div>
         </div>
         <div class="owl-nav">

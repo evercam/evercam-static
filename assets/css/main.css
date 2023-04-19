@@ -462,7 +462,8 @@ background-position:center;
 
 .section-left-and-right p {
     font-size: 18px !important;
-    line-height: 35px !important;
+    line-height: 24px !important;
+    margin-bottom: 10px;
     font-weight: 300;
     color: #000;
 }
@@ -506,4 +507,75 @@ color: white;
     padding: calc(.667em + 2px) calc(1.333em + 2px);
     font-size: 1.125em;
 }
+
+#marketing-up .row p {
+    font-size: 18px;
+    line-height: 33px;
+}
   
+.pricing-page h2 {
+    font-size: 56px;
+    line-height: 57px;
+    color: #c4161c;
+    font-weight: 700;
+    margin-top: -7px;
+    margin-bottom: 23px;
+}
+
+.section-left-and-right li p {
+    line-height: 24px !important;
+    margin: 0;
+}
+
+.pricing-page .container h2:before {
+    content: "";
+    width: 6px;
+    height: 58px;
+    background: #c4161c;
+    top: -3px;
+    left: -27px;
+    position: absolute;
+}
+
+.pricing-page .container .col-md-5.text-md-right h2:before {
+    right: -27px;
+    left: auto;
+}
+
+.feature-table .container ul li a b {
+    color: #000;
+    font-weight: bold;
+    display: inline-block;
+    position: relative;
+    padding-right: 30px;
+}
+
+.feature-table .container ul li a b:after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 10px;
+    right: 10px;
+    margin: auto;
+    background: #000;
+    top: 0;
+    bottom: 0;
+}
+
+.feature-table .container ul li a b:hover {
+    color: #c4161c;
+}
+
+.stories-word-section .inner p {
+    margin-bottom: 0px;
+}
+
+/* .pricing-page h2:before {
+    top: 50%;
+    left: -19px;
+    transform: translateY(-50%);
+    content: "";
+    width: 6px;
+    height: 58px;
+    background: #c4161c;
+} */

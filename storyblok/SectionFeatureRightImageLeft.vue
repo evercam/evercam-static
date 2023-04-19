@@ -28,7 +28,7 @@ if (
 </script>
 
 <template>
-  <section class="bottom-content-section">
+  <section :class="blok.class_option">
     <div class="container">
       <div class="row">
         <div v-if="!isVideo" class="col-md-7">
@@ -50,6 +50,7 @@ if (
         <div class="col-md-5 text-md-right">
           <div v-html="resolvedFeatureName"></div>
           <div class="section-left-and-right" v-html="resolvedDescription"></div>
+          <a v-if="blok.button_name" class="btn-style" :href="blok.button_url">{{ blok.button_name }}</a>
         </div>
       </div>
     </div>

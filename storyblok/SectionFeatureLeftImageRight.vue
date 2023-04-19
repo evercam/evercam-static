@@ -29,8 +29,9 @@ if (
 </script>
 
 <template>
-  <section class="bottom-content-section">
-    <div class="container">
+  <section :class="blok.class_option">
+    <div v-if="blok.image" class="container">
+      <h2 v-if="blok.middle_title">{{blok.middle_title}}</h2>
       <div class="row">
         <div v-if="!isVideo" class="col-md-7 order-md-2">
           <img
@@ -55,8 +56,17 @@ if (
             class="section-left-and-right"
             v-html="resolvedDescription"
           ></div>
+          <a v-if="blok.button_name" class="btn-style" :href="blok.button_url">{{ blok.button_name }}</a>
         </div>
       </div>
+    </div>
+    <div v-else class="container">
+      <h2 v-if="blok.middle_title">{{blok.middle_title}}</h2>
+      <div v-html="resolvedFeatureName"></div>
+      <div
+        class="section-left-and-right"
+        v-html="resolvedDescription"
+      ></div>
     </div>
   </section>
 </template>
