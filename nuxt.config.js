@@ -20,7 +20,9 @@ export default defineNuxtConfig({
     //     routes: ['/sitemap.xml']
     // }
     // },
-    build: { transpile: ['@fortawesome/vue-fontawesome'], },
+    build: { 
+        transpile: ['@fortawesome/vue-fontawesome'],
+    },
     app: {
         head: {
             title: 'Nuxt - Evercam Demo',

@@ -7,9 +7,14 @@ const imageThumbnail = props.project.image_thumbnail
 
 const urlPath = useRoute().path;
 let isProjectPages = false;
+let isBlogPages = false;
 
-if (urlPath.includes("/projects/")) {
+if (urlPath.includes("projects")) {
   isProjectPages = true;
+}
+
+if (urlPath.includes("blog")) {
+  isBlogPages = true;
 }
 </script>
 
@@ -46,7 +51,19 @@ if (urlPath.includes("/projects/")) {
       </div>
     </div>
   </div>
-  <div class="owl-item cloned active" style="width: 300px; margin-right: 30px">
+  <div v-else-if="isBlogPages" class="post-wrapper">
+    <NuxtLink :to="'/' + slug">
+      <div class="post-div">
+        <div class="data">
+          <span class="post-title">{{ project.name }}</span>
+        </div>
+        <div class="img-div">
+          <img v-if="imageThumbnail" :src="imageThumbnail" :alt=project.name />
+        </div>
+      </div>
+    </NuxtLink>
+  </div>
+  <div v-else class="owl-item cloned active" style="margin-right: 30px">
     <a :href="'/' + slug" class="item">
       <div class="inner">
         <nuxt-img
@@ -64,7 +81,11 @@ if (urlPath.includes("/projects/")) {
         />
         <!-- <h4>{{ project }}</h4> -->
         <div class="text">
-          <strong>{{ project.name }}</strong>
+          <h4>
+            <strong>
+              {{ project.name }}
+            </strong>
+          </h4>
           <p>
             {{ project.short_description }}
           </p>

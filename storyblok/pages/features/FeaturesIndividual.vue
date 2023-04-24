@@ -31,16 +31,27 @@ const { data } = await storyblokApi.get("cdn/stories", {
   starts_with: "features",
   is_startpage: false,
 });
-features.value = data.stories;
-
 
 /** 
- * TODO: 
- * Only show other Feature
+ * Only show 3 Random Feature and exclude the Active Feature
  *  */
-const otherFeature = computed(() => {
-  return features.value.find( feature => !urlPath.includes(feature.full_slug) ) !== undefined
-})
+
+const urlFix = urlPath.replace("/features/", "");
+
+features.value = data.stories
+  .filter(e => e.slug !== urlFix)
+  .slice(0,3)
+
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
+shuffleArray(features.value);
 
 /** Todo
  * Check the type of Features Content, if it's
@@ -52,8 +63,6 @@ const otherFeature = computed(() => {
 const videoSource = ["vimeo", "youtube", "mp4", ".mp4"];
 const imageSource = ["webp", "png", "jpg", "jpeg", "gif"];
 const assetSource = props.blok.asset_heading ? props.blok.asset_heading.filename : "https://a.storyblok.com/f/208852/1920x1083/82ba327790/asset-heading_placeholder.jpg";
-
-console.log("This is the asset", assetSource)
 
 let isVideo = false;
 
@@ -80,11 +89,6 @@ if (assetSource) {
     })
   ) {
     isVideo = true;
-    console.log("It's Video", assetSource);
-  } else {
-    // assetSource = false;
-    console.log("Is Video?", isVideo);
-    console.log("It's Image", assetSource);
   }
 }
 
@@ -101,10 +105,7 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
  * And change the font color of content to be contrast
  */
  onNuxtReady(async () => {
-  const testHello = "Hello!";
-  console.log("This component running on client", testHello);
   const img = imageBackground;
-  console.log("This is the image that calculated", img);
 
   const getImageBrightness = (imgSrc, callback) => {
     let img = document.createElement("img");
@@ -151,9 +152,7 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
 
       heading[0].style.color = 'black';
       paragraph[0].style.color = 'black';
-      console.log("The Background is bright!")
     } else {
-      console.log("The Background is dark!")
       navbar.setAttribute('style', 'background-color:#111C27 !important');
     }
   })
@@ -186,12 +185,12 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
   </div>
   <!-- Heading section -->
   <section
-    v-if="blok.content_name"
+    v-if="blok.content_title"
     id="marketing-up"
     class="project-management"
   >
     <div class="container text-center">
-      <h2>{{ blok.content_name }}</h2>
+      <h2>{{ blok.content_title }}</h2>
       <div v-html="resolvedContentDescription"></div>
     </div>
     <div class="container tick-image text-center">
@@ -308,41 +307,13 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
     <div class="container">
       <h2 class="slide-up">Other Features</h2>
       <div class="row">
-        <!-- Other Features Card is broken -->
-        <!-- <div v-for="feature in features" class="col-md-4">
+        <!-- Other Features Card -->
+        <div v-for="feature in features" class="col-md-4">
           <OtherFeaturesCard
             :key="feature.uuid"
-            :blok="feature.content"
+            :feature="feature.content"
             :slug="feature.full_slug"
           />
-        </div> -->
-        <div class="col-md-4">
-          <div class="wrapper slide-up">
-            <a
-              href="https://evercam.io/features/snapmail"
-              class="image-wrapper"
-            >
-              <img
-                src="https://evercam.io/wp-content/uploads/2021/03/snapmail-1.jpg"
-                alt="Add on"
-              />
-            </a>
-            <h3>Snapmail</h3>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="wrapper slide-up">
-            <a
-              href="https://evercam.io/features/gate-report"
-              class="image-wrapper"
-            >
-              <img
-                src="https://evercam.io/wp-content/uploads/2021/03/gate-report.jpg"
-                alt="Add on"
-              />
-            </a>
-            <h3>Gate Report</h3>
-          </div>
         </div>
       </div>
     </div>

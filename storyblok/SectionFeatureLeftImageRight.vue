@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps({ blok: Object });
-const resolvedFeatureName = computed(() => renderRichText(props.blok.name));
+const resolvedFeatureName = computed(() => renderRichText(props.blok.title));
 const resolvedDescription = computed(() =>
   renderRichText(props.blok.description)
 );
@@ -11,14 +11,12 @@ let assetCheck = "";
 let isVideo = false;
 const fromYoutube = "www.youtube.com/watch";
 let isYoutube = assetSource.includes(fromYoutube);
-// console.log("isYoutube", isYoutube)
 
 if (isYoutube) {
   assetCheck = assetSource.replace("watch?v=", "embed/");
 } else {
   assetCheck = assetSource;
 }
-// console.log("This is the asset", assetCheck);
 if (
   videoSource.some(function (v) {
     return assetCheck.indexOf(v) > -1;
@@ -30,7 +28,7 @@ if (
 
 <template>
   <section :class="blok.class_option">
-    <div v-if="blok.image" class="container">
+    <div v-if="assetCheck" class="container">
       <h2 v-if="blok.middle_title">{{blok.middle_title}}</h2>
       <div class="row">
         <div v-if="!isVideo" class="col-md-7 order-md-2">

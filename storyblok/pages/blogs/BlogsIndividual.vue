@@ -3,15 +3,27 @@ import SectionNavigationWhite from "@/storyblok/SectionNavigationWhite.vue";
 import SectionBreadcrumbLeftRight from "@/storyblok/SectionBreadcrumbLeftRight.vue";
 import SectionContainerContent from "../../SectionContainerContent.vue";
 import SectionAskUs from "@/storyblok/SectionAskUs.vue";
+import BlogPostIndividual from "./BlogPostIndividual.vue";
 // import SectionVideoWrapper from "../../SectionVideoWrapper.vue";
 
+// If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
+import "vue3-carousel/dist/carousel.css";
+import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import BlogCardIndividual from "./BlogCardIndividual.vue";
+
 export default {
+  name: "App",
   components: {
+    Carousel,
+    Slide,
+    Pagination,
+    Navigation,
     SectionNavigationWhite,
     SectionBreadcrumbLeftRight,
     SectionContainerContent,
     SectionAskUs,
-    // SectionVideoWrapper,
+    BlogPostIndividual,
+    BlogCardIndividual,
   },
 };
 </script>
@@ -24,13 +36,20 @@ const resolvedContent = computed(() => renderRichText(props.blok.content));
 const videoSource = ["vimeo.com", "youtube.com", "mp4", ".mp4"];
 
 const blogs = ref(null);
+const projects = ref(null);
 const storyblokApi = useStoryblokApi();
 const { data } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
-  starts_with: "blogs",
+  starts_with: "blog",
   is_startpage: false,
 });
-blogs.value = data.stories;
+// const { data_project } = await storyblokApi.get("cdn/stories", {
+//   version: useRoute().query._storyblok ? "draft" : "published",
+//   starts_with: "projects",
+//   is_startpage: false,
+// });
+blogs.value = data.stories.slice(0, 5);
+// projects.value = data_project.stories.slice(0,15);
 
 const assetHeading = props.blok.asset_heading
   ? props.blok.asset_heading.filename
@@ -64,17 +83,19 @@ if (
  * Name and Photo
  */
 
-const defaultPhoto = props.blok.writer_details ? props.blok.writer_details[0].photo : "https://a.storyblok.com/f/208852/225x225/07df9eefcf/photo_icon.png";
+const defaultPhoto = props.blok.writer_details
+  ? props.blok.writer_details[0].photo
+  : "https://a.storyblok.com/f/208852/225x225/07df9eefcf/photo_icon.png";
 </script>
 
 <template>
   <SectionNavigationWhite />
   <SectionBreadcrumbLeftRight class="d-none" />
   <SectionChatbox />
+
   <section class="single-blog">
     <div class="container">
-      <SectionSocialShare
-      />
+      <SectionSocialShare />
       <div class="row">
         <div class="col-lg-8">
           <div class="breadcrumbs-wrapper-banner">
@@ -83,12 +104,10 @@ const defaultPhoto = props.blok.writer_details ? props.blok.writer_details[0].ph
                 <div class="col-md-8 align-self-center">
                   <div v-for="writer in blok.writer_details" class="auth-div">
                     <div class="img-div">
-                      <img
-                        :src="defaultPhoto"
-                      />
+                      <img :src="defaultPhoto" />
                     </div>
                     <div class="data">
-                      <span class="auth-name">{{writer.name}}</span>
+                      <span class="auth-name">{{ writer.name }}</span>
                       <div class="all-dates">
                         <span class="entry-date">Date : 03-04-2023</span>
                       </div>
@@ -96,9 +115,7 @@ const defaultPhoto = props.blok.writer_details ? props.blok.writer_details[0].ph
                   </div>
                 </div>
                 <div class="col-md-4 align-self-center">
-                  <SectionSocialShare
-                    class="desktop"
-                  />
+                  <SectionSocialShare class="desktop" />
                 </div>
               </div>
             </div>
@@ -106,30 +123,28 @@ const defaultPhoto = props.blok.writer_details ? props.blok.writer_details[0].ph
           <div class="container img-title">
             <div class="row">
               <div v-if="!isVideo" class="col-md-12 mt-5">
-                <img
-                  v-if="assetCheck"
-                  :src="assetCheck"
-                />
+                <img v-if="assetCheck" :src="assetCheck" />
               </div>
               <div v-else class="col-md-12 mt-5">
                 <iframe
-                    class="embed-responsive-item"
-                    :src="assetCheck"
-                    allowfullscreen=""
-                  ></iframe>
+                  class="embed-responsive-item"
+                  :src="assetCheck"
+                  allowfullscreen=""
+                ></iframe>
               </div>
               <div class="col-md-12 mt-3">
                 <h1>
-                {{ blok.blog_title }}
+                  {{ blok.blog_title }}
                 </h1>
               </div>
             </div>
           </div>
-          <div class="standard-content container" v-html="resolvedContent"></div>
-          <SectionSocialShare
-            class="mobile d-block d-md-none"
-          />
-          
+          <div
+            class="standard-content container"
+            v-html="resolvedContent"
+          ></div>
+          <SectionSocialShare class="mobile d-block d-md-none" />
+
           <!-- <div class="social-share-buttons mobile d-block d-md-none">
             <a
               class="share_facebook share-button"
@@ -220,108 +235,12 @@ const defaultPhoto = props.blok.writer_details ? props.blok.writer_details[0].ph
 
           <div class="recent-post-sidebar">
             <h3>Recent Posts</h3>
-            <div class="post-wrapper">
-              <a
-                href="https://evercam.io/blog/the-all-seeing-eye-why-you-need-full-video-recordings-of-your-construction-site"
-              >
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title">
-                      The All-Seeing Eye: Why You Need Full Video Recordings of
-                      Your Construction Site
-                    </span>
-                  </div>
-                  <div class="img-div"></div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a
-                href="https://evercam.io/blog/meet-evercams-new-vp-of-sales-anton-marinovich-bringing-expertise-in-reality-capture-and-site-monitoring"
-              >
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title">
-                      Meet Evercam's New VP of Sales: Anton Marinovich, Bringing
-                      Expertise in Reality Capture and Site Monitoring
-                    </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2023/04/Anton-Marinovich-672x372.jpeg"
-                      class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
-                      alt="Anton Marinovich might bring reality capture space to a new level"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a
-                href="https://evercam.io/blog/db-schenker-case-study-a-sustainable-construction"
-              >
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title">
-                      Building for the Future: A Sustainable Construction Case
-                      Study with DB Schenker
-                    </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2023/03/Capture-672x372.jpg"
-                      class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
-                      alt="DB Schenker"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a href="https://evercam.io/blog/women-in-construction">
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title"> Women In Construction </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2023/03/wic-672x372.png"
-                      class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
-                      alt="Evercam women team on site"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a
-                href="https://evercam.io/blog/5-ways-to-reduce-project-risk-using-evercams-drone-view"
-              >
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title">
-                      5 Ways to Reduce Project Risk Using Evercam's Drone View
-                    </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2023/03/Drone-view-2.png"
-                      class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
-                      alt="Avoid project risk with Drone view"
-                      decoding="async"
-                      srcset="
-                        https://evercam.io/wp-content/uploads/2023/03/Drone-view-2.png         603w,
-                        https://evercam.io/wp-content/uploads/2023/03/Drone-view-2-300x136.png 300w
-                      "
-                      sizes="(max-width: 603px) 100vw, 603px"
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
+            <BlogPostIndividual
+              v-for="blog in blogs"
+              :key="blog.uuid"
+              :blog="blog.content"
+              :slug="blog.full_slug"
+            />
           </div>
 
           <div class="recent-post-sidebar">
@@ -576,15 +495,38 @@ const defaultPhoto = props.blok.writer_details ? props.blok.writer_details[0].ph
               </a>
             </div>
           </div>
-
-          <!--        <div class="recent-projects-sidebar">
-
-                    <h3>Recent Projects</h3>
-                    <div class="row">
-                                            </div>
-                </div>-->
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="related-posts">
+    <div class="container">
+      <h2>Related Posts</h2>
+      <carousel :items-to-show="3" :wrap-around="true">
+        <slide v-for="blog in blogs" :key="slide">
+          <div class="owl-item cloned" style="width: 350px; margin-right: 30px">
+            <div class="item">
+              <BlogCardIndividual
+                :key="blog.uuid"
+                :blog="blog.content"
+                :slug="blog.full_slug"
+              />
+              <div class="content">
+                <div class="row">
+                  <div class="col">
+                    <div class="date">{{ blog.created_at.toString() }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </slide>
+
+        <template #addons>
+          <navigation />
+        </template>
+      </carousel>
     </div>
   </section>
 </template>

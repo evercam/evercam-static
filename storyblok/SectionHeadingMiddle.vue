@@ -2,9 +2,7 @@
 const props = defineProps({ blok: Object });
 const resolvedContent = computed(() => renderRichText(props.blok.content));
 
-// const route = useRoute().fullPath;
-
-// console.log("This is the url", route);
+let containerClass = props.blok.container_class_option
 
 const assetSource = props.blok.video
   ? props.blok.video
@@ -26,7 +24,7 @@ if (isYoutube) {
 </script>
 
 <template>
-  <section v-editable="blok" id="marketing-up">
+  <section :class="containerClass" v-editable="blok" id="marketing-up">
     <div class="container">
       <h2 v-if="blok.name">{{ blok.name }}</h2>
       <div class="text-center" v-html="resolvedContent"></div>
