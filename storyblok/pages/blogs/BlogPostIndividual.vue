@@ -1,9 +1,9 @@
 <script setup>
 const props = defineProps({ blog: Object, slug: String });
 
-const imageThumbnail = props.blog.asset_heading
+const imageThumbnail = props.blog.asset_heading.filename
   ? props.blog.asset_heading.filename
-  : "https://a.storyblok.com/f/208852/674x380/538e670581/image_thumbnail.jpg";
+  : "https://a.storyblok.com/f/208852/674x380/bf71efc381/image_thumbnail.jpg";
 </script>
 
 <template>

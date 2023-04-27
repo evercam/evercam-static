@@ -570,12 +570,51 @@ color: white;
     margin-bottom: 0px;
 }
 
-/* .pricing-page h2:before {
-    top: 50%;
-    left: -19px;
-    transform: translateY(-50%);
-    content: "";
-    width: 6px;
-    height: 58px;
-    background: #c4161c;
-} */
+.story-section #testimonials .col-md-6>h2,
+.story-section #testimonials .col-md-6 p {
+    text-align: left !important;
+}
+
+.project-section #testimonial .inner h4,
+.project-section #testimonial .inner p {
+    text-align: left !important;
+}
+
+section.story-section .carousel__prev,
+section.story-section .carousel__next {
+    top: 75%;
+    right: 0;
+}
+
+section.story-section .carousel__prev {
+    left: 80%;
+}
+
+
+section.project-section .carousel__prev,
+section.project-section  .carousel__next {
+    top: 105%;
+    right: 12%;
+}
+
+section.project-section .carousel__prev {
+    left: 70%;
+}
+
+.carousel__icon {
+    fill: #b20000 !important;
+}
+
+@media screen and (min-width: 1200px) {
+    /* .project-section #testimonial {
+        min-width: calc((110vw - 1297px)/2 + 1200px);
+    } */
+}
+
+#testimonial .carousel__track {
+    padding-bottom: 30px !important;
+}
+
+.recent-blog {
+    text-align: left;
+}

@@ -1,9 +1,53 @@
 <script setup>
-defineProps({ blok: Object });
+const props = defineProps({ blok: Object });
+const projects = ref(null);
+const storyblokApi = useStoryblokApi();
+const { data } = await storyblokApi.get("cdn/stories", {
+  version: useRoute().query._storyblok ? "draft" : "published",
+  starts_with: "projects",
+  is_startpage: false,
+});
+projects.value = data.stories;
+
+const urlPath = useRoute().path;
+const isProjects = urlPath.includes("/projects");
+const isBlog = urlPath.includes("/blog");
+
+function changeBlogtoProject(d) {
+  return d.replace('blog','')
+}
+
+// const imageThumbnail = props.project.image_thumbnail
+//   ? props.project.image_thumbnail.filename
+//   : "https://a.storyblok.com/f/208852/674x380/538e670581/image_thumbnail.jpg";
 </script>
 
 <template>
-  <section id="related-posts" class="recent-projects">
+  <div v-if="isBlog">
+    <div v-for="project in projects" class="post-wrapper">
+      <a :href="'/projects/' + project.slug">
+        <div class="post-div">
+          <div class="data">
+            <span class="post-title">{{ project.name }} </span>
+          </div>
+          <!-- Load the Image Dynamically -->
+          <div class="img-div">
+            <img
+              v-if="!project.content.image_thumbnail.filename"
+              src="https://a.storyblok.com/f/208852/674x380/bf71efc381/image_thumbnail.jpg"
+              :alt="project.name"
+            />
+            <img
+              v-else
+              :src="project.content.image_thumbnail.filename"
+              :alt="project.name"
+            />
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <section v-else id="related-posts" class="recent-projects">
     <div class="container">
       <h2>Recent Projects</h2>
       <div class="owl-carousel related-posts-slider owl-loaded owl-drag">

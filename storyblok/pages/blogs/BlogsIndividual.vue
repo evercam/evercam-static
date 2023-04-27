@@ -56,6 +56,40 @@ const assetHeading = props.blok.asset_heading
   : "https://player.vimeo.com/video/427781103?dnt=1&app_id=122963";
 
 /**
+ *  Change format Date of Blog post
+ */
+
+function formatDate(d) {
+  let date = new Date(d);
+
+  if (isNaN(date.getTime())) {
+    return d;
+  } else {
+    let month = new Array();
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "Juny";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+
+    let day = date.getDate();
+
+    if (day < 10) {
+      day = "0" + day;
+    }
+
+    return month[date.getMonth()] + " " + day + "," + " " + date.getFullYear();
+  }
+}
+
+/**
  * Check if Youtube and make it embed
  */
 
@@ -245,255 +279,7 @@ const defaultPhoto = props.blok.writer_details
 
           <div class="recent-post-sidebar">
             <h3>Recent Projects</h3>
-            <div class="post-wrapper">
-              <a
-                href="https://evercam.io/projects/st-leonards-beach-nourishment-works"
-              >
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title">
-                      St Leonards Beach Nourishment Works
-                    </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2023/04/St-Leonards-North-beach-replenished.jpg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a
-                href="https://evercam.io/projects/mod-21-new-production-hall-project"
-              >
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title">
-                      Mod 21 – New Production Hall Project
-                    </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2023/01/MOD21-montaz-linii-prefabrykacji-Ostaszewo.png"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a href="https://evercam.io/projects/technimark-longford">
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title"> Technimark Longford </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/09/Technimark-Longford-2.jpg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a href="https://evercam.io/projects/walsh-group-oak-trace">
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title"> Walsh Group – Oak Trace </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/11/walsh-group-.jpg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a
-                href="https://evercam.io/projects/college-square-crane-installation-ie-evercam"
-              >
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title">
-                      College Square – Crane Installation, IE | Evercam
-                    </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/08/College-Square-–-Crane-Installation-IE.jpg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a href="https://evercam.io/projects/mill-creek-city-hall">
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title"> Mill Creek – City Hall </span>
-                  </div>
-                  <div class="img-div">
-                    <img src="" alt="" />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a
-                href="https://evercam.io/projects/actavo-gorey-school-development"
-              >
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title">
-                      Actavo Gorey School Development
-                    </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/07/PE-Gorey-ETSS.jpg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a
-                href="https://evercam.io/projects/e-finitys-microturbine-stallation-us"
-              >
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title">
-                      E-Finity’s Microturbine Installation, US
-                    </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/07/E-finity-overview.png"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a
-                href="https://evercam.io/projects/demolition-of-stack-pilgrim-street-hub-uk"
-              >
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title">
-                      Demolition of Stack – Pilgrim Street Hub, UK
-                    </span>
-                  </div>
-                  <div class="img-div">
-                    <img src="" alt="" />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a href="https://evercam.io/projects/metro-deconstruction-uk">
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title"> Metro Deconstruction, UK </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/07/metro-demolition.jpg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a href="https://evercam.io/projects/eve-belle-housing-care-uk">
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title">
-                      Eve Belle – Housing Care, UK
-                    </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/07/Chaplin-Lodge-2022-July-Evercam-Timelapse-Screenshot.jpg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a href="https://evercam.io/projects/gascoigne-east-uk">
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title"> Gascoigne East, UK </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2020/07/GascoigneEast-White-Arkitekter-06-1.1-840x736-1.jpg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a
-                href="https://evercam.io/projects/sky-offices-burlington-plaza-ireland"
-              >
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title">
-                      Sky Offices – Burlington Plaza, Ireland
-                    </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/06/Sky-offices-2.jpg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a href="https://evercam.io/projects/twill-bailey-creek">
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title"> Twill Bailey Creek </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/06/Tulsa-Group-File-1BR.jpeg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="post-wrapper">
-              <a href="https://evercam.io/projects/400-h-barnhill-usa">
-                <div class="post-div">
-                  <div class="data">
-                    <span class="post-title"> 400 H – Barnhill, USA </span>
-                  </div>
-                  <div class="img-div">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/06/1-400-H-.jpg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
+            <SectionRelatedProject />
           </div>
         </div>
       </div>
@@ -505,7 +291,7 @@ const defaultPhoto = props.blok.writer_details
       <h2>Related Posts</h2>
       <carousel :items-to-show="3" :wrap-around="true">
         <slide v-for="blog in blogs" :key="slide">
-          <div class="owl-item cloned" style="width: 350px; margin-right: 30px">
+          <div class="recent-blog" style="width: 350px; margin-right: 30px">
             <div class="item">
               <BlogCardIndividual
                 :key="blog.uuid"
@@ -515,7 +301,7 @@ const defaultPhoto = props.blok.writer_details
               <div class="content">
                 <div class="row">
                   <div class="col">
-                    <div class="date">{{ blog.created_at.toString() }}</div>
+                    <div class="date">{{ formatDate(blog.created_at) }}</div>
                   </div>
                 </div>
               </div>
