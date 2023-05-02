@@ -3,16 +3,17 @@ import SectionNavigationWhite from "@/storyblok/SectionNavigationWhite.vue";
 import SectionBreadcrumbLeftAll from "@/storyblok/SectionBreadcrumbLeftAll.vue";
 import SectionRelatedProject from "@/storyblok/SectionRelatedProject.vue";
 import ProjectDetailsList from "./ProjectDetailsList.vue";
-// import VueCompareImage from 'vue-compare-image';
-// import SectionCompareImages from '@/storyblok/SectionCompareImages.vue';
+import ImageCompare from "image-compare-viewer";
 
 export default {
+  name: "app",
   components: {
+    // VueCompareImage,
     SectionNavigationWhite,
     SectionBreadcrumbLeftAll,
     SectionRelatedProject,
-    ProjectDetailsList
-},
+    ProjectDetailsList,
+  },
 };
 </script>
 
@@ -20,6 +21,41 @@ export default {
 const props = defineProps({ blok: Object });
 
 const resolvedRichText = computed(() => renderRichText(props.blok.content));
+onNuxtReady(async () => {
+  const element = document.getElementById("image-compare");
+  const options = {
+    // UI Theme Defaults
+
+    controlColor: "#FFFFFF",
+    controlShadow: true,
+    addCircle: false,
+    addCircleBlur: true,
+
+    // Label Defaults
+
+    showLabels: false,
+    labelOptions: {
+      before: "Before",
+      after: "After",
+      onHover: false,
+    },
+
+    // Smoothing
+
+    smoothing: true,
+    smoothingAmount: 100,
+
+    // Other options
+
+    hoverStart: false,
+    verticalMode: false,
+    startingPoint: 50,
+    fluidMode: false,
+  };
+
+  // Add your options object as the second argument
+  const viewer = new ImageCompare(element, options).mount();
+});
 </script>
 
 <template>
@@ -35,8 +71,9 @@ const resolvedRichText = computed(() => renderRichText(props.blok.content));
       <div class="top-content">
         <div class="embed-responsive embed-responsive-16by9">
           <iframe
+            v-if="blok.video_heading.filename"
             class="embed-responsive-item"
-            src="https://player.vimeo.com/video/699767276?h=a0f73a286b"
+            :src="blok.video_heading.filename"
             allowfullscreen=""
           ></iframe>
         </div>
@@ -45,10 +82,18 @@ const resolvedRichText = computed(() => renderRichText(props.blok.content));
         <div class="col-md-8">
           <div class="standard-content" v-html="resolvedRichText"></div>
           <div>
-            <!-- <VueCompareImage
-              leftImage="https://evercam.io/wp-content/uploads/2022/09/Technimark-Longford-2021-November-20-13-00-Evercam-Time-lase-screenshot.jpg"
-              rightImage="https://evercam.io/wp-content/uploads/2022/09/Technimark-Longford-2022-September-21-12-00-Evercam-Time-lapse-screenshot.jpg"
-            /> -->
+            <div v-if="blok.image_compare_section">
+              <div v-for="image in blok.image_compare_section" id="image-compare">
+                <img
+                  :src="image.image_before.filename"
+                  alt=""
+                />
+                <img
+                  :src="image.image_after.filename"
+                  alt=""
+                />
+              </div>
+            </div>
           </div>
           <!-- <SectionCompareImages/> -->
         </div>
@@ -69,11 +114,6 @@ const resolvedRichText = computed(() => renderRichText(props.blok.content));
                   </p>
                 </td>
               </tr>
-              <!-- <ProjectDetailsList 
-                v-for="list in blok.project_details"
-                :list="list.content"
-                :name="list.content.name"
-              /> -->
             </tbody>
           </table>
           <iframe :src="blok.maps" style="border: 0"></iframe>

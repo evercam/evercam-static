@@ -27,9 +27,9 @@ const clientPhotoDefault = "https://a.storyblok.com/f/208852/800x600/398723ac00/
   <section v-if="sliderType === 'testimonial_card'" class="story-section">
     <div id="testimonials" class="container">
       <h2>Success Stories</h2>
-      <carousel :items-to-show="1" :autoplay="4000" :wrap-around="true">
+      <carousel :items-to-show="1" :wrap-around="true">
         <slide v-for="slide in blok.testimonial_blok" :key="slide">
-          <div class="item">
+          <div class="testimonial-item">
             <div class="row">
               <div class="col-md-6">
                 <h2>{{ slide.client_name }}</h2>
@@ -43,17 +43,17 @@ const clientPhotoDefault = "https://a.storyblok.com/f/208852/800x600/398723ac00/
                 </p>
               </div>
               <div class="col-md-6 col-2-img">
-                <div class="box-shadow">
+                <div class="">
                   <img
                     v-if="slide.client_photo"
                     :src="slide.client_photo"
-                    class="box-shadow lazyloaded"
+                    class="lazyloaded"
                     alt="image"
                   />
                   <img
                     v-else
                     :src="clientPhotoDefault"
-                    class="box-shadow lazyloaded"
+                    class="lazyloaded"
                     alt="image"
                   />
                 </div>
