@@ -3,11 +3,14 @@ defineProps({ blok: Object });
 
 const projects = ref(null);
 const storyblokApi = useStoryblokApi();
+
+/** Search by category */
 const { data } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
   starts_with: "projects",
   is_startpage: false,
 });
+
 projects.value = data.stories;
 
 // const imageThumbnail = props.project.image_thumbnail

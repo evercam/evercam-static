@@ -60,7 +60,6 @@ onNuxtReady(async () => {
 
 <template>
   <SectionNavigationWhite />
-  <SectionChatbox />
   <SectionBreadcrumbLeftAll />
   <section
     class="single-blog projects-single"

@@ -1,5 +1,6 @@
 <script setup>
 defineProps({ blok: Object });
+const localePath = useLocalePath();
 </script>
 
 <template>
@@ -8,7 +9,7 @@ defineProps({ blok: Object });
       <div class="container">
         <div class="row">
           <div class="col-md-3">
-            <a class="logo" href="/">
+            <a class="logo" :href="localePath('/')">
               <img
                 class="sticky-logo"
                 src="https://evercam.io/wp-content/themes/evercam/img/section-1-logo2.png"

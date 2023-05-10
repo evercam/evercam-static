@@ -172,7 +172,6 @@ onNuxtReady(async () => {
 
 <template>
   <SectionNavigationTransparent />
-  <SectionChatbox />
   <div
     v-editable="blok"
     v-if="imageBackground"

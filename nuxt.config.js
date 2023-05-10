@@ -3,7 +3,26 @@ export default defineNuxtConfig({
     modules: [
         ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_API_KEY }],
         '@nuxt/image-edge',
+        '@nuxtjs/i18n',
     ],
+    i18n: {
+        locales: [
+            {
+                code: 'ie',
+                name: 'IE'
+            },
+            {
+                code: 'en-au',
+                name: 'AU'
+            },
+            {
+                code: 'en-gb',
+                name: 'UK'
+            },
+        ],
+        defaultLocale: 'ie',
+        strategy: 'prefix_except_default'
+    },
     image: {
         provider: 'storyblok',
         storyblok: {
@@ -14,13 +33,13 @@ export default defineNuxtConfig({
         // CSS file in the project
         '@/assets/css/main.css',
         '@fortawesome/fontawesome-svg-core/styles.css',
-      ],
+    ],
     // nitro: {
     // prerender: {
     //     routes: ['/sitemap.xml']
     // }
     // },
-    build: { 
+    build: {
         transpile: ['@fortawesome/vue-fontawesome'],
     },
     app: {
@@ -41,11 +60,12 @@ export default defineNuxtConfig({
             ],
             script: [
                 { src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js', integrity: 'sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2', crossorigin: 'anonymous' },
-                // { src: "@/plugins/interaction.js" },
-                { src: "https://zcs1.maillist-manage.com/js/jquery.form.js", async: true,
-                defer: true }, 
-                { src: "https://zcs1.maillist-manage.com/js/optin_min.js", async: true,
-                defer: true },
+                {
+                    type: 'text/javascript',
+                    id: 'zsiqchat',
+                    body: true,
+                    innerHTML: `var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode: "694935cc19da1884296ec776ee2796a95201621fa2797eb644df334acc9aa292", values:{},ready:function(){}};var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;s.src="https://salesiq.zoho.com/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);`
+                }
             ]
         },
     },

@@ -1,8 +1,12 @@
 <script setup>
 const props = defineProps({ blok: Object });
 const sliderType = props.blok.slider_option;
+const { locale, locales } = useI18n();
 
-const clientPhotoDefault = "https://a.storyblok.com/f/208852/800x600/398723ac00/client_photo_placeholder.jpg"
+console.log("What is the Language", locale.value);
+
+const clientPhotoDefault =
+  "https://a.storyblok.com/f/208852/800x600/398723ac00/client_photo_placeholder.jpg";
 </script>
 
 <template>
@@ -24,7 +28,7 @@ const clientPhotoDefault = "https://a.storyblok.com/f/208852/800x600/398723ac00/
       </div>
     </div>
   </section>
-  <section v-if="sliderType === 'testimonial_card'" class="story-section">
+  <section v-if="sliderType === 'testimonial_card_ie' && locale === 'ie'" class="story-section">
     <div id="testimonials" class="container">
       <h2>Success Stories</h2>
       <carousel :items-to-show="1" :wrap-around="true">
@@ -37,8 +41,7 @@ const clientPhotoDefault = "https://a.storyblok.com/f/208852/800x600/398723ac00/
                   {{ slide.testimonial_details }}
                 </p>
                 <p>
-                  <strong
-                    >– {{ slide.client_pic }}</strong
+                  <strong>– {{ slide.client_pic }}</strong
                   ><br /><a href="/testimonials">See More</a>
                 </p>
               </div>
@@ -61,7 +64,50 @@ const clientPhotoDefault = "https://a.storyblok.com/f/208852/800x600/398723ac00/
             </div>
           </div>
         </slide>
-        
+
+        <template #addons>
+          <navigation />
+        </template>
+      </carousel>
+    </div>
+  </section>
+  <section v-if="sliderType === 'testimonial_card_au' && locale === 'en-au'" class="story-section">
+    <div id="testimonials" class="container">
+      <h2>Success Stories</h2>
+      <carousel :items-to-show="1" :wrap-around="true">
+        <slide v-for="slide in blok.testimonial_blok" :key="slide">
+          <div class="testimonial-item">
+            <div class="row">
+              <div class="col-md-6">
+                <h2>{{ slide.client_name }}</h2>
+                <p>
+                  {{ slide.testimonial_details }}
+                </p>
+                <p>
+                  <strong>– {{ slide.client_pic }}</strong
+                  ><br /><a href="/testimonials">See More</a>
+                </p>
+              </div>
+              <div class="col-md-6 col-2-img">
+                <div class="">
+                  <img
+                    v-if="slide.client_photo"
+                    :src="slide.client_photo"
+                    class="lazyloaded"
+                    alt="image"
+                  />
+                  <img
+                    v-else
+                    :src="clientPhotoDefault"
+                    class="lazyloaded"
+                    alt="image"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </slide>
+
         <template #addons>
           <navigation />
         </template>

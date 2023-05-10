@@ -42,16 +42,16 @@ features.value = data.stories
   .filter(e => e.slug !== urlFix)
   .slice(0,3)
 
-function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-}
+// function shuffleArray(array) {
+//     for (var i = array.length - 1; i > 0; i--) {
+//         var j = Math.floor(Math.random() * (i + 1));
+//         var temp = array[i];
+//         array[i] = array[j];
+//         array[j] = temp;
+//     }
+// }
 
-shuffleArray(features.value);
+// shuffleArray(features.value);
 
 /** Todo
  * Check the type of Features Content, if it's
@@ -62,7 +62,16 @@ shuffleArray(features.value);
 
 const videoSource = ["vimeo", "youtube", "mp4", ".mp4"];
 const imageSource = ["webp", "png", "jpg", "jpeg", "gif"];
-const assetSource = props.blok.asset_heading ? props.blok.asset_heading.filename : "https://a.storyblok.com/f/208852/1920x1083/82ba327790/asset-heading_placeholder.jpg";
+let assetSource = "";
+
+console.log("This is the asset heading", props.blok.asset_heading.filename);
+
+if(props.blok.asset_heading.filename == null) {
+  assetSource = "";
+} else {
+  assetSource = props.blok.asset_heading ? props.blok.asset_heading.filename : "https://a.storyblok.com/f/208852/1920x1083/82ba327790/asset-heading_placeholder.jpg";
+}
+// const assetSource = props.blok.asset_heading ? props.blok.asset_heading.filename : "https://a.storyblok.com/f/208852/1920x1083/82ba327790/asset-heading_placeholder.jpg";
 
 let isVideo = false;
 
@@ -161,7 +170,6 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
 
 <template>
   <SectionNavigationTransparent />
-  <SectionChatbox />
   <div
     v-editable="blok"
     id="marketing-banner"
@@ -206,24 +214,26 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
   </section>
   
   <!-- Video or Image Heading -->
-  <section v-if="!isVideo" id="bmi-image" class="d-none d-md-block">
-    <div class="container">
-      <img v-if="assetSource" :src="assetSource" alt="Image" />
-    </div>
-  </section>
-  <section v-if="isVideo" id="bmi-video" class="d-none d-md-block">
-    <div class="container">
-      <div class="embed-responsive embed-responsive-16by9">
-        <iframe
-          v-if="assetCheck"
-          class="embed-responsive-item"
-          :src="assetCheck"
-          allowfullscreen=""
-        ></iframe>
-        {{ blok.asset_heading }}
+  <div v-if="assetSource">
+    <section v-if="!isVideo" id="bmi-image" class="d-none d-md-block">
+      <div class="container">
+        <img v-if="assetSource" :src="assetSource" alt="Image" />
       </div>
-    </div>
-  </section>
+    </section>
+    <section v-if="isVideo" id="bmi-video" class="d-none d-md-block">
+      <div class="container">
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe
+            v-if="assetCheck"
+            class="embed-responsive-item"
+            :src="assetCheck"
+            allowfullscreen=""
+          ></iframe>
+          {{ blok.asset_heading }}
+        </div>
+      </div>
+    </section>
+  </div>
 
   <!-- Feature List 1st -->
   <div v-if="blok.feature_list_section">

@@ -51,7 +51,6 @@ if (isYoutube) {
 <template>
   <SectionNavigationWhite />
   <SectionBreadcrumbLeftRight />
-  <SectionChatbox />
   <div v-editable="blok" class="standard-content container">
     <figure
       class="wp-block-embed-vimeo wp-block-embed is-type-video is-provider-vimeo wp-embed-aspect-16-9 wp-has-aspect-ratio"

@@ -125,7 +125,6 @@ const defaultPhoto = props.blok.writer_details
 <template>
   <SectionNavigationWhite />
   <SectionBreadcrumbLeftRight class="d-none" />
-  <SectionChatbox />
 
   <section class="single-blog">
     <div class="container">

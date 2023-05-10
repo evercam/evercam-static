@@ -1,7 +1,4 @@
 <template>
-    <div>
-        <SectionChatbox/>
-        <slot/>
-        <SectionFooter/>
-    </div>
+    <slot/>
+    <SectionFooter/>
 </template>

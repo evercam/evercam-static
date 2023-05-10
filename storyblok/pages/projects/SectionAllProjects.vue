@@ -3,12 +3,61 @@ defineProps({ blok: Object });
 
 const projects = ref(null);
 const storyblokApi = useStoryblokApi();
+let getPost = true;
+
 const { data } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
   starts_with: "projects",
   is_startpage: false,
 });
+
+async function fetchSuggestions(searchInput) {
+  if (searchInput) {
+    const { data } = await storyblokApi.get("cdn/stories", {
+      version: useRoute().query._storyblok ? "draft" : "published",
+      starts_with: "projects",
+      // resolve_relations: 'author',
+      search_term: searchInput,
+      per_page: 5,
+    });
+    projects.value = data.stories;
+    console.log("This is the result", data.stories.length)
+    if(data.stories.length >= 1) {
+      getPost = true;
+      console.log("Are there a post?", getPost)
+    } else {
+      getPost = false;
+      console.log("Are there a post?", getPost)
+    }
+    // if(data.stories.length >= 1) {
+    // }
+  } else {
+    const { data } = await storyblokApi.get("cdn/stories", {
+      version: useRoute().query._storyblok ? "draft" : "published",
+      starts_with: "projects",
+      is_startpage: false,
+    });
+    projects.value = data.stories;
+    console.log("This is the result", data.stories.length)
+    if(data.stories.length >= 1) {
+      getPost = true;
+      console.log("Are there a post?", getPost)
+    } else {
+      getPost = false;
+      console.log("Are there a post?", getPost)
+    }
+    
+  }
+}
 projects.value = data.stories;
+
+if(data.stories.length < 1) {
+  getPost = false
+}
+
+if(data.stories.length >= 1) {
+  getPost = true
+}
 </script>
 
 <template>
@@ -501,15 +550,9 @@ projects.value = data.stories;
               </div>
               <div class="search-box">
                 <div class="input-group">
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    aria-label="Search"
-                    aria-describedby="Search"
-                    class="form-control"
-                  />
+                  <SearchProject :search="fetchSuggestions" />
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-secondary">
+                    <button :on-click="fetchSuggestions" type="button" class="btn btn-outline-secondary">
                       <font-awesome-icon :icon="['fas', 'search']" />
                     </button>
                   </div>
@@ -542,628 +585,16 @@ projects.value = data.stories;
         <div class="filter-projects">
           <div class="row">
             <ProjectCard
-                v-for="project in projects"
-                :key="project.uuid"
-                :project="project.content"
-                :slug="project.full_slug"
+              v-for="project in projects"
+              :key="project.uuid"
+              :project="project.content"
+              :slug="project.full_slug"
             />
-            <!-- <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a href="/projects/technimark-longford"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/09/Technimark-Longford-2-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a href="/projects/technimark-longford"
-                      >Technimark Longford</a
-                    >
-                  </h3>
-                  <p>
-                    Technimark has been in business in Longford for over 50
-                    years, previously operating as Longford Tool and
-                    Plastic.&nbsp; The company was bought by a major US firm
-                    that specialises in […]
-                  </p>
-                </div>
-              </div>
-            </div> -->
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/college-square-crane-installation-ie-evercam"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/08/College-Square-–-Crane-Installation-IE-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/college-square-crane-installation-ie-evercam"
-                      >College Square - Crane Installation, IE | Evercam</a
-                    >
-                  </h3>
-                  <p>
-                    Walls Construction Limited is proud to have the first
-                    Raimondi Cranes Luffing Jib Crane in Ireland on the College
-                    Square site delivering another large-scale project for
-                    Marlet Property Group. The […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/actavo-gorey-school-development"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/07/PE-Gorey-ETSS-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/actavo-gorey-school-development"
-                      >Actavo Gorey School Development</a
-                    >
-                  </h3>
-                  <p>
-                    Actavo Modular, the modular buildings division of Actavo
-                    Group, has been awarded the contract for the manufacture of
-                    seven new steel-framed modular education buildings for Gorey
-                    Educate Together Secondary School […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/sky-offices-burlington-plaza-ireland"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/06/Sky-offices-2-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/sky-offices-burlington-plaza-ireland"
-                      >Sky Offices – Burlington Plaza, Ireland</a
-                    >
-                  </h3>
-                  <p>
-                    Sky employs just under 1000 people in Ireland, over 750 of
-                    those based at its Head Office in Burlington Road in Dublin.
-                    Sky wanted the campus to provide the right […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/siemens-moneypoint-synchronous-condenser"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/05/Siemens-Moneypoint-CGI-672x344.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/siemens-moneypoint-synchronous-condenser"
-                      >Siemen's Moneypoint Synchronous Condenser,
-                      Ireland&nbsp;</a
-                    >
-                  </h3>
-                  <p>
-                    Following a competitive tender process, Siemens Energy
-                    Limited was awarded the contract for the engineering,
-                    procurement and construction of the new €50m Synchronous
-                    Compensator in Moneypoint Power Station. The synchronous […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/central-bank-bridge-north-wall-ireland"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/03/Central-Bank-Bridge-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/central-bank-bridge-north-wall-ireland"
-                      >Central Bank Bridge, North Wall, Ireland</a
-                    >
-                  </h3>
-                  <p>
-                    Timelapse project: Walls Construction is one of Ireland’s
-                    leading construction companies for the last 72 years.&nbsp;
-                    The company is constructing a stunning new 30-meter link
-                    bridge connecting the Central Bank […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/opera-house-limerick-ireland-timelapse"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/03/Opera-House-2-cgi-672x321.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/opera-house-limerick-ireland-timelapse"
-                      >Opera House Limerick, Ireland - Timelapse</a
-                    >
-                  </h3>
-                  <p>
-                    Work has commenced on Opera Square; a site that is poised to
-                    be the biggest ever city center “mixed-use” development
-                    outside the capital and set to be constructed over a […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/dunkettle-interchange-time-lapse"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2022/02/Dunkettle-Traffic-backing-up-as-far-as-Mahon-on-traffic-camera-looking-east-at-Bloomfield.-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/dunkettle-interchange-time-lapse"
-                      >Dunkettle Interchange - Time Lapse</a
-                    >
-                  </h3>
-                  <p>
-                    The Dunkettle Interchange is located approximately 6
-                    kilometres East of Cork City, Ireland. The interchange is at
-                    the intersection of the M8/N8 Road from Dublin to Cork with
-                    the N25 […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/bartra-healthcare-clondalkin"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/12/Revised_Plans_OPTION_B_2.rvt_2018-Jul-31_08-25-01AM-000_3D_View_7_jpg-scaled-1-706x529-1-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/bartra-healthcare-clondalkin"
-                      >Bartra Healthcare Clondalkin</a
-                    >
-                  </h3>
-                  <p>
-                    The Bartra Group is one of Ireland’s most successful real
-                    estate developers. Their business includes healthcare,
-                    social housing, private housing, commercial real estate,
-                    shared housing, and renewable energy. As a […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/waterford-warehouse-redevelopment"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/11/image-3-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/waterford-warehouse-redevelopment"
-                      >Waterford Warehouse Redevelopment</a
-                    >
-                  </h3>
-                  <p>
-                    Stafford Wholesale Ltd trading as Stafford Bonded was
-                    founded in 1892 and has been involved in the manufacturing,
-                    distribution, and storage of alcohol since its foundation.
-                    The company’s core operations […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/the-baird-family-hospital-and-the-anchor-centre"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/09/Baird-BIM-Model-672x372.png"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/the-baird-family-hospital-and-the-anchor-centre"
-                      >The Baird Family Hospital and The ANCHOR Centre</a
-                    >
-                  </h3>
-                  <p>
-                    The Baird Family Hospital and The ANCHOR Centre Project is a
-                    £233.2 million building development at the Foresterhill
-                    Health Campus in Aberdeen. This exciting project will result
-                    in two new […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/cpac-modular-greystones-community-college"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/09/CPAC-Modular-Greystone-School-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/cpac-modular-greystones-community-college"
-                      >Cpac Modular – Greystones Community College</a
-                    >
-                  </h3>
-                  <p>
-                    Cpac&nbsp;Modular has recently started construction of the
-                    new Greystones Community College, in Greystones, Co.
-                    Wicklow. This, 3,174sqm, two storey building is Ireland’s
-                    largest Hybrid Modular post primary school with top […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a href="https://evercam.io/projects/myrtle-square"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/09/Myrtle-Square-Featured-Image-672x372.jpeg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a href="https://evercam.io/projects/myrtle-square"
-                      >Myrtle Square</a
-                    >
-                  </h3>
-                  <p>
-                    The site is located in the heart of Dun Laoghaire Town
-                    between St. Michaels Hospital and Bloomfields Shopping
-                    Centre and the lane running parallel to Georges Street
-                    alongside the shopping […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/snugborough-interchange-upgrade-scheme"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/09/snugborough-exchange-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/snugborough-interchange-upgrade-scheme"
-                      >Snugborough Interchange Upgrade Scheme</a
-                    >
-                  </h3>
-                  <p>
-                    The Snugborough Interchange Upgrade Scheme is located at
-                    junction 2 on the N3 and Snugborough Road crossroads. It is
-                    a strategic interchange which serves Dublin 15.
-                    Blanchardstown Village, Blanchardstown Town […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/national-forensic-mental-health-service-hospital"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/04/DJI_0357-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/national-forensic-mental-health-service-hospital"
-                      >National Forensic Mental Health Service Hospital</a
-                    >
-                  </h3>
-                  <p>
-                    National Forensic Mental Health Service (NFMHS) is a modern
-                    state-of-the-art facility in Portrane, North County Dublin,
-                    located 22 kilometers from Dublin City. The project was
-                    awarded to the Joint Venture […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a href="https://evercam.io/projects/st-lukes-hospital-kilkenny"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/05/St.-Lukes-Hospital-Kilkenny.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/st-lukes-hospital-kilkenny"
-                      >St. Luke's Hospital, Kilkenny</a
-                    >
-                  </h3>
-                  <p>
-                    As ambassadors of the modular construction revolution, ESS
-                    Modular has taken on a new project for St. Luke’s Hospital
-                    in Kilkenny. &nbsp;Established in Dublin in 1989, ESS
-                    Modular has grown […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/green-aspect-wellington-road"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/05/Green-Asp-Well-Rd-2021-January-25-13-00-Evercam-Download-672x372.jpeg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/green-aspect-wellington-road"
-                      >Green Aspect - Wellington Road</a
-                    >
-                  </h3>
-                  <p>
-                    Green Aspect was founded by Richard Cooney in Melbourne,
-                    Australia in 2011. After almost 10 years in Melbourne,
-                    Richard returned home to Dublin in 2018 and has established
-                    Green Aspect […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/dublin-bus-broadstone-garage-project"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/04/dublin-bus-depot.png"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/dublin-bus-broadstone-garage-project"
-                      >Dublin Bus Broadstone Garage Project</a
-                    >
-                  </h3>
-                  <p>
-                    Dublin Bus operates the Public Service Obligation network in
-                    the Greater Dublin Area under a contract of services with
-                    the National Transport Authority. A detached five-bay,
-                    two-story former railway terminus, […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a href="https://evercam.io/projects/north-dock"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/04/The-Building-header-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a href="https://evercam.io/projects/north-dock"
-                      >North Dock</a
-                    >
-                  </h3>
-                  <p>
-                    Located in Dublin The North Dock is a HQ office building
-                    with a Grade A rating. The building is built on a site with
-                    over 2,000 years of history. The […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a href="https://evercam.io/projects/waxie-dargle-basement"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/03/stacks-image-e589493-1200x800-1-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a href="https://evercam.io/projects/waxie-dargle-basement"
-                      >The Waxie Dargle (Evercam HQ)</a
-                    >
-                  </h3>
-                  <p>
-                    The Waxie Dargle was a traditional Irish pub located in
-                    Parnell Square, Dublin 1. The traditional Irish pub was sold
-                    in 2015 and has since become the Evercam HQ. Parnell […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a href="https://evercam.io/projects/block-k-l-shannon-airport"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/02/maxresdefault-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/block-k-l-shannon-airport"
-                      >Block K &amp; L, Shannon Airport</a
-                    >
-                  </h3>
-                  <p>
-                    The 148,000 sq ft Blocks K+L development is part of the
-                    Masterplan for rejuvenating commercial sites in the Shannon
-                    Free Zone business park&nbsp;at the Shannon airport,
-                    Ireland. Blocks K&amp;L property […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/sisk-the-distillers-building"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/02/Smithfield-View-A1-Further-South-672x372.png"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/sisk-the-distillers-building"
-                      >SISK - The Distillers Building</a
-                    >
-                  </h3>
-                  <p>
-                    The construction of this entire city block is the demolition
-                    of the original Irish Distillers building and the
-                    integration into the new commercial building. The building
-                    ranges in height from […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/woodlock-hall-all-hallows-library"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/02/McKeon-DCU-Woodlock-Hall-2020-December-25-12-00-Evercam-Download-672x372.jpeg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/woodlock-hall-all-hallows-library"
-                      >Woodlock Hall - All Hallows Library</a
-                    >
-                  </h3>
-                  <p>
-                    The Woodlock hall construction consisted of the
-                    refurbishment of the current Woodlock Hall for use as a
-                    postgraduate reading room within the Senior House Building,
-                    Secured Structure (RPS Ref 3237), […]
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-3 col-md-6">
-              <div class="product-wrapper">
-                <a
-                  href="https://evercam.io/projects/royal-irish-academy-of-music"
-                  ><div class="wrapper">
-                    <img
-                      src="https://evercam.io/wp-content/uploads/2021/01/23380011_1623259084398660_1386286392953942621_n-1-1-672x372.jpg"
-                      class="img-responsive"
-                    /></div
-                ></a>
-                <div class="content-wrapper">
-                  <h3>
-                    <a
-                      href="https://evercam.io/projects/royal-irish-academy-of-music"
-                      >Royal Irish Academy of Music</a
-                    >
-                  </h3>
-                  <p>
-                    Founded in 1848, the RIAM is Ireland’s national music
-                    conservatoire. It RIAM provides the highest standards for
-                    pre-college, undergraduate, and postgraduate musical
-                    training. RIAM’s nationwide music and drama exams evaluate
-                    […]
-                  </p>
-                </div>
-              </div>
-            </div>
+            <span v-if="!getPost" class="no-result">No project found</span>
           </div>
         </div>
       </div>
-      <!---->
-      <nav class="text-right pagination-wrapper">
+      <!-- <nav class="text-right pagination-wrapper">
         <ul class="pagination">
           <li class="active">
             <a href="#"><span>1</span></a>
@@ -1187,7 +618,7 @@ projects.value = data.stories;
             <a href="#"><span>7</span></a>
           </li>
         </ul>
-      </nav>
+      </nav> -->
     </div>
   </div>
 </template>
