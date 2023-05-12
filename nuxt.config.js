@@ -29,6 +29,18 @@ export default defineNuxtConfig({
             baseUrl: 'https://a.storyblok.com'
         }
     },
+    extends: [
+        'nuxt-seo-kit'
+    ],
+    runtimeConfig: {
+        public: {
+          siteUrl: 'https://localhost:3000/',
+          siteName: 'Construction Time-lapse & Project Management Live Cameras | Evercam',
+          siteDescription: 'Construction time-lapse cameras & project management software helps in marketing content, project management and dispute avoidance in the construction industry.',
+          language: 'ie', // prefer more explicit language codes like `en-AU` over `en`
+        },
+        indexable: false
+      },
     css: [
         // CSS file in the project
         '@/assets/css/main.css',
@@ -53,9 +65,9 @@ export default defineNuxtConfig({
             viewport: 'width=device-width, initial-scale=1',
             link: [
                 { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css', integrity: 'sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor', crossorigin: 'anonymous' },
-                { rel: 'stylesheet', href: 'https://evercam.io/wp-content/themes/evercam/css/main.css?id=2165878 '},
-                { rel: 'stylesheet', href: 'https://evercam.io/wp-content/themes/evercam/css/main.css?id=3162236'},
-                { rel: 'stylesheet', href: 'https://evercam.io/wp-content/themes/evercam/fontawesome/css/all.min.css'},
+                { rel: 'stylesheet', href: 'https://evercam.io/wp-content/themes/evercam/css/main.css?id=2165878 ' },
+                { rel: 'stylesheet', href: 'https://evercam.io/wp-content/themes/evercam/css/main.css?id=3162236' },
+                { rel: 'stylesheet', href: 'https://evercam.io/wp-content/themes/evercam/fontawesome/css/all.min.css' },
                 { rel: 'icon', type: 'image/x-icon', href: 'https://evercam.io/favicon.ico' }
             ],
             script: [

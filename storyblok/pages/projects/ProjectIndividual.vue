@@ -21,7 +21,7 @@ export default {
 const props = defineProps({ blok: Object });
 
 const resolvedRichText = computed(() => renderRichText(props.blok.content));
-onNuxtReady(async () => {
+onMounted(() => {
   const element = document.getElementById("image-compare");
   const options = {
     // UI Theme Defaults
@@ -82,15 +82,12 @@ onNuxtReady(async () => {
           <div class="standard-content" v-html="resolvedRichText"></div>
           <div>
             <div v-if="blok.image_compare_section">
-              <div v-for="image in blok.image_compare_section" id="image-compare">
-                <img
-                  :src="image.image_before.filename"
-                  alt=""
-                />
-                <img
-                  :src="image.image_after.filename"
-                  alt=""
-                />
+              <div
+                v-for="image in blok.image_compare_section"
+                id="image-compare"
+              >
+                <img :src="image.image_before.filename" alt="" />
+                <img :src="image.image_after.filename" alt="" />
               </div>
             </div>
           </div>

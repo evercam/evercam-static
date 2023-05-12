@@ -64,14 +64,21 @@ const videoSource = ["vimeo", "youtube", "mp4", ".mp4"];
 const imageSource = ["webp", "png", "jpg", "jpeg", "gif"];
 let assetSource = "";
 
-console.log("This is the asset heading", props.blok.asset_heading.filename);
+if(props.blok.asset_heading.filename === "") {
+  assetSource = "";
+  console.log("The asset is not set", assetSource);
+} else {
+  assetSource = props.blok.asset_heading.filename;
+  console.log("The asset is placed", assetSource);
+}
 
 if(props.blok.asset_heading.filename == null) {
   assetSource = "";
+  console.log("The asset is not set", assetSource);
 } else {
-  assetSource = props.blok.asset_heading ? props.blok.asset_heading.filename : "https://a.storyblok.com/f/208852/1920x1083/82ba327790/asset-heading_placeholder.jpg";
+  assetSource = props.blok.asset_heading.filename;
+  console.log("The asset is placed", assetSource);
 }
-// const assetSource = props.blok.asset_heading ? props.blok.asset_heading.filename : "https://a.storyblok.com/f/208852/1920x1083/82ba327790/asset-heading_placeholder.jpg";
 
 let isVideo = false;
 
@@ -106,76 +113,107 @@ if (assetSource) {
  * Build a function to check Feature Section with isVideo
  * const isVideo => function to check and pass true or false
  */
-
-const imageBackground = props.blok.image_features ? props.blok.image_features.filename : "https://a.storyblok.com/f/208852/1920x1083/a5457bd6d0/image-features_placeholder.jpg";
+let imageBackground = ""
+// const imageBackground = props.blok.image_background ? props.blok.image_background.filename : "https://a.storyblok.com/f/208852/1920x1083/a5457bd6d0/image-features_placeholder.jpg";
+if(props.blok.image_background === "") {
+  imageBackground = "https://a.storyblok.com/f/208852/1920x1083/51ff3b2b72/home-banner-bg.webp";
+  console.log("This is the background", imageBackground);
+} else {
+  // imageBackground = props.blok.image_background ? props.blok.image_background : "https://a.storyblok.com/f/208852/1920x1083/51ff3b2b72/home-banner-bg.webp";
+  imageBackground = props.blok.image_background;
+  console.log("This is the background", imageBackground);
+}
 
 /**
  * Check if Heading Background Image is Light or Dark
  * And change the font color of content to be contrast
  */
  onNuxtReady(async () => {
-  const img = imageBackground;
-
-  const getImageBrightness = (imgSrc, callback) => {
-    let img = document.createElement("img");
-    img.src = imgSrc;
-    img.crossOrigin = "Anonymous";
-    img.style.display = "none";
-    document.body.appendChild(img);
-
-    let colorSum = 0;
-
-    img.onload = function () {
-      // create canvas
-      let canvas = document.createElement("canvas");
-      canvas.width = this.width;
-      canvas.height = this.height;
-
-      let ctx = canvas.getContext("2d");
-      ctx.drawImage(this, 0, 0);
-
-      let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      let data = imageData.data;
-      let r, g, b, avg;
-
-      for (let x = 0, len = data.length; x < len; x += 4) {
-        r = data[x];
-        g = data[x + 1];
-        b = data[x + 2];
-
-        avg = Math.floor((r + g + b) / 3);
-        colorSum += avg;
-      }
-
-      let brightness = Math.floor(colorSum / (this.width * this.height));
-      callback(brightness);
+  if(imageBackground) {
+    const img = imageBackground;
+  
+    const getImageBrightness = (imgSrc, callback) => {
+      let img = document.createElement("img");
+      img.src = imgSrc;
+      img.crossOrigin = "Anonymous";
+      img.style.display = "none";
+      document.body.appendChild(img);
+  
+      let colorSum = 0;
+  
+      img.onload = function () {
+        // create canvas
+        let canvas = document.createElement("canvas");
+        canvas.width = this.width;
+        canvas.height = this.height;
+  
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(this, 0, 0);
+  
+        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let r, g, b, avg;
+  
+        for (let x = 0, len = data.length; x < len; x += 4) {
+          r = data[x];
+          g = data[x + 1];
+          b = data[x + 2];
+  
+          avg = Math.floor((r + g + b) / 3);
+          colorSum += avg;
+        }
+  
+        let brightness = Math.floor(colorSum / (this.width * this.height));
+        callback(brightness);
+      };
     };
-  };
-
-  getImageBrightness(img,function(brightness) {
-    const navbar = document.getElementById("header-transparent");
-    if(brightness > 100) {
-      let heading = document.getElementsByClassName("h1-heading")
-      let paragraph = document.getElementsByClassName("p-heading")
-      navbar.setAttribute('style', 'background-color:#111C27 !important');
-
-      heading[0].style.color = 'black';
-      paragraph[0].style.color = 'black';
-    } else {
-      navbar.setAttribute('style', 'background-color:#111C27 !important');
-    }
-  })
+  
+    getImageBrightness(img,function(brightness) {
+      const navbar = document.getElementById("header-transparent");
+      if(brightness > 100) {
+        let heading = document.getElementsByClassName("h1-heading")
+        let paragraph = document.getElementsByClassName("p-heading")
+        navbar.setAttribute('style', 'background-color:#111C27 !important');
+  
+        heading[0].style.color = 'black';
+        paragraph[0].style.color = 'black';
+      } else {
+        navbar.setAttribute('style', 'background-color:#111C27 !important');
+      }
+    })
+  }
 });
 </script>
 
 <template>
   <SectionNavigationTransparent />
   <div
-    v-editable="blok"
+    v-if="blok.image_background === ''"
     id="marketing-banner"
     class="trust-banner"
     :style="{
-      backgroundImage: 'url(' + imageBackground + ')',
+      backgroundImage: 'url(https://a.storyblok.com/f/208852/1920x1083/51ff3b2b72/home-banner-bg.webp)',
+      noRepeat: 'center',
+      backgroundSize: 'cover',
+      minHeight: '50vh',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+    }"
+  >
+    <div class="container">
+      <h1 class="h1-heading" v-if="blok.name">{{ blok.name }}</h1>
+      <p class="p-heading" v-if="blok.description">{{ blok.description }}</p>
+      <p v-if="blok.button_name">
+        <a class="btn-style" :href="blok.button_cta">{{ blok.button_name }}</a>
+      </p>
+    </div>
+  </div>
+  <div
+    v-else
+    id="marketing-banner"
+    class="trust-banner"
+    :style="{
+      backgroundImage: 'url('+ imageBackground +')',
       noRepeat: 'center',
       backgroundSize: 'cover',
       minHeight: '50vh',
@@ -229,7 +267,6 @@ const imageBackground = props.blok.image_features ? props.blok.image_features.fi
             :src="assetCheck"
             allowfullscreen=""
           ></iframe>
-          {{ blok.asset_heading }}
         </div>
       </div>
     </section>

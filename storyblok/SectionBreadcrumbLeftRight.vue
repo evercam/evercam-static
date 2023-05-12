@@ -4,6 +4,7 @@ const urlPath = useRoute().path;
 const isProjects = urlPath.includes("/projects/");
 const isFeatures = urlPath.includes("/features/");
 const isBlog = urlPath.includes("/blog/");
+const isTutorials = urlPath.includes("/tutorials/");
 
 function checkUrl(urlPath) {
   if (isProjects) {
@@ -14,6 +15,9 @@ function checkUrl(urlPath) {
   }
   if (isBlog) {
     return urlPath.replace("/blog/", "").replace(/-/g, " ");
+  }
+  if (isTutorials) {
+    return urlPath.replace("/tutorials/", "").replace(/-/g, " ");
   }
 }
 
@@ -46,6 +50,7 @@ const titleAndPath = toTitleCase(urlRaw);
                         <li v-if="isProjects" class="breadcrumb-item"><a href="/projects">Projects</a></li>
                         <li v-else-if="isFeatures" class="breadcrumb-item"><a href="/features">Features</a></li>
                         <li v-else-if="isBlog" class="breadcrumb-item"><a href="/blog">Blog</a></li>
+                        <li v-else-if="isTutorials" class="breadcrumb-item"><a href="/tutorials">Tutorials</a></li>
                         <li v-if="titleAndPath" class="breadcrumb-item active">{{ titleAndPath }}</li>
                         <li v-else class="breadcrumb-item active">Pages url Needed</li>
                     </ol>    

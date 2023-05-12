@@ -65,42 +65,6 @@ const onClickHandler = (page) => {
           v-model="currentPage"
         />
       </div>
-
-      <!-- <vue-awesome-paginate
-        :total-items="2"
-        :items-per-page="1"
-        v-model="currentPage"
-        :on-click="onClickHandler"
-      /> -->
-      <!-- <SectionPagination @change="refecth" :totalPages="2" :currentPage="page.value"/> -->
-      <!-- <nav class="text-right pagination-wrapper" aria-label="Page navigation">
-        <ul class="pagination">
-          <li id="liP1" class="pnos active">
-            <a href="https://evercam.io/blog">1</a>
-          </li>
-          <li id="liP2" class="pnos">
-            <a href="https://evercam.io/blog/page/2">2</a>
-          </li>
-          <li id="liP3" class="pnos">
-            <a href="https://evercam.io/blog/page/3">3</a>
-          </li>
-          <li id="liP4" class="pnos">
-            <a href="https://evercam.io/blog/page/4">4</a>
-          </li>
-          <li id="liP5" class="pnos">
-            <a href="https://evercam.io/blog/page/5">5</a>
-          </li>
-          <li id="liP6" class="pnos">
-            <a href="https://evercam.io/blog/page/6">6</a>
-          </li>
-          <li id="liP7" class="pnos">
-            <a href="https://evercam.io/blog/page/7">7</a>
-          </li>
-          <li id="liP8" class="pnos">
-            <a href="https://evercam.io/blog/page/8">8</a>
-          </li>
-        </ul>
-      </nav> -->
     </div>
   </section>
 </template>

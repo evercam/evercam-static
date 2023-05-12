@@ -31,8 +31,13 @@ const { data } = await storyblokApi.get("cdn/stories", {
 });
 tutorials.value = data.stories;
 
-const assetSource = props.blok.video_url ? props.blok.video_url : "https://player.vimeo.com/video/427781103?dnt=1&app_id=122963";
+let assetSource = ""
 
+if(props.blok.video_url.filename == null) {
+  assetSource = "";
+} else {
+  assetSource = props.blok.video_url.filename;
+}
 /**
  * Check if Youtube and make it embed
  */
@@ -53,6 +58,7 @@ if (isYoutube) {
   <SectionBreadcrumbLeftRight />
   <div v-editable="blok" class="standard-content container">
     <figure
+      v-if="assetSource"
       class="wp-block-embed-vimeo wp-block-embed is-type-video is-provider-vimeo wp-embed-aspect-16-9 wp-has-aspect-ratio"
       style="width: 100%"
     >
@@ -85,5 +91,4 @@ if (isYoutube) {
       >Login to Evercam</a
     >
   </div>
-  <SectionAskUs />
 </template>

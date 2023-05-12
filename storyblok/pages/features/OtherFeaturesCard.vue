@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({ feature: Object, slug: String });
-const thumbnailAsset = props.feature.image_thumbnail
-  ? props.feature.image_thumbnail.filename
+const thumbnailAsset = props.feature.feature_thumbnail
+  ? props.feature.feature_thumbnail.filename
   : "https://a.storyblok.com/f/208852/1024x576/786f8fa4c3/other_timelapse.webp/m/250x0?cv=1681194645343";
 </script>
 
