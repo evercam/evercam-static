@@ -8,20 +8,25 @@ export default defineNuxtConfig({
     i18n: {
         locales: [
             {
-                code: 'ie',
-                name: 'IE'
+                code: 'en-ie',
+                name: 'IE',
+                // domain: "https://localhost:3000/",
+
             },
             {
                 code: 'en-au',
-                name: 'AU'
+                name: 'AU',
+                // domain: "https://evercam-demo.vercel.app",
             },
             {
                 code: 'en-gb',
-                name: 'UK'
+                name: 'UK',
+                // domain: "https://evercam-static-demo.vercel.app",
             },
         ],
-        defaultLocale: 'ie',
-        strategy: 'prefix_except_default'
+        defaultLocale: 'en-ie',
+        // differentDomains: true,
+        detectBrowserLanguage: false
     },
     image: {
         provider: 'storyblok',

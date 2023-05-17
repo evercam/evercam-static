@@ -1,5 +1,9 @@
 <script setup>
 defineProps({ blok: Object });
+/** Multilanguage Configuration */
+const localePath = useLocalePath();
+const { locale, locales } = useI18n();
+const switchLocalePath = useSwitchLocalePath();
 </script>
 
 <style>
@@ -105,12 +109,20 @@ defineProps({ blok: Object });
           </p>
           <h3>Other Locations</h3>
           <ul>
-            <li><a href="https://evercam.io">IE</a></li>
+            <!-- <li><a href="">IE</a></li>
             <li><a href="https://evercam.uk">UK</a></li>
             <li><a href="https://evercam.sg">SG</a></li>
             <li><a href="https://evercam.com.au">AU</a></li>
             <li><a href="https://evercam.com">US</a></li>
-            <li><a href="https://evercam.pl">PL</a></li>
+            <li><a href="https://evercam.pl">PL</a></li> -->
+            <li v-for="{ code, name } in locales"
+                :key="code">
+              <NuxtLink
+                :to="switchLocalePath(code)"
+              >
+                {{ name.replace('en-','') }}
+              </NuxtLink>
+            </li>
           </ul>
           <div class="accordion d-md-none" id="accordion">
             <div class="card">
@@ -137,16 +149,16 @@ defineProps({ blok: Object });
                 <div class="card-body">
                   <ul class="">
                     <li id="li-405" class="dropdown">
-                      <a href="https://evercam.io/pricing">Pricing</a>
+                      <a href="/pricing">Pricing</a>
                     </li>
                     <li id="li-568" class="dropdown">
-                      <a href="https://evercam.io/blog">Blog</a>
+                      <a href="/blog">Blog</a>
                     </li>
                     <li id="li-406" class="dropdown">
-                      <a href="https://evercam.io/contact">Contact Us</a>
+                      <a href="/contact">Contact Us</a>
                     </li>
                     <li id="li-559" class="dropdown">
-                      <a href="https://evercam.io/tutorials">Tutorials</a>
+                      <a href="/tutorials">Tutorials</a>
                     </li>
                   </ul>
                 </div>
@@ -182,12 +194,12 @@ defineProps({ blok: Object });
                       >
                     </li>
                     <li id="li-29064" class="dropdown">
-                      <a href="https://evercam.io/project-management"
+                      <a href="/project-management"
                         >Project Management</a
                       >
                     </li>
                     <li id="li-29065" class="dropdown">
-                      <a href="https://evercam.io/marketing">Marketing</a>
+                      <a href="/marketing">Marketing</a>
                     </li>
                     <li id="li-29066" class="dropdown">
                       <a
@@ -241,7 +253,7 @@ defineProps({ blok: Object });
                       >
                     </li>
                     <li id="li-28138" class="dropdown">
-                      <a href="https://evercam.io/features/gate-report"
+                      <a href="/features/gate-report"
                         >Gate Report</a
                       >
                     </li>
@@ -252,12 +264,12 @@ defineProps({ blok: Object });
                       >
                     </li>
                     <li id="li-492" class="dropdown">
-                      <a href="https://evercam.io/bim-time-lapse-integration"
+                      <a href="/bim-time-lapse-integration"
                         >BIM Integration</a
                       >
                     </li>
                     <li id="li-29060" class="dropdown">
-                      <a href="https://evercam.io/features/the-measuring-tool"
+                      <a href="/features/the-measuring-tool"
                         >Measuring Tool</a
                       >
                     </li>
@@ -268,7 +280,7 @@ defineProps({ blok: Object });
                       >
                     </li>
                     <li id="li-29061" class="dropdown">
-                      <a href="https://evercam.io/features/edit-tool"
+                      <a href="/features/edit-tool"
                         >Edit Tool</a
                       >
                     </li>
@@ -300,12 +312,12 @@ defineProps({ blok: Object });
                 <div class="card-body">
                   <ul class="">
                     <li id="li-25747" class="dropdown">
-                      <a href="https://evercam.io/become-an-installer"
+                      <a href="/become-an-installer"
                         >Become An Installer</a
                       >
                     </li>
                     <li id="li-1705" class="dropdown">
-                      <a href="https://evercam.io/partners"
+                      <a href="/partners"
                         >Find An Installer</a
                       >
                     </li>
@@ -368,7 +380,7 @@ defineProps({ blok: Object });
           <h3>Construction Cameras</h3>
           <ul class="">
             <li id="li-405" class="dropdown">
-              <a href="https://evercam.io/pricing">Pricing</a>
+              <a href="/pricing">Pricing</a>
             </li>
             <li id="li-568" class="dropdown"><a href="/blog">Blog</a></li>
             <li id="li-406" class="dropdown">
