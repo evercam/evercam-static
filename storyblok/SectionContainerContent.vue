@@ -46,9 +46,9 @@ if (assetCheck) {
     <div
       class="container text-center"
     >
-      <h2>{{ blok.name }}</h2>
+      <h2 v-if="blok.name">{{ blok.name }}</h2>
       <div v-html="resolvedContent"></div>
-      <div class="box-shadow">
+      <div v-if="blok.asset.filename != null" class="box-shadow">
         <div
           v-if="videoSource.some((el) => blok.asset.filename.includes(el))"
           class="embed-responsive embed-responsive-16by9"

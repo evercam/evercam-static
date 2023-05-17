@@ -93,6 +93,10 @@ header #navbar>ul>#li-353>a:hover {
     text-decoration: underline !important;
 }
 
+.features-header {
+    margin-top: -80px;
+}
+
 
 
 #li-29119>a:hover {
@@ -186,6 +190,10 @@ header .language-dropdown {
     top: 13px;
 }
 
+.language-dropdown.active .language-menu {
+    height: auto !important;
+}
+
 header.sticky .lang-white {
     border: 1px solid black !important;
 }
@@ -230,6 +238,10 @@ header .language-dropdown .glob-icon.country span {
     left: 0;
     line-height: 28px;
     top: 1px;
+}
+
+.language-dropdown.active .language-menu .glob-icon.country span {
+    line-height: 22.5px;
 }
 
 /* Breadcrumb */
@@ -426,6 +438,16 @@ button.carousel__prev.recent_project {
 
 button.carousel__next.recent_project {
     right: -50px;
+}
+
+/* Project Pge */
+.checkbox-label {
+    display: block;
+}
+
+.country-checkbox {
+    position: absolute;
+    left: 1vw;
 }
 
 /* Tutorials Page */

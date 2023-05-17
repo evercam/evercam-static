@@ -33,9 +33,7 @@ tutorials.value = data.stories;
 
 let assetSource = ""
 
-if(props.blok.video_url.filename == null) {
-  assetSource = "";
-} else {
+if(props.blok.video_url.filename != "") {
   assetSource = props.blok.video_url.filename;
 }
 /**

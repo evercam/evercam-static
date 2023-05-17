@@ -36,20 +36,13 @@ const resolvedContent = computed(() => renderRichText(props.blok.content));
 const videoSource = ["vimeo.com", "youtube.com", "mp4", ".mp4"];
 
 const blogs = ref(null);
-const projects = ref(null);
 const storyblokApi = useStoryblokApi();
 const { data } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
   starts_with: "blog",
   is_startpage: false,
 });
-// const { data_project } = await storyblokApi.get("cdn/stories", {
-//   version: useRoute().query._storyblok ? "draft" : "published",
-//   starts_with: "projects",
-//   is_startpage: false,
-// });
 blogs.value = data.stories.slice(0, 5);
-// projects.value = data_project.stories.slice(0,15);
 
 const assetHeading = props.blok.asset_heading
   ? props.blok.asset_heading.filename
@@ -113,13 +106,52 @@ if (
 }
 
 /**
+ * Get Blog data
+ * Get blog date
+ */
+
+let blog_details = ref(null);
+
+async function fetchBlog(blogTitle) {
+  if (blogTitle) {
+    let blog = await storyblokApi.get("cdn/stories", {
+      version: useRoute().query._storyblok ? "draft" : "published",
+      starts_with: "blog/",
+      search_term: blogTitle,
+    });
+    return blog.data.stories;
+  }
+}
+
+blog_details = await fetchBlog(props.blok.blog_title)
+  .then((result) => {
+    return result;
+  })
+  .catch(console.error.bind(console));
+
+/**
  * Writer Details
  * Name and Photo
  */
 
-const defaultPhoto = props.blok.writer_details
-  ? props.blok.writer_details[0].photo
-  : "https://a.storyblok.com/f/208852/225x225/07df9eefcf/photo_icon.png";
+let author_details = ref(null);
+
+async function fetchAuthor(authorUUID) {
+  if (authorUUID) {
+    let author = await storyblokApi.get("cdn/stories", {
+      version: useRoute().query._storyblok ? "draft" : "published",
+      starts_with: "author/",
+      by_uuids: authorUUID,
+    });
+    return author.data.stories;
+  }
+}
+
+author_details = await fetchAuthor(props.blok.writer_details)
+  .then((result) => {
+    return result;
+  })
+  .catch(console.error.bind(console));
 </script>
 
 <template>
@@ -135,14 +167,17 @@ const defaultPhoto = props.blok.writer_details
             <div class="container">
               <div class="row">
                 <div class="col-md-8 align-self-center">
-                  <div v-for="writer in blok.writer_details" class="auth-div">
+                  <div v-if="blok.writer_details" class="auth-div">
                     <div class="img-div">
-                      <img :src="defaultPhoto" />
+                      <img :src="author_details[0].content.picture" />
                     </div>
                     <div class="data">
-                      <span class="auth-name">{{ writer.name }}</span>
+                      <span class="auth-name">{{
+                        author_details[0].name
+                      }}</span>
                       <div class="all-dates">
-                        <span class="entry-date">Date : 03-04-2023</span>
+                        <span class="entry-date">Date : {{ formatDate(blog_details[0].first_published_at) }}</span>
+                        <span class="last-date">Last Modified Date : {{ formatDate(blog_details[0].published_at) }}</span>
                       </div>
                     </div>
                   </div>

@@ -26,6 +26,7 @@
     "lodash": "^4.17.21",
     "vue-awesome-paginate": "^1.1.46",
     "vue-compare-image": "^0.2.0",
+    "vue-multiselect": "^3.0.0-beta.2",
     "vue3-carousel": "^0.3.0",
     "youtube-embed": "^1.0.0"
   }

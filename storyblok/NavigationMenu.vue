@@ -12,6 +12,10 @@ const isHomepage = fullPath.length < 2;
 const localePath = useLocalePath();
 const { locale, locales } = useI18n();
 const switchLocalePath = useSwitchLocalePath();
+
+const availableLocales = computed(() => {
+  return (locales.value).filter(i => i.code !== locale.value)
+})
 </script>
 
 <script>
@@ -124,7 +128,7 @@ export default {
             @click="onClickLocale()"
             href="#"
           >
-            <span class="country"> {{ locale.toUpperCase() }} </span>
+            <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
           </NuxtLink>
           <div class="language-menu">
             <a
@@ -133,20 +137,15 @@ export default {
               @click="onClickLocale()"
               id="language-dropdown-close"
             >
-              <span class="country"> {{ locale.toUpperCase() }} </span>
+              <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
             </a>
             <NuxtLink
-              v-for="{ code, name } in locales"
+              v-for="{ code, name } in availableLocales"
               :key="code"
               :to="switchLocalePath(code)"
             >
-              {{ name }}
+              {{ name.replace('en-','') }}
             </NuxtLink>
-            <!-- <a href="https://evercam.uk">UK</a>
-  <a href="https://evercam.sg">SG</a>
-  <a href="https://evercam.com.au">AU</a>
-  <a href="https://evercam.com">US</a>
-  <a href="https://evercam.pl">PL</a> -->
           </div>
         </div>
 
@@ -157,14 +156,14 @@ export default {
             @click="onClickLocale()"
             id="language-dropdown-close"
           >
-            <span class="country"> {{ locale.toUpperCase() }} </span>
+            <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
           </a>
           <NuxtLink
-            v-for="{ code, name } in locales"
+            v-for="{ code, name } in availableLocales"
             :key="code"
             :to="switchLocalePath(code)"
           >
-            {{ name }}
+            {{ name.replace('en-','') }}
           </NuxtLink>
           <!-- <a href="https://evercam.uk">UK</a>
 <a href="https://evercam.sg">SG</a>
@@ -265,7 +264,7 @@ export default {
             @click="onClickLocale()"
             href="#"
           >
-            <span class="country"> {{ locale.toUpperCase() }} </span>
+            <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
           </NuxtLink>
           <div class="language-menu">
             <a
@@ -274,14 +273,14 @@ export default {
               @click="onClickLocale()"
               id="language-dropdown-close"
             >
-              <span class="country"> {{ locale.toUpperCase() }} </span>
+              <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
             </a>
             <NuxtLink
-              v-for="{ code, name } in locales"
+              v-for="{ code, name } in availableLocales"
               :key="code"
               :to="switchLocalePath(code)"
             >
-              {{ name }}
+              {{ name.replace('en-','') }}
             </NuxtLink>
             <!-- <a href="https://evercam.uk">UK</a>
   <a href="https://evercam.sg">SG</a>
@@ -298,14 +297,14 @@ export default {
             @click="onClickLocale()"
             id="language-dropdown-close"
           >
-            <span class="country"> {{ locale.toUpperCase() }} </span>
+            <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
           </a>
           <NuxtLink
-            v-for="{ code, name } in locales"
+            v-for="{ code, name } in availableLocales"
             :key="code"
             :to="switchLocalePath(code)"
           >
-            {{ name }}
+            {{ name.replace('en-','') }}
           </NuxtLink>
           <!-- <a href="https://evercam.uk">UK</a>
 <a href="https://evercam.sg">SG</a>

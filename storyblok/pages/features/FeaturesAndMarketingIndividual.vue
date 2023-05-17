@@ -333,7 +333,9 @@ onNuxtReady(async () => {
       </section>
     </div>
   </div>
-  <SectionAskUs />
+  <section id="ask-us">
+    <SectionAskUs />
+  </section>
   <section id="add-ons">
     <div class="container">
       <h2 class="slide-up">Other Features</h2>

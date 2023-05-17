@@ -30,7 +30,10 @@ const isBackground = props.blok.background
           :key="blok.uuid"
         />
       </ul>
-      <div v-if="blok.testimonial_list" class="row row-eq-height desktop-items justify-content-center">
+      <div
+        v-if="blok.testimonial_list"
+        class="row row-eq-height desktop-items justify-content-center"
+      >
         <TestimonialIndividual
           v-for="blok in blok.testimonial_list"
           :blok="blok"
@@ -54,7 +57,10 @@ const isBackground = props.blok.background
           :key="blok.uuid"
         />
       </ul>
-      <div v-if="blok.testimonial_list" class="row row-eq-height desktop-items justify-content-center">
+      <div
+        v-if="blok.testimonial_list"
+        class="row row-eq-height desktop-items justify-content-center"
+      >
         <TestimonialIndividual
           v-for="blok in blok.testimonial_list"
           :blok="blok"

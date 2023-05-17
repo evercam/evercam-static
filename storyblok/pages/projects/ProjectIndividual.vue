@@ -56,6 +56,28 @@ onMounted(() => {
   // Add your options object as the second argument
   const viewer = new ImageCompare(element, options).mount();
 });
+
+const assetSource = props.blok.additional_video
+let assetCheck = ""
+
+const fromYoutube = "www.youtube.com/watch"
+let isYoutube = ""
+
+if(assetSource) {
+  isYoutube = assetSource.includes(fromYoutube);
+}
+
+console.log("isYoutube", isYoutube)
+
+if (assetSource) {
+  if (isYoutube) {
+    assetCheck = assetSource.replace('watch?v=','embed/')
+    console.log("This is the additional video", assetCheck)
+  } else {
+    assetCheck = assetSource
+    console.log("This is the additional video", assetCheck)
+  }
+}
 </script>
 
 <template>
@@ -80,7 +102,7 @@ onMounted(() => {
       <div class="row">
         <div class="col-md-8">
           <div class="standard-content" v-html="resolvedRichText"></div>
-          <div>
+          <div class="standard-content">
             <div v-if="blok.image_compare_section">
               <div
                 v-for="image in blok.image_compare_section"
@@ -91,7 +113,14 @@ onMounted(() => {
               </div>
             </div>
           </div>
-          <!-- <SectionCompareImages/> -->
+          <div class="standard-content">
+            <iframe
+              v-if="assetCheck"
+              class="embed-responsive-item"
+              :src="assetCheck"
+              allowfullscreen=""
+            ></iframe>
+          </div>
         </div>
         <div class="col-md-4 right-sidebar">
           <h3>Project Details</h3>

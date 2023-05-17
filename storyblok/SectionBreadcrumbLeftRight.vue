@@ -8,17 +8,18 @@ const isTutorials = urlPath.includes("/tutorials/");
 
 function checkUrl(urlPath) {
   if (isProjects) {
-    return urlPath.replace("/projects/", "").replace(/-/g, " ");
+    return urlPath.replace("/projects/", "").replace(/[^a-zA-Z0-9]/g, " ");
   } 
   if (isFeatures) {
-    return urlPath.replace("/features/", "").replace(/-/g, " ");
+    return urlPath.replace("/features/", "").replace(/[^a-zA-Z0-9]/g, " ");
   }
   if (isBlog) {
-    return urlPath.replace("/blog/", "").replace(/-/g, " ");
+    return urlPath.replace("/blog/", "").replace(/[^a-zA-Z0-9]/g, " ");
   }
   if (isTutorials) {
-    return urlPath.replace("/tutorials/", "").replace(/-/g, " ");
+    return urlPath.replace("/tutorials/", "").replace(/[^a-zA-Z0-9]/g, " ");
   }
+  return urlPath.replace(/[^a-zA-Z0-9]/g, " ");
 }
 
 const urlRaw = checkUrl(urlPath);
