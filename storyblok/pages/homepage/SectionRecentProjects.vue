@@ -21,6 +21,9 @@ function projectBasedUrl() {
   if(locale.value === "en-ie") {
     return "94332311-8c5a-447f-bf35-d01f8c6de53c,ba36f6fc-ee8d-4623-8ee9-37178297fe9f,03549e41-cad9-427f-8547-d99255e6eb40"
   }
+  if(locale.value === "en-sg") {
+    return "94332311-8c5a-447f-bf35-d01f8c6de53c,ba36f6fc-ee8d-4623-8ee9-37178297fe9f,03549e41-cad9-427f-8547-d99255e6eb40"
+  }
   if(locale.value === "en-au") {
     return "ba36f6fc-ee8d-4623-8ee9-37178297fe9f"
   }

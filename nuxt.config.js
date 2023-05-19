@@ -8,24 +8,40 @@ export default defineNuxtConfig({
     i18n: {
         locales: [
             {
+                code: 'en-sg',
+                name: 'SG',
+                domain: "https://evercam.sg/",
+
+            },
+            {
                 code: 'en-ie',
                 name: 'IE',
-                // domain: "https://localhost:3000/",
-
+                domain: "https://evercam.io/",
+            },
+            {
+                code: 'en-uk',
+                name: 'UK',
+                domain: "https://evercam.uk/",
             },
             {
                 code: 'en-au',
                 name: 'AU',
-                // domain: "https://evercam-demo.vercel.app",
+                domain: "https://evercam.com.au/",
             },
             {
-                code: 'en-gb',
-                name: 'UK',
-                // domain: "https://evercam-static-demo.vercel.app",
+                code: 'en-us',
+                name: 'AU',
+                domain: "https://evercam.com/",
             },
+            {
+                code: 'en-pl',
+                name: 'PL',
+                domain: "https://evercam.pl/",
+            },
+            
         ],
-        defaultLocale: 'en-ie',
-        // differentDomains: true,
+        defaultLocale: 'en-sg',
+        differentDomains: true,
         detectBrowserLanguage: false
     },
     image: {
@@ -39,10 +55,10 @@ export default defineNuxtConfig({
     ],
     runtimeConfig: {
         public: {
-          siteUrl: 'https://localhost:3000/',
+          siteUrl: 'https://evercam.sg',
           siteName: 'Construction Time-lapse & Project Management Live Cameras | Evercam',
           siteDescription: 'Construction time-lapse cameras & project management software helps in marketing content, project management and dispute avoidance in the construction industry.',
-          language: 'ie', // prefer more explicit language codes like `en-AU` over `en`
+          language: 'en-SG', // prefer more explicit language codes like `en-AU` over `en`
         },
         indexable: false
       },
@@ -61,11 +77,11 @@ export default defineNuxtConfig({
     },
     app: {
         head: {
-            title: 'Nuxt - Evercam Demo',
-            meta: [
-                // <meta name="description" content="My amazing site">
-                { name: 'description', content: 'Demo from yonathanevan' }
-            ],
+            // title: 'Nuxt - Evercam Demo',
+            // meta: [
+            //     // <meta name="description" content="My amazing site">
+            //     { name: 'description', content: 'Demo from yonathanevan' }
+            // ],
             charset: 'utf-8',
             viewport: 'width=device-width, initial-scale=1',
             link: [

@@ -71,7 +71,7 @@ const clientPhotoDefault =
       </carousel>
     </div>
   </section>
-  <section v-if="sliderType === 'testimonial_card_au' && locale === 'en-au'" class="story-section">
+  <section v-if="sliderType === 'testimonial_card_au' && locale === 'en-sg'" class="story-section">
     <div id="testimonials" class="container">
       <h2>Success Stories</h2>
       <carousel :items-to-show="1" :wrap-around="true">
