@@ -3,6 +3,7 @@ export default defineNuxtConfig({
     modules: [
         ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_API_KEY }],
         // ['@nuxtjs/robots', { configPath: "~/config/robots.config" }],
+        '@unlighthouse/nuxt',
         '@nuxt/image-edge',
         '@nuxtjs/i18n',
         'nuxt-schema-org',
@@ -76,11 +77,11 @@ export default defineNuxtConfig({
         '@/assets/css/main.css',
         '@fortawesome/fontawesome-svg-core/styles.css',
     ],
-    // nitro: {
-    // prerender: {
-    //     routes: ['/sitemap.xml']
-    // }
-    // },
+    nitro: {
+        prerender: {
+            routes: ['/sitemap.xml']
+        }
+    },
     build: {
         transpile: ['@fortawesome/vue-fontawesome'],
     },
