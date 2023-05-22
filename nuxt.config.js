@@ -60,7 +60,7 @@ export default defineNuxtConfig({
           siteDescription: 'Construction time-lapse cameras & project management software helps in marketing content, project management and dispute avoidance in the construction industry.',
           language: 'en-SG', // prefer more explicit language codes like `en-AU` over `en`
         },
-        indexable: false
+        indexable: true
       },
     css: [
         // CSS file in the project
