@@ -52,6 +52,17 @@ header #navbar>ul>li a {
     color: #000;
 }
 
+@media screen and (max-width: 767px){
+    .siq_rM {
+        top: 290px !important;
+    }
+
+    .filter-wrapper {
+        margin-top: 0px !important;
+    }
+}
+
+
 @media screen and (min-width: 200px) {
     header.inner-page-menu.sticky {
         position: fixed !important;
