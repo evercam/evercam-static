@@ -2,7 +2,7 @@
 const props = defineProps({ project: Object, slug: String });
 
 const imageThumbnail = props.project.image_thumbnail
-  ? props.project.image_thumbnail.filename
+  ? props.project.image_thumbnail
   : "https://a.storyblok.com/f/208852/674x380/538e670581/image_thumbnail.jpg";
 
 const urlPath = useRoute().path;

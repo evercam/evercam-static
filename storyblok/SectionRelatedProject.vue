@@ -17,9 +17,8 @@ function changeBlogtoProject(d) {
   return d.replace("blog", "");
 }
 
-// const imageThumbnail = props.project.image_thumbnail
-//   ? props.project.image_thumbnail.filename
-//   : "https://a.storyblok.com/f/208852/674x380/538e670581/image_thumbnail.jpg";
+const thumbnailPlaceholder =
+  "https://a.storyblok.com/f/208852/674x380/bf71efc381/image_thumbnail.jpg";
 </script>
 
 <script>
@@ -49,15 +48,11 @@ export default {
           <!-- Load the Image Dynamically -->
           <div class="img-div">
             <img
-              v-if="!project.content.image_thumbnail.filename"
-              src="https://a.storyblok.com/f/208852/674x380/bf71efc381/image_thumbnail.jpg"
+              v-if="project.content.image_thumbnail"
+              :src="project.content.image_thumbnail"
               :alt="project.name"
             />
-            <img
-              v-else
-              :src="project.content.image_thumbnail.filename"
-              :alt="project.name"
-            />
+            <img v-else :src="thumbnailPlaceholder" :alt="project.name" />
           </div>
         </div>
       </a>
@@ -68,21 +63,21 @@ export default {
       <h2>Recent Projects</h2>
 
       <carousel :items-to-show="5" :wrap-around="true">
-        <slide style="align-items: baseline;" v-for="project in projects" :key="slide">
+        <slide
+          style="align-items: baseline"
+          v-for="project in projects"
+          :key="slide"
+        >
           <div class="owl-item" style="margin: 10px">
             <div class="item">
               <div class="image-wrapper">
                 <a :href="'/projects/' + project.slug">
                   <img
-                    v-if="!project.content.image_thumbnail.filename"
-                    src="https://a.storyblok.com/f/208852/674x380/bf71efc381/image_thumbnail.jpg"
+                    v-if="project.content.image_thumbnail"
+                    :src="project.content.image_thumbnail"
                     :alt="project.name"
                   />
-                  <img
-                    v-else
-                    :src="project.content.image_thumbnail.filename"
-                    :alt="project.name"
-                  />
+                  <img v-else :src="thumbnailPlaceholder" :alt="project.name" />
                 </a>
               </div>
               <div class="content">
@@ -100,20 +95,6 @@ export default {
           <navigation class="recent_project" />
         </template>
       </carousel>
-      <!-- <div class="owl-carousel related-posts-slider owl-loaded owl-drag">
-        <div class="owl-stage-outer">
-          <div
-            class="owl-stage"
-            style="
-              transform: translate3d(-1140px, 0px, 0px);
-              transition: all 0s ease 0s;
-              width: 4104px;
-            "
-          >
-            
-          </div>
-        </div>
-      </div> -->
     </div>
   </section>
 </template>

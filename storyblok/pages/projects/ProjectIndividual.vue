@@ -92,7 +92,6 @@ if (assetSource) {
       <div class="top-content">
         <div class="embed-responsive embed-responsive-16by9">
           <iframe
-            v-if="blok.video_heading.filename"
             class="embed-responsive-item"
             :src="blok.video_heading.filename"
             allowfullscreen=""
