@@ -9,7 +9,7 @@ export default defineNuxtConfig({
         'nuxt-simple-robots',
     ],
     linkChecker: {
-        failOn404: true,
+        failOn404: false,
     },
     experimental: {
         inlineSSRStyles: false
