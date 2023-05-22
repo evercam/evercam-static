@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
     modules: [
         ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_API_KEY }],
+        ['@nuxtjs/robots', { configPath: "~/config/robots.config" }],
         '@nuxt/image-edge',
         '@nuxtjs/i18n',
     ],
