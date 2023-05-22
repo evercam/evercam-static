@@ -22,7 +22,7 @@ blogs.value = data.stories;
 
 const onClickHandler = (page) => {
   refresh();
-  console.log(page);
+  // console.log(page);
 };
 </script>
 

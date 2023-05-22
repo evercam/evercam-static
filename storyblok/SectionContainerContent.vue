@@ -5,7 +5,7 @@ const videoSource = ["vimeo", "youtube", "mp4", ".mp4"];
 const imageSource = ["webp", "png", "jpg", "jpeg", "gif"];
 const assetSource = props.blok.asset ? props.blok.asset.filename : "https://a.storyblok.com/f/208852/1920x932/f9ba743fd2/bim-compare-bentley-4d-view.webp/m/250x0?cv=1681284255111";
 
-console.log("This is the asset", assetSource)
+// console.log("This is the asset", assetSource)
 
 let isVideo = false;
 
@@ -19,8 +19,8 @@ let assetCheck = "";
 
 if (isYoutube) {
   assetCheck = assetSource.replace("watch?v=", "embed/");
-  console.log("This is assetCheck", assetCheck);
-  console.log("This is assetSource", assetSource);
+  // console.log("This is assetCheck", assetCheck);
+  // console.log("This is assetSource", assetSource);
 } else {
   assetCheck = assetSource;
 }
@@ -32,11 +32,11 @@ if (assetCheck) {
     })
   ) {
     isVideo = true;
-    console.log("It's Video", assetCheck);
+    // console.log("It's Video", assetCheck);
   } else {
     // assetCheck = false;
-    console.log("Is Video?", isVideo);
-    console.log("It's Image", assetCheck);
+    // console.log("Is Video?", isVideo);
+    // console.log("It's Image", assetCheck);
   }
 }
 </script>

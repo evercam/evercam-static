@@ -1,20 +1,20 @@
 <script>
-import SectionNavigationWhite from "@/storyblok/SectionNavigationWhite.vue";
-import SectionBreadcrumbLeftAll from "@/storyblok/SectionBreadcrumbLeftAll.vue";
-import SectionRelatedProject from "@/storyblok/SectionRelatedProject.vue";
-import ProjectDetailsList from "./ProjectDetailsList.vue";
+// import SectionNavigationWhite from "@/storyblok/SectionNavigationWhite.vue";
+// import SectionBreadcrumbLeftAll from "@/storyblok/SectionBreadcrumbLeftAll.vue";
+// import SectionRelatedProject from "@/storyblok/SectionRelatedProject.vue";
+// import ProjectDetailsList from "./ProjectDetailsList.vue";
 import ImageCompare from "image-compare-viewer";
 
-export default {
-  name: "app",
-  components: {
-    // VueCompareImage,
-    SectionNavigationWhite,
-    SectionBreadcrumbLeftAll,
-    SectionRelatedProject,
-    ProjectDetailsList,
-  },
-};
+// export default {
+//   name: "app",
+//   components: {
+//     // VueCompareImage,
+//     SectionNavigationWhite,
+//     SectionBreadcrumbLeftAll,
+//     SectionRelatedProject,
+//     ProjectDetailsList,
+//   },
+// };
 </script>
 
 <script setup>
@@ -67,15 +67,15 @@ if(assetSource) {
   isYoutube = assetSource.includes(fromYoutube);
 }
 
-console.log("isYoutube", isYoutube)
+// console.log("isYoutube", isYoutube)
 
 if (assetSource) {
   if (isYoutube) {
     assetCheck = assetSource.replace('watch?v=','embed/')
-    console.log("This is the additional video", assetCheck)
+    // console.log("This is the additional video", assetCheck)
   } else {
     assetCheck = assetSource
-    console.log("This is the additional video", assetCheck)
+    // console.log("This is the additional video", assetCheck)
   }
 }
 </script>
@@ -145,6 +145,6 @@ if (assetSource) {
       </div>
     </div>
   </section>
-  <SectionRelatedProject />
+  <SectionProjectGallery />
   <SectionFooter />
 </template>

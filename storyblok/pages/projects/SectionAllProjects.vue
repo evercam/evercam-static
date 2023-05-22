@@ -15,6 +15,7 @@ export default {
       isCheckedAllCategory: true,
       isCheckedAllLocation: true,
       showFilterOnMobile: false,
+      searchText: "",
       searchInput: "",
       locations: [
         {
@@ -104,7 +105,6 @@ export default {
           selected: true,
         },
         {
-          id: "",
           id: "e2b872a0-2d4e-42fd-86d7-5cd5760b6010",
           value: "Industrial",
           total: 0,
@@ -181,10 +181,9 @@ export default {
       const storyblokApi = useStoryblokApi();
       const data = await storyblokApi.get("cdn/tags");
 
-      console.log(data.data.tags);
 
       this.categories.map((category) => {
-        var categoriesTitle = kebabCase(category.value);
+        let categoriesTitle = kebabCase(category.value);
 
         const findTag = data.data.tags.find(
           (tag) => tag.name == categoriesTitle
@@ -194,7 +193,7 @@ export default {
       });
 
       this.locations.map((location) => {
-        var locationsTitle = kebabCase(location.value);
+        let locationsTitle = kebabCase(location.value);
 
         const findTag = data.data.tags.find(
           (tag) => tag.name == locationsTitle
@@ -225,8 +224,8 @@ export default {
     fetchSuggestions: async function () {
       const storyblokApi = useStoryblokApi();
 
-      var optCategories = this.selectedCategory.map((category) => category.id);
-      var optLocations = this.selectedLocation.map((location) => location.id);
+      let optCategories = this.selectedCategory.map((category) => category.id);
+      let optLocations = this.selectedLocation.map((location) => location.id);
 
       // additional since, not all list has id
       optCategories = optCategories.filter((n) => n != "");

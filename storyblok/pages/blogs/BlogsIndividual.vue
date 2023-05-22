@@ -1,31 +1,15 @@
 <script>
-import SectionNavigationWhite from "@/storyblok/SectionNavigationWhite.vue";
-import SectionBreadcrumbLeftRight from "@/storyblok/SectionBreadcrumbLeftRight.vue";
-import SectionContainerContent from "../../SectionContainerContent.vue";
-import SectionAskUs from "@/storyblok/SectionAskUs.vue";
-import BlogPostIndividual from "./BlogPostIndividual.vue";
-// import SectionVideoWrapper from "../../SectionVideoWrapper.vue";
-
 // If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
-import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-import BlogCardIndividual from "./BlogCardIndividual.vue";
+import { Carousel, Slide, Navigation } from "vue3-carousel";
 
-export default {
-  name: "App",
+export default defineComponent({
+  name: 'Basic',
   components: {
     Carousel,
     Slide,
-    Pagination,
     Navigation,
-    SectionNavigationWhite,
-    SectionBreadcrumbLeftRight,
-    SectionContainerContent,
-    SectionAskUs,
-    BlogPostIndividual,
-    BlogCardIndividual,
   },
-};
+})
 </script>
 
 <script setup>
@@ -323,8 +307,9 @@ author_details = await fetchAuthor(props.blok.writer_details)
   <section id="related-posts">
     <div class="container">
       <h2>Related Posts</h2>
-      <carousel :items-to-show="3" :wrap-around="true">
-        <slide v-for="blog in blogs" :key="slide">
+
+      <Carousel :items-to-show="3" :wrap-around="true">
+        <Slide v-for="blog in blogs" :key="blog">
           <div class="recent-blog" style="width: 350px; margin-right: 30px">
             <div class="item">
               <BlogCardIndividual
@@ -341,12 +326,12 @@ author_details = await fetchAuthor(props.blok.writer_details)
               </div>
             </div>
           </div>
-        </slide>
+        </Slide>
 
         <template #addons>
-          <navigation />
+          <Navigation />
         </template>
-      </carousel>
+      </Carousel>
     </div>
   </section>
 </template>

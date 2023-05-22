@@ -2,10 +2,18 @@
 export default defineNuxtConfig({
     modules: [
         ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_API_KEY }],
-        ['@nuxtjs/robots', { configPath: "~/config/robots.config" }],
+        // ['@nuxtjs/robots', { configPath: "~/config/robots.config" }],
         '@nuxt/image-edge',
         '@nuxtjs/i18n',
+        'nuxt-schema-org',
+        'nuxt-simple-robots',
     ],
+    linkChecker: {
+        failOn404: true,
+    },
+    experimental: {
+        inlineSSRStyles: false
+    },
     i18n: {
         locales: [
             {
@@ -39,7 +47,7 @@ export default defineNuxtConfig({
                 name: 'PL',
                 domain: "https://evercam.pl/",
             },
-            
+
         ],
         defaultLocale: 'en-sg',
         differentDomains: true,
@@ -56,13 +64,13 @@ export default defineNuxtConfig({
     ],
     runtimeConfig: {
         public: {
-          siteUrl: 'https://evercam.sg',
-          siteName: 'Construction Time-lapse & Project Management Live Cameras | Evercam',
-          siteDescription: 'Construction time-lapse cameras & project management software helps in marketing content, project management and dispute avoidance in the construction industry.',
-          language: 'en-SG', // prefer more explicit language codes like `en-AU` over `en`
+            siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://evercam.sg',
+            siteName: 'Construction Time-lapse & Project Management Live Cameras | Evercam',
+            siteDescription: 'Construction time-lapse cameras & project management software helps in marketing content, project management and dispute avoidance in the construction industry.',
+            language: 'en-SG', // prefer more explicit language codes like `en-AU` over `en`
         },
         indexable: true
-      },
+    },
     css: [
         // CSS file in the project
         '@/assets/css/main.css',

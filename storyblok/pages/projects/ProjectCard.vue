@@ -27,15 +27,9 @@ if (urlPath.includes("blog")) {
     <div class="product-wrapper">
       <NuxtLink :to="'/' + slug">
         <div class="wrapper">
-          <nuxt-img
+          <img
             class="img-responsive"
-            v-if="imageThumbnail"
             :src="imageThumbnail"
-          />
-          <nuxt-img
-            class="img-responsive"
-            v-else
-            src="https://a.storyblok.com/f/208852/674x380/bf71efc381/image_thumbnail.jpg"
           />
         </div>
       </NuxtLink>
@@ -66,18 +60,12 @@ if (urlPath.includes("blog")) {
   <div v-else class="owl-item cloned active" style="margin-right: 30px">
     <a :href="'/' + slug" class="item">
       <div class="inner">
-        <nuxt-img
+        <img
           class="owl-lazy"
           :alt="project.name"
           v-if="imageThumbnail"
           :src="imageThumbnail"
           style="opacity: 1"
-        />
-        <nuxt-img
-          class="owl-lazy"
-          v-else
-          style="opacity: 1"
-          src="https://a.storyblok.com/f/208852/674x380/bf71efc381/image_thumbnail.jpg"
         />
         <!-- <h4>{{ project }}</h4> -->
         <div class="text">

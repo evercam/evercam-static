@@ -3,7 +3,7 @@ defineProps({ blok: Object });
 
 /** Run the Script on Client */
 onMounted(() => {
-  console.log('brand-page class added');
+  // console.log('brand-page class added');
   document.body.classList.add("new-design","transparent-header","brand-page");
   document.getElementById('marketing-banner').id = 'new-design-banner'
 });

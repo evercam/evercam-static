@@ -91,7 +91,7 @@ const switchLocalePath = useSwitchLocalePath();
             </a>
           </div>
           <div class="col-6 text-right">
-            <a href="/contact/" class="btn-style">Book a demo</a>
+            <a href="/contact" class="btn-style">Book a demo</a>
           </div>
         </div>
       </div>

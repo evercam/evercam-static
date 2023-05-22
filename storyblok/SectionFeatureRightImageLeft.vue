@@ -10,14 +10,14 @@ let assetCheck = '';
 let isVideo = false;
 const fromYoutube = "www.youtube.com/watch"
 let isYoutube = assetSource.includes(fromYoutube);
-// console.log("isYoutube", isYoutube)
+// // console.log("isYoutube", isYoutube)
 
 if (isYoutube) {
   assetCheck = assetSource.replace('watch?v=','embed/')
 } else {
   assetCheck = assetSource
 }
-// console.log("This is the asset", assetCheck);
+// // console.log("This is the asset", assetCheck);
 if (
   videoSource.some(function (v) {
     return assetCheck.indexOf(v) > -1;

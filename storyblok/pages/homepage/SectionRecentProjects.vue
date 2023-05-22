@@ -41,18 +41,16 @@ projects.value = data.stories;
 
 <script>
 // If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
-import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import { Carousel, Slide, Navigation } from "vue3-carousel";
 
-export default {
-  name: "App",
+export default defineComponent({
+  name: 'Basic',
   components: {
     Carousel,
     Slide,
-    Pagination,
     Navigation,
   },
-};
+})
 </script>
 
 <template>
@@ -64,19 +62,19 @@ export default {
         construction projects across the globe.
       </p>
       <div id="testimonial">
-        <carousel :items-to-show="3.1" :wrap-around="true">
-          <slide v-for="project in projects" :key="slide">
+        <Carousel :items-to-show="3.1" :wrap-around="true">
+          <Slide v-for="project in projects" :key="project">
             <ProjectCard
               :key="project.uuid"
               :project="project.content"
               :slug="project.full_slug"
             />
-          </slide>
+          </Slide>
 
           <template #addons>
-            <navigation />
+            <Navigation />
           </template>
-        </carousel>
+        </Carousel>
       </div>
       <div class="btn-div">
         <a href="/projects" class="btn-style">See All Projects</a>

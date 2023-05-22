@@ -12,8 +12,8 @@ let assetCheck = "";
 
 if (isYoutube) {
   assetCheck = assetSource.replace("watch?v=", "embed/");
-  console.log("This is assetCheck", assetCheck);
-  console.log("This is assetSource", assetSource);
+  // console.log("This is assetCheck", assetCheck);
+  // console.log("This is assetSource", assetSource);
 } else {
   assetCheck = assetSource;
 }

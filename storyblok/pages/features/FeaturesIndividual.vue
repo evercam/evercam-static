@@ -40,7 +40,7 @@ const urlFix = urlPath.replace("/features/", "");
 
 const isHeaderForm = props.blok.is_header_form;
 
-console.log("Is Header have Form", isHeaderForm);
+// console.log("Is Header have Form", isHeaderForm);
 
 features.value = data.stories.filter((e) => e.slug !== urlFix).slice(0, 3);
 
@@ -120,10 +120,19 @@ if (props.blok.image_background === "") {
 
 onMounted(() => {
   if (isHeaderForm) {
-    console.log("landing page is with form");
+    // console.log("landing page is with form");
     document.body.classList.add("landing-page-new-with-form");
   }
 });
+
+let button_cta = "";
+if (props.blok.button_cta.url !== "") {
+  button_cta = props.blok.button_cta.url;
+  // console.log("This is the button_cta", button_cta);
+} else {
+  button_cta = props.blok.button_cta.cached_url;
+  // console.log("This is the button_cta", button_cta);
+}
 
 /**
  * Check if Heading Background Image is Light or Dark
@@ -204,13 +213,12 @@ onNuxtReady(async () => {
     <div class="container">
       <div class="row">
         <div class="col-md-6 slideLeft">
-          <h1 v-if="blok.name">{{ blok.name }}
-          </h1>
+          <h1 v-if="blok.name">{{ blok.name }}</h1>
           <p v-if="blok.description">
             {{ blok.description }}
           </p>
           <p v-if="blok.button_name">
-            <a class="btn-style" :href="blok.button_cta">{{
+            <a class="btn-style" :href="`/` + button_cta">{{
               blok.button_name
             }}</a>
           </p>
@@ -374,7 +382,7 @@ onNuxtReady(async () => {
         <h1 class="h1-heading" v-if="blok.name">{{ blok.name }}</h1>
         <p class="p-heading" v-if="blok.description">{{ blok.description }}</p>
         <p v-if="blok.button_name">
-          <a class="btn-style" :href="blok.button_cta">{{
+          <a class="btn-style" :href="`/` + button_cta">{{
             blok.button_name
           }}</a>
         </p>
@@ -397,7 +405,7 @@ onNuxtReady(async () => {
         <h1 class="h1-heading" v-if="blok.name">{{ blok.name }}</h1>
         <p class="p-heading" v-if="blok.description">{{ blok.description }}</p>
         <p v-if="blok.button_name">
-          <a class="btn-style" :href="blok.button_cta">{{
+          <a class="btn-style" :href="`/` + button_cta">{{
             blok.button_name
           }}</a>
         </p>

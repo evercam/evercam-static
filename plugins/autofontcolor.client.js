@@ -89,6 +89,6 @@ export default defineNuxtPlugin(() => {
             }
         }
 
-        console.log(getImageBrightness())
+        // console.log(getImageBrightness())
     })
 })
