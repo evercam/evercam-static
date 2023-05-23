@@ -9,7 +9,11 @@ export default defineNuxtConfig({
         '@nuxtjs/i18n',
         'nuxt-schema-org',
         'nuxt-simple-robots',
+        'nuxt-gtag'
     ],
+    gtag: {
+        id: 'G-FWDSTSQX63'
+    },
     // Activate this if get [ERROR] No loader is configured for ".node" files: node_modules/fsevents/fsevents.node
     vite: {
         //...
