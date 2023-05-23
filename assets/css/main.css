@@ -29,7 +29,6 @@ header #navbar>ul>#li-1502 a:before {
     background: #c4161c;
     top: 20px;
     left: 0;
-    opacity: 0;
     transition: .5s;
     display: block;
     position: absolute;

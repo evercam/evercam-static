@@ -3,18 +3,25 @@ export default defineNuxtConfig({
     modules: [
         ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_API_KEY }],
         // ['@nuxtjs/robots', { configPath: "~/config/robots.config" }],
-        '@unlighthouse/nuxt',
+        // Activate unlight house only if want to check locally
+        // '@unlighthouse/nuxt',
         '@nuxt/image-edge',
         '@nuxtjs/i18n',
         'nuxt-schema-org',
         'nuxt-simple-robots',
     ],
-    unlighthouse: {
-        scanner: {
-            dynamicSampling: false,
-            device: 'mobile',
-        }
+    // Activate this if get [ERROR] No loader is configured for ".node" files: node_modules/fsevents/fsevents.node
+    vite: {
+        //...
+        optimizeDeps: { exclude: ["fsevents"] },
     },
+    // Activate unlight house only if want to check locally
+    // unlighthouse: {
+    //     scanner: {
+    //         dynamicSampling: false,
+    //         device: 'mobile',
+    //     }
+    // },
     linkChecker: {
         failOn404: false,
     },
