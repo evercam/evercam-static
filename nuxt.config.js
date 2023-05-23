@@ -92,7 +92,7 @@ export default defineNuxtConfig({
     ],
     runtimeConfig: {
         public: {
-            siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://evercam.sg',
+            siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.evercam.sg',
             siteName: 'Construction Time-lapse & Project Management Live Cameras | Evercam',
             siteDescription: 'Construction time-lapse cameras & project management software helps in marketing content, project management and dispute avoidance in the construction industry.',
             language: 'en-SG', // prefer more explicit language codes like `en-AU` over `en`
