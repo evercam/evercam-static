@@ -9,11 +9,27 @@ export default defineNuxtConfig({
         'nuxt-schema-org',
         'nuxt-simple-robots',
     ],
+    unlighthouse: {
+        scanner: {
+            dynamicSampling: false,
+            device: 'mobile',
+        }
+    },
     linkChecker: {
         failOn404: false,
     },
     experimental: {
         inlineSSRStyles: false
+    },
+    nitro: {
+        prerender: {
+            routes: ['/']
+        }
+    },
+    robots: {
+        sitemap: [
+            '/sitemap.xml',
+        ],
     },
     i18n: {
         locales: [
@@ -77,11 +93,6 @@ export default defineNuxtConfig({
         '@/assets/css/main.css',
         '@fortawesome/fontawesome-svg-core/styles.css',
     ],
-    nitro: {
-        prerender: {
-            routes: ['/sitemap.xml']
-        }
-    },
     build: {
         transpile: ['@fortawesome/vue-fontawesome'],
     },
