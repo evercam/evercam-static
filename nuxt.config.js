@@ -2,7 +2,6 @@
 export default defineNuxtConfig({
     modules: [
         ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_API_KEY }],
-        // ['@nuxtjs/robots', { configPath: "~/config/robots.config" }],
         // Activate unlight house only if want to check locally
         // '@unlighthouse/nuxt',
         '@nuxt/image-edge',

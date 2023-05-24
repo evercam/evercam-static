@@ -101,7 +101,7 @@ if (assetSource) {
       <div class="row">
         <div class="col-md-8">
           <div class="standard-content" v-html="resolvedRichText"></div>
-          <div class="standard-content">
+          <div>
             <div v-if="blok.image_compare_section">
               <div
                 v-for="image in blok.image_compare_section"
@@ -146,5 +146,4 @@ if (assetSource) {
     </div>
   </section>
   <SectionProjectGallery />
-  <SectionFooter />
 </template>

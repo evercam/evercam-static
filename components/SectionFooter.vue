@@ -467,7 +467,7 @@ const switchLocalePath = useSwitchLocalePath();
               >
             </li>
             <li id="li-492" class="dropdown">
-              <a href="/bim-time-lapse-integration">BIM Integration</a>
+              <a href="/features/bim-time-lapse-integration">BIM Integration</a>
             </li>
             <li id="li-29060" class="dropdown">
               <a href="/features/the-measuring-tool">Measuring Tool</a>

@@ -24,7 +24,7 @@ const resolvedDescription = computed(() =>
             <a
               id="download-files"
               class="btn-style"
-              :href="blok.download_url.filename"
+              :href="blok.download_url.url ? blok.download_url.url : blok.download_url.cached_url"
               download=""
               >{{blok.download_name}}</a
             >

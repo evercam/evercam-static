@@ -292,7 +292,7 @@ header .language-dropdown .glob-icon.country span {
     height: 60px;
     width: auto;
     margin-right: 10px;
-    margin-top: 20px;
+    margin-top: -10px;
 }
 
 .icon-big {
@@ -476,6 +476,22 @@ button.carousel__next.recent_project {
 
 #my-team.tutorials a p:hover {
     text-decoration: none !important;
+}
+
+/* Effect */
+a.button-red:hover {
+    background-color:#9c1115;
+    color: white !important;
+    text-decoration: none;
+}
+
+a#download-files {
+    color: white;
+}
+
+a#download-files:hover,
+a#download-files:focus {
+    color: #c4161c;
 }
 
 /* Image Comparison */

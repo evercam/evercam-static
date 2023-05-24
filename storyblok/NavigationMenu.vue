@@ -3,6 +3,7 @@ defineProps({ blok: Object });
 const urlPath = useRoute().path;
 const fullPath = useRoute().fullPath;
 const isProjects = urlPath.includes("/projects");
+const isFeatures = urlPath.includes("/features");
 const isPricing = urlPath.includes("/pricing");
 const isBlog = urlPath.includes("/blog");
 const isContact = urlPath.includes("/contact");
@@ -16,6 +17,13 @@ const switchLocalePath = useSwitchLocalePath();
 const availableLocales = computed(() => {
   return (locales.value).filter(i => i.code !== locale.value)
 })
+
+onMounted(() => {
+  if(isFeatures) {
+    document.getElementById("language-dropdown").style.border = "1px solid rgb(255, 255, 255) !important";
+    console.log("This is the Button", document.getElementById("language-dropdown").style);
+  }
+});
 </script>
 
 <script>
@@ -121,12 +129,40 @@ export default {
           >
           <span>|</span> <a href="tel:+35319194500">+353 1 919 4500</a>
         </div>
-        <div class="language-dropdown" :class="menuActive ? 'active' : ''">
+        <div v-if="isFeatures" class="language-dropdown" :class="menuActive ? 'active' : ''">
           <NuxtLink
             class="glob-icon country lang-white"
             id="language-dropdown"
             @click="onClickLocale()"
-            href="#"
+            href=""
+            style="border: 1px solid #fff !important"
+          >
+            <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
+          </NuxtLink>
+          <div class="language-menu">
+            <a
+              href="#"
+              class="glob-icon country"
+              @click="onClickLocale()"
+              id="language-dropdown-close"
+            >
+              <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
+            </a>
+            <NuxtLink
+              v-for="{ code, name } in availableLocales"
+              :key="code"
+              :to="switchLocalePath(code)"
+            >
+              {{ name.replace('en-','') }}
+            </NuxtLink>
+          </div>
+        </div>
+        <div v-else class="language-dropdown" :class="menuActive ? 'active' : ''">
+          <NuxtLink
+            class="glob-icon country lang-white"
+            id="language-dropdown"
+            @click="onClickLocale()"
+            href=""
           >
             <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
           </NuxtLink>

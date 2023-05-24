@@ -251,7 +251,7 @@ onMounted(() => {
             alt="img"
           />
           <p>
-            EVERCAM RED<br />
+            EVERCAM BLACK<br />
             CMYK 0 | 100 | 100 | 20<br />
             RGB 196 | 22 | 28<br />
             HEX #C4161C
@@ -263,7 +263,7 @@ onMounted(() => {
             alt="img"
           />
           <p>
-            EVERCAM RED<br />
+            EVERCAM WHITE<br />
             CMYK 0 | 100 | 100 | 20<br />
             RGB 196 | 22 | 28<br />
             HEX #C4161C

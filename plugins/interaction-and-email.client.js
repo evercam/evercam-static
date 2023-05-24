@@ -3,7 +3,7 @@ export default defineNuxtPlugin(() => {
         const navbar = document.getElementById("header-transparent");
         if (navbar) {
             window.addEventListener("scroll", function () {
-                if (window.scrollY >= 300) {
+                if (window.scrollY >= 140) {
                     navbar.setAttribute('style', 'background-color:#111C27 !important');
                 } else {
                     navbar.setAttribute('style', 'background-color:transparent !important');
