@@ -177,6 +177,10 @@ header #navbar>ul>#li-353>a:hover {
     max-height: 450px;
 }
 
+.home header {
+    z-index: 9999;
+}
+
 header .language-dropdown:before {
     content: "";
     height: 4px;
@@ -198,6 +202,10 @@ header .language-dropdown {
     text-align: center;
     padding-top: 4px;
     top: 13px;
+}
+
+.sign-in-and-phone span {
+    margin-left: 7px;
 }
 
 .language-dropdown.active .language-menu {
@@ -337,6 +345,10 @@ p.p-heading.background--dark {
     margin-bottom: 23px;
 }
 
+.feature-table .container ul li:hover {
+    color: #c4161c;
+}
+
 .section-left-and-right li p {
     line-height: 24px !important;
     margin: 0;
@@ -393,11 +405,11 @@ p.p-heading.background--dark {
 .project-section #testimonial .inner h4,
 .project-section #testimonial .inner p {
     text-align: left !important;
-}
+}   
 
 section.story-section .carousel__prev,
 section.story-section .carousel__next {
-    top: 75%;
+    top: 77%;
     right: 0;
 }
 
@@ -436,6 +448,7 @@ section.project-section .carousel__prev {
 
 .story-section #testimonials .col-md-6 img {
     box-shadow: rgba(0, 0, 0, .16) -7px 5px 37px;
+    max-height: 300px;
 }
 
 .recent-blog {
@@ -764,11 +777,11 @@ a#download-files:focus {
     --vc-clr-white: #ffffff;
   
     /* Icon */
-    --vc-icn-width: 1.2em;
+    --vc-icn-width: 1em;
   
     /* Navigation */
-    --vc-nav-width: 30px;
-    --vc-nav-height: 30px;
+    --vc-nav-width: 50px;
+    --vc-nav-height: 50px;
     --vc-nav-border-radius: 0;
     --vc-nav-color: var(--vc-clr-primary);
     --vc-nav-color-hover: var(--vc-clr-secondary);

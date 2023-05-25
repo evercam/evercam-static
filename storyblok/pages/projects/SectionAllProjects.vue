@@ -31,13 +31,13 @@ export default {
           selected: true,
         },
         {
-          id: "",
+          id: "f6547d6e-d16c-4c20-ab81-b919aa4c2a17",
           value: "Poland",
           total: 0,
           selected: true,
         },
         {
-          id: "",
+          id: "99ca21c1-5030-4289-aa4b-ba9b2535b98b",
           value: "Singapore",
           total: 0,
           selected: true,
@@ -49,7 +49,7 @@ export default {
           selected: true,
         },
         {
-          id: "",
+          id: "bca81fbe-0317-4d5b-bbe2-5ace823bb8b4",
           value: "United State",
           total: 0,
           selected: true,
@@ -57,7 +57,7 @@ export default {
       ],
       categories: [
         {
-          id: "",
+          id: "ebc5a82c-6354-4f98-9978-47e312313bc4",
           value: "Arts Heritage Culture",
           total: 0,
           selected: true,
@@ -75,7 +75,7 @@ export default {
           selected: true,
         },
         {
-          id: "",
+          id: "e5313f8a-9e0f-4e95-9bdb-e43d7df1c415",
           value: "Completed",
           total: 0,
           selected: true,
@@ -87,19 +87,19 @@ export default {
           selected: true,
         },
         {
-          id: "",
+          id: "7426b71c-2783-4e3e-9207-960a4bcfc624",
           value: "Fit Out",
           total: 0,
           selected: true,
         },
         {
-          id: "",
+          id: "d0ed6ace-8573-486f-ae17-1f4385e8477e",
           value: "Healthcare Pharma",
           total: 0,
           selected: true,
         },
         {
-          id: "",
+          id: "9963cd99-5e83-4572-bd7f-504f9fdcf48a",
           value: "Hotel Leisure",
           total: 0,
           selected: true,
@@ -111,31 +111,31 @@ export default {
           selected: true,
         },
         {
-          id: "",
+          id: "15b17749-c004-4572-a494-302bf47e149e",
           value: "Project Of Interest",
           total: 0,
           selected: true,
         },
         {
-          id: "",
+          id: "efdaebfb-60db-43f9-9321-b0b082f31e7e",
           value: "Public Sector Utilities",
           total: 0,
           selected: true,
         },
         {
-          id: "",
+          id: "454002d7-5f7b-48a7-bd77-a3e04df10263",
           value: "Residential",
           total: 0,
           selected: true,
         },
         {
-          id: "",
+          id: "5a845318-fc2c-4cbf-b994-b6b68616e035",
           value: "Retail",
           total: 0,
           selected: true,
         },
         {
-          id: "",
+          id: "5beaebfa-e244-4423-9778-c418bdda4514",
           value: "Student Accom",
           total: 0,
           selected: true,

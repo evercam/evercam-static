@@ -66,7 +66,7 @@ export default defineNuxtConfig({
             },
             {
                 code: 'en-us',
-                name: 'AU',
+                name: 'US',
                 domain: "https://evercam.com/",
             },
             {

@@ -15,13 +15,32 @@ const { locale, locales } = useI18n();
 const switchLocalePath = useSwitchLocalePath();
 
 const availableLocales = computed(() => {
-  return (locales.value).filter(i => i.code !== locale.value)
-})
+  return locales.value.filter((i) => i.code !== locale.value);
+});
 
 onMounted(() => {
-  if(isFeatures) {
-    document.getElementById("language-dropdown").style.border = "1px solid rgb(255, 255, 255) !important";
-    console.log("This is the Button", document.getElementById("language-dropdown").style);
+  if (isFeatures) {
+    document.getElementById("language-dropdown").style.border =
+      "1px solid rgb(255, 255, 255) !important";
+    console.log(
+      "This is the Button",
+      document.getElementById("language-dropdown").style
+    );
+  }
+  if (isHomepage) {
+    document.body.classList.add("home");
+
+    const languageToggle = document.getElementById("language-dropdown");
+    const languageMenu = document.getElementsByClassName("language-dropdown");
+
+    // Handle click outside dropdown
+    document.addEventListener("click", (event) => {
+      const isClickInside = languageToggle.contains(event.target);
+      console.log(languageMenu[0])
+      if (!isClickInside) {
+        languageMenu[0].classList.remove("active");
+      }
+    });
   }
 });
 </script>
@@ -80,13 +99,22 @@ export default {
                 <a :href="localePath('/features/gate-report')">Gate Report</a>
               </li>
               <li id="li-29118" class="dropdown1">
-                <a :href="localePath('/features/x-ray-tool-for-construction-site-projects')"
+                <a
+                  :href="
+                    localePath(
+                      '/features/x-ray-tool-for-construction-site-projects'
+                    )
+                  "
                   >X-Ray</a
                 >
               </li>
               <li id="li-29383" class="dropdown1">
                 <a
-                  :href="localePath('/features/evercam-construction-project-management-software-integrations')"
+                  :href="
+                    localePath(
+                      '/features/evercam-construction-project-management-software-integrations'
+                    )
+                  "
                   >Integrations</a
                 >
               </li>
@@ -97,7 +125,9 @@ export default {
                 <a :href="localePath('/features')">All features</a>
               </li>
               <li id="li-35131" class="dropdown1">
-                <a :href="localePath('/construction-camera-specs')">Camera Specs</a>
+                <a :href="localePath('/construction-camera-specs')"
+                  >Camera Specs</a
+                >
               </li>
             </ul>
           </li>
@@ -129,7 +159,11 @@ export default {
           >
           <span>|</span> <a href="tel:+35319194500">+353 1 919 4500</a>
         </div>
-        <div v-if="isFeatures" class="language-dropdown" :class="menuActive ? 'active' : ''">
+        <div
+          v-if="isFeatures"
+          class="language-dropdown"
+          :class="menuActive ? 'active' : ''"
+        >
           <NuxtLink
             class="glob-icon country lang-white"
             id="language-dropdown"
@@ -137,34 +171,46 @@ export default {
             href=""
             style="border: 1px solid #fff !important"
           >
-            <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
+            <span class="country">
+              {{ locale.replace("en-", "").toUpperCase() }}
+            </span>
           </NuxtLink>
-          <div class="language-menu">
+          <div
+            class="language-menu"
+          >
             <a
               href="#"
               class="glob-icon country"
               @click="onClickLocale()"
               id="language-dropdown-close"
             >
-              <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
+              <span class="country">
+                {{ locale.replace("en-", "").toUpperCase() }}
+              </span>
             </a>
             <NuxtLink
               v-for="{ code, name } in availableLocales"
               :key="code"
               :to="switchLocalePath(code)"
             >
-              {{ name.replace('en-','') }}
+              {{ name.replace("en-", "") }}
             </NuxtLink>
           </div>
         </div>
-        <div v-else class="language-dropdown" :class="menuActive ? 'active' : ''">
+        <div
+          v-else
+          class="language-dropdown"
+          :class="menuActive ? 'active' : ''"
+        >
           <NuxtLink
             class="glob-icon country lang-white"
             id="language-dropdown"
             @click="onClickLocale()"
             href=""
           >
-            <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
+            <span class="country">
+              {{ locale.replace("en-", "").toUpperCase() }}
+            </span>
           </NuxtLink>
           <div class="language-menu">
             <a
@@ -173,14 +219,16 @@ export default {
               @click="onClickLocale()"
               id="language-dropdown-close"
             >
-              <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
+              <span class="country">
+                {{ locale.replace("en-", "").toUpperCase() }}
+              </span>
             </a>
             <NuxtLink
               v-for="{ code, name } in availableLocales"
               :key="code"
               :to="switchLocalePath(code)"
             >
-              {{ name.replace('en-','') }}
+              {{ name.replace("en-", "") }}
             </NuxtLink>
           </div>
         </div>
@@ -192,14 +240,16 @@ export default {
             @click="onClickLocale()"
             id="language-dropdown-close"
           >
-            <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
+            <span class="country">
+              {{ locale.replace("en-", "").toUpperCase() }}
+            </span>
           </a>
           <NuxtLink
             v-for="{ code, name } in availableLocales"
             :key="code"
             :to="switchLocalePath(code)"
           >
-            {{ name.replace('en-','') }}
+            {{ name.replace("en-", "") }}
           </NuxtLink>
           <!-- <a href="https://evercam.uk">UK</a>
 <a href="https://evercam.sg">SG</a>
@@ -244,13 +294,22 @@ export default {
                 <a :href="localePath('/features/gate-report')">Gate Report</a>
               </li>
               <li id="li-29118" class="dropdown1">
-                <a :href="localePath('/features/x-ray-tool-for-construction-site-projects')"
+                <a
+                  :href="
+                    localePath(
+                      '/features/x-ray-tool-for-construction-site-projects'
+                    )
+                  "
                   >X-Ray</a
                 >
               </li>
               <li id="li-29383" class="dropdown1">
                 <a
-                  :href="localePath('/features/evercam-construction-project-management-software-integrations')"
+                  :href="
+                    localePath(
+                      '/features/evercam-construction-project-management-software-integrations'
+                    )
+                  "
                   >Integrations</a
                 >
               </li>
@@ -261,7 +320,9 @@ export default {
                 <a :href="localePath('/features')">All features</a>
               </li>
               <li id="li-35131" class="dropdown1">
-                <a :href="localePath('/construction-camera-specs')">Camera Specs</a>
+                <a :href="localePath('/construction-camera-specs')"
+                  >Camera Specs</a
+                >
               </li>
             </ul>
           </li>
@@ -300,7 +361,9 @@ export default {
             @click="onClickLocale()"
             href="#"
           >
-            <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
+            <span class="country">
+              {{ locale.replace("en-", "").toUpperCase() }}
+            </span>
           </NuxtLink>
           <div class="language-menu">
             <a
@@ -309,14 +372,16 @@ export default {
               @click="onClickLocale()"
               id="language-dropdown-close"
             >
-              <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
+              <span class="country">
+                {{ locale.replace("en-", "").toUpperCase() }}
+              </span>
             </a>
             <NuxtLink
               v-for="{ code, name } in availableLocales"
               :key="code"
               :to="switchLocalePath(code)"
             >
-              {{ name.replace('en-','') }}
+              {{ name.replace("en-", "") }}
             </NuxtLink>
             <!-- <a href="https://evercam.uk">UK</a>
   <a href="https://evercam.sg">SG</a>
@@ -333,14 +398,16 @@ export default {
             @click="onClickLocale()"
             id="language-dropdown-close"
           >
-            <span class="country"> {{ locale.replace('en-','').toUpperCase() }} </span>
+            <span class="country">
+              {{ locale.replace("en-", "").toUpperCase() }}
+            </span>
           </a>
           <NuxtLink
             v-for="{ code, name } in availableLocales"
             :key="code"
             :to="switchLocalePath(code)"
           >
-            {{ name.replace('en-','') }}
+            {{ name.replace("en-", "") }}
           </NuxtLink>
           <!-- <a href="https://evercam.uk">UK</a>
 <a href="https://evercam.sg">SG</a>
