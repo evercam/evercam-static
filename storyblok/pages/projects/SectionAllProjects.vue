@@ -53,7 +53,7 @@ export default {
         },
         {
           id: "bca81fbe-0317-4d5b-bbe2-5ace823bb8b4",
-          value: "United State",
+          value: "United States",
           total: 0,
           selected: true,
         },
@@ -139,7 +139,7 @@ export default {
         },
         {
           id: "5beaebfa-e244-4423-9778-c418bdda4514",
-          value: "Student Accom",
+          value: "Student Accommodation",
           total: 0,
           selected: true,
         },
