@@ -108,12 +108,6 @@ export default {
           selected: true,
         },
         {
-          id: "15b17749-c004-4572-a494-302bf47e149e",
-          value: "Project Of Interest",
-          total: 0,
-          selected: true,
-        },
-        {
           id: "efdaebfb-60db-43f9-9321-b0b082f31e7e",
           value: "Public Sector Utilities",
           total: 0,
