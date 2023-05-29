@@ -10,6 +10,9 @@ export default {
     return {
       projects: null,
       getPost: true,
+      currentPage: 1,
+      perPage: 24,
+      totalPost: 0,
       showFilterLocation: false,
       showFilterCategory: false,
       isCheckedAllCategory: true,
@@ -152,7 +155,6 @@ export default {
     },
   },
   created() {
-    this.fetchTags();
     this.fetchPost();
   },
   watch: {
@@ -160,6 +162,9 @@ export default {
       this.fetchSuggestions(this.searchInput);
     },
     selectedCategory: function () {
+      this.fetchSuggestions(this.searchInput);
+    },
+    currentPage: function (value) {
       this.fetchSuggestions(this.searchInput);
     },
   },
@@ -176,42 +181,62 @@ export default {
       }
       return this.categories.map((category) => (category.selected = false));
     },
-    fetchTags: async function () {
-      // Fetch Tags and Mapping to Category & Location to count total post / stories
+    groupingPost: async function () {
       const storyblokApi = useStoryblokApi();
-      const data = await storyblokApi.get("cdn/tags");
+      var customPerPage = 50;
 
+      // console.log(
+      //   this.totalPost,
+      //   "grouping post",
+      //   this.calculatePagesCount(100, this.totalPost)
+      // );
+      for (
+        var i = 0;
+        i <= this.calculatePagesCount(customPerPage, this.totalPost);
+        i++
+      ) {
+        const { data, headers } = await storyblokApi.get("cdn/stories", {
+          version: useRoute().query._storyblok ? "draft" : "published",
+          starts_with: "projects",
+          is_startpage: false,
+          per_page: customPerPage,
+          page: i + 1,
+        });
 
-      this.categories.map((category) => {
-        let categoriesTitle = kebabCase(category.value);
+        data.stories.map((story) => {
+          // Group and find locations
+          var locationIndex = this.locations.findIndex(
+            (location) => location.id == story.content.project_country
+          );
 
-        const findTag = data.data.tags.find(
-          (tag) => tag.name == categoriesTitle
-        );
+          if (locationIndex >= 0) {
+            this.locations[locationIndex].total += 1;
+          }
 
-        category.total = findTag ? findTag.taggings_count : 0;
-      });
+          // Group and find categories
+          var categoryIndex = this.categories.findIndex(
+            (category) => category.id == story.content.project_category
+          );
 
-      this.locations.map((location) => {
-        let locationsTitle = kebabCase(location.value);
-
-        const findTag = data.data.tags.find(
-          (tag) => tag.name == locationsTitle
-        );
-
-        location.total = findTag ? findTag.taggings_count : 0;
-      });
+          if (categoryIndex >= 0) {
+            this.categories[categoryIndex].total += 1;
+          }
+        });
+      }
     },
     fetchPost: async function () {
       const storyblokApi = useStoryblokApi();
 
-      const { data } = await storyblokApi.get("cdn/stories", {
+      const { data, headers } = await storyblokApi.get("cdn/stories", {
         version: useRoute().query._storyblok ? "draft" : "published",
         starts_with: "projects",
         is_startpage: false,
+        page: this.currentPage,
+        per_page: this.perPage,
       });
 
       this.projects = data.stories;
+      this.totalPost = parseInt(headers.total);
 
       if (data.stories.length < 1) {
         this.getPost = false;
@@ -220,65 +245,42 @@ export default {
       if (data.stories.length >= 1) {
         this.getPost = true;
       }
+
+      this.groupingPost();
     },
     fetchSuggestions: async function () {
       const storyblokApi = useStoryblokApi();
 
-      let optCategories = this.selectedCategory.map((category) => category.id);
-      let optLocations = this.selectedLocation.map((location) => location.id);
+      var optCategories = this.selectedCategory.map((category) => category.id);
+      var optLocations = this.selectedLocation.map((location) => location.id);
 
       // additional since, not all list has id
       optCategories = optCategories.filter((n) => n != "");
       optLocations = optLocations.filter((n) => n != "");
 
-      // this.searchText = searchInput
-
-      if (this.searchText) {
-        const { data } = await storyblokApi.get("cdn/stories", {
-          version: useRoute().query._storyblok ? "draft" : "published",
-          starts_with: "projects",
-          // resolve_relations: 'author',
-          search_term: this.searchText,
-          per_page: 5,
-          filter_query: {
-            project_country: {
-              in: optLocations.join(),
-            },
-            project_category: {
-              in: optCategories.join(),
-            },
+      const { data, headers } = await storyblokApi.get("cdn/stories", {
+        version: useRoute().query._storyblok ? "draft" : "published",
+        starts_with: "projects",
+        is_startpage: false,
+        search_term: this.searchText || null,
+        page: this.currentPage,
+        per_page: this.perPage,
+        filter_query: {
+          project_country: {
+            in: optLocations.join(),
           },
-        });
-
-        this.projects = data.stories;
-        if (data.stories.length >= 1) {
-          this.getPost = true;
-        } else {
-          this.getPost = false;
-        }
-      } else {
-        const { data } = await storyblokApi.get("cdn/stories", {
-          version: useRoute().query._storyblok ? "draft" : "published",
-          starts_with: "projects",
-          is_startpage: false,
-          filter_query: {
-            project_country: {
-              in: optLocations.join(),
-            },
-            project_category: {
-              in: optCategories.join(),
-            },
+          project_category: {
+            in: optCategories.join(),
           },
-        });
+        },
+      });
 
-        this.projects = data.stories;
-
-        if (data.stories.length >= 1) {
-          this.getPost = true;
-        } else {
-          this.getPost = false;
-        }
-      }
+      this.projects = data.stories;
+      this.totalPost = parseInt(headers.total);
+      this.getPost = data.stories.length >= 1;
+    },
+    calculatePagesCount(perPage, totalPost) {
+      return totalPost < perPage ? 1 : Math.ceil(totalPost / perPage);
     },
   },
 };
@@ -474,31 +476,31 @@ export default {
           </div>
         </div>
       </div>
-      <!-- <nav class="text-right pagination-wrapper">
-        <ul class="pagination">
-          <li class="active">
-            <a href="#"><span>1</span></a>
-          </li>
-          <li class="">
-            <a href="#"><span>2</span></a>
-          </li>
-          <li class="">
-            <a href="#"><span>3</span></a>
-          </li>
-          <li class="">
-            <a href="#"><span>4</span></a>
-          </li>
-          <li class="">
-            <a href="#"><span>5</span></a>
-          </li>
-          <li class="">
-            <a href="#"><span>6</span></a>
-          </li>
-          <li class="last">
-            <a href="#"><span>7</span></a>
-          </li>
-        </ul>
-      </nav> -->
+      <div v-if="totalPost > perPage" class="paginate">
+        <div style="margin-right: 10px">
+          <p>
+            Showing {{ currentPage * perPage - perPage + 1 }} - {{ " " }}
+            {{ Math.min(currentPage * perPage, totalPost) }} of
+            {{ totalPost }}
+          </p>
+        </div>
+
+        <div>
+          <nav class="text-right pagination-wrapper">
+            <ul class="pagination">
+              <li
+                v-for="page in calculatePagesCount(perPage, totalPost)"
+                :key="page"
+                :class="currentPage == page ? 'active' : ''"
+              >
+                <a href="#" @click="currentPage = page"
+                  ><span>{{ page }}</span></a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
     </div>
   </div>
 </template>

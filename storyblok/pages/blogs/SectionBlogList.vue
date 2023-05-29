@@ -1,28 +1,46 @@
 <script setup>
-// import { Pagination } from 'vue3-carousel';
 import BlogCardIndividual from "./BlogCardIndividual.vue";
-
 defineProps({ blok: Object });
+</script>
 
-const blogs = ref(null);
-const page = ref(1);
-const currentPage = ref(1);
+<script>
+export default {
+  data() {
+    return {
+      blogs: null,
+      currentPage: 1,
+      perPage: 30,
+      totalPost: 0,
+    };
+  },
+  created() {
+    this.fetchPost();
+  },
+  watch: {
+    currentPage: function (value) {
+      this.fetchPost(this.searchInput);
+    },
+  },
+  methods: {
+    fetchPost: async function () {
+      const storyblokApi = useStoryblokApi();
 
-const storyblokApi = useStoryblokApi();
-const { data, refresh } = await storyblokApi.get("cdn/stories", {
-  version: useRoute().query._storyblok ? "draft" : "published",
-  starts_with: "blog",
-  is_startpage: false,
-  sort_by: "content.date_published:desc",
-  per_page: 25,
-  page: currentPage,
-});
+      const { data, headers } = await storyblokApi.get("cdn/stories", {
+        version: useRoute().query._storyblok ? "draft" : "published",
+        starts_with: "blog",
+        is_startpage: false,
+        sort_by: "content.date_published:desc",
+        page: this.currentPage,
+        per_page: this.perPage,
+      });
 
-blogs.value = data.stories;
-
-const onClickHandler = (page) => {
-  refresh();
-  // console.log(page);
+      this.blogs = data.stories;
+      this.totalPost = parseInt(headers.total);
+    },
+    calculatePagesCount(perPage, totalPost) {
+      return totalPost < perPage ? 1 : Math.ceil(totalPost / perPage);
+    },
+  },
 };
 </script>
 
@@ -64,6 +82,33 @@ const onClickHandler = (page) => {
           :slug="blog.full_slug"
           v-model="currentPage"
         />
+      </div>
+      <div class="row">
+        <div v-if="totalPost > perPage" class="paginate">
+          <div style="margin-right: 10px">
+            <p>
+              Showing {{ currentPage * perPage - perPage + 1 }} - {{ " " }}
+              {{ Math.min(currentPage * perPage, totalPost) }} of
+              {{ totalPost }}
+            </p>
+          </div>
+
+          <div>
+            <nav class="text-right pagination-wrapper">
+              <ul class="pagination">
+                <li
+                  v-for="page in calculatePagesCount(perPage, totalPost)"
+                  :key="page"
+                  :class="currentPage == page ? 'active' : ''"
+                >
+                  <a href="#" @click="this.currentPage = page"
+                    ><span>{{ page }}</span></a
+                  >
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
       </div>
     </div>
   </section>

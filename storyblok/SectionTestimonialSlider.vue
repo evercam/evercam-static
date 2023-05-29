@@ -27,7 +27,7 @@ const clientPhotoDefault =
   <section v-if="sliderType === 'testimonial_full'" class="black-bg gray-bg">
     <div class="container text-center">
       <div id="gray-slider" class="owl-carousel owl-loaded owl-drag">
-        <Carousel :items-to-show="1" :autoplay="4000" :wrap-around="true">
+        <Carousel v-if="blok.testimonial_blok.length > 1" :items-to-show="1" :autoplay="4000" :wrap-around="true">
           <Slide v-for="item in blok.testimonial_blok" :key="item">
             <div class="item">
               <h3>“{{ item.testimonial_details }}”</h3>
@@ -36,7 +36,18 @@ const clientPhotoDefault =
           </Slide>
 
           <template #addons>
-            <Navigation />
+            <Navigation v-if="blok.testimonial_blok.length > 1" />
+          </template>
+        </Carousel>
+        <Carousel v-else :items-to-show="1">
+          <Slide v-for="item in blok.testimonial_blok" :key="item">
+            <div class="item">
+              <h3>“{{ item.testimonial_details }}”</h3>
+              <p>{{ item.client_name }}</p>
+            </div>
+          </Slide>
+
+          <template #addons>
           </template>
         </Carousel>
       </div>

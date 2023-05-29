@@ -1,20 +1,27 @@
 <script setup>
 defineProps({ blok: Object });
 const localePath = useLocalePath();
-const { locale, locales } = useI18n();
-const switchLocalePath = useSwitchLocalePath();
 </script>
 
 <script>
 export default {
   data() {
     return {
-      menuActive: false,
+      menuOpen:false
     };
   },
   methods: {
-    onClickLocale() {
-      this.menuActive = !this.menuActive;
+    onClickMenuMobile() {
+      this.menuOpen = !this.menuOpen;
+      const mobileMenu = document.getElementById("main-menu");
+      console.log("This is the mobile menu", mobileMenu);
+      if(this.menuOpen === true) {
+        mobileMenu.style.display = "block";
+        console.log("Is menu Open", this.menuOpen);
+      } else {
+        mobileMenu.style.display = "none";
+        console.log("Is menu Open", this.menuOpen);
+      }
     },
   },
 };
@@ -39,7 +46,11 @@ export default {
                 alt="Logo"
               />
             </a>
-            <span id="menu-btn"></span>
+            <span
+              id="menu-btn"
+              @click="onClickMenuMobile"
+              :class="menuOpen ? 'active' : ''"
+            ></span>
           </div>
           <NavigationMenu />
         </div>
