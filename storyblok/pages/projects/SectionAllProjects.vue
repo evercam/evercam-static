@@ -78,12 +78,6 @@ export default {
           selected: true,
         },
         {
-          id: "e5313f8a-9e0f-4e95-9bdb-e43d7df1c415",
-          value: "Completed",
-          total: 0,
-          selected: true,
-        },
-        {
           id: "63dc68e9-ed1d-430a-9353-b679dfef6023",
           value: "Education",
           total: 0,
