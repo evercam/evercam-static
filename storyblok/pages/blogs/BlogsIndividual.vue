@@ -25,6 +25,7 @@ const { data } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
   starts_with: "blog",
   is_startpage: false,
+  per_page: 5,
 });
 blogs.value = data.stories.slice(0, 5);
 
@@ -174,16 +175,18 @@ author_details = await fetchAuthor(props.blok.writer_details)
           </div>
           <div class="container img-title">
             <div class="row">
-              <div v-if="!isVideo" class="col-md-12 mt-5">
-                <img v-if="assetCheck" :src="assetCheck" />
-              </div>
-              <div v-else class="col-md-12 mt-5">
-                <iframe
-                  class="embed-responsive-item"
-                  :src="assetCheck"
-                  allowfullscreen=""
-                ></iframe>
-              </div>
+              <main>
+                <div v-if="!isVideo" class="col-md-12 mt-5">
+                  <img v-if="assetCheck" :src="assetCheck" />
+                </div>
+                <div v-else class="col-md-12 mt-5">
+                  <iframe
+                    class="embed-responsive-item"
+                    :src="assetCheck"
+                    allowfullscreen=""
+                  ></iframe>
+                </div>
+              </main>
               <div class="col-md-12 mt-3">
                 <h1>
                   {{ blok.blog_title }}

@@ -1,8 +1,6 @@
 <script setup>
 const props = defineProps({ blog: Object, slug: String });
 
-const resolvedContent = computed(() => renderRichText(props.blog.content).substring(0, 200));
-
 const imageThumbnail = props.blog.asset_heading
   ? props.blog.asset_heading.filename
   : "https://a.storyblok.com/f/208852/1920x1083/82ba327790/asset-heading_placeholder.jpg";
@@ -42,7 +40,7 @@ if (urlPath === '/blog') {
         <h2>
           <a :href="'/' + slug">{{ blog.blog_title }}</a>
         </h2>
-        <div v-html="resolvedContent"></div>
+        <p>{{blog.short_description}} […]</p>
         <div class="text-right">
           <a :href="'/' + slug" class="btn-style">Read More</a>
         </div>

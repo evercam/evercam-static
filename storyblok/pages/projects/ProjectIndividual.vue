@@ -91,11 +91,13 @@ if (assetSource) {
     <div class="container">
       <div class="top-content">
         <div class="embed-responsive embed-responsive-16by9">
-          <iframe
-            class="embed-responsive-item"
-            :src="blok.video_heading.filename"
-            allowfullscreen=""
-          ></iframe>
+          <main>
+            <iframe
+              class="embed-responsive-item"
+              :src="blok.video_heading.filename"
+              allowfullscreen=""
+            ></iframe>
+          </main>
         </div>
       </div>
       <div class="row">

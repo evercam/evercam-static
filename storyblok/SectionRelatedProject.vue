@@ -6,6 +6,7 @@ const { data } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
   starts_with: "projects",
   is_startpage: false,
+  per_page: 15,
 });
 projects.value = data.stories;
 
