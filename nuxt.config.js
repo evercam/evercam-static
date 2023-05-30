@@ -78,7 +78,7 @@ export default defineNuxtConfig({
             {
                 code: 'en-pl',
                 name: 'PL',
-                domain: "https://evercam-static.vercel.app/",
+                domain: localeDomains.test,
             },
 
         ],

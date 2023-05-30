@@ -5,4 +5,5 @@ module.exports = {
     au: process.env.DOMAIN_AU,
     us: process.env.DOMAIN_US,
     pl: process.env.DOMAIN_PL,
+    test: process.env.DOMAIN_TEST,
   };
