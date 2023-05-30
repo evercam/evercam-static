@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+const localeDomains = require('./config/locale-domains')
+
 export default defineNuxtConfig({
     modules: [
         ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_API_KEY }],
@@ -46,33 +48,37 @@ export default defineNuxtConfig({
             {
                 code: 'en-sg',
                 name: 'SG',
-                domain: "https://evercam.sg/",
-
+                domain: localeDomains.sg,
             },
             {
                 code: 'en-ie',
                 name: 'IE',
-                domain: "https://evercam.io/",
+                domain: localeDomains.ie,
             },
             {
                 code: 'en-uk',
                 name: 'UK',
-                domain: "https://evercam.uk/",
+                domain: localeDomains.uk,
             },
             {
                 code: 'en-au',
                 name: 'AU',
-                domain: "https://evercam.com.au/",
+                domain: localeDomains.au,
             },
             {
                 code: 'en-us',
                 name: 'US',
-                domain: "https://evercam.com/",
+                domain: localeDomains.us,
             },
             {
                 code: 'en-pl',
                 name: 'PL',
-                domain: "https://evercam.pl/",
+                domain: localeDomains.pl,
+            },
+            {
+                code: 'en-pl',
+                name: 'PL',
+                domain: localeDomains.test,
             },
 
         ],
@@ -91,7 +97,7 @@ export default defineNuxtConfig({
     ],
     runtimeConfig: {
         public: {
-            siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.evercam.sg',
+            siteUrl: localeDomains.sg,
             siteName: 'Construction Time-lapse & Project Management Live Cameras | Evercam',
             siteDescription: 'Construction time-lapse cameras & project management software helps in marketing content, project management and dispute avoidance in the construction industry.',
             language: 'en-SG', // prefer more explicit language codes like `en-AU` over `en`

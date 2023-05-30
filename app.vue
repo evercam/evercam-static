@@ -9,6 +9,8 @@
   </NuxtLayout>
 </template>
 
-<!-- <script lang="ts" setup>
-defineRobotMeta()
-</script> -->
+<script setup>
+//defineRobotMeta()
+const  {locale}  = useI18n();
+console.log(locale);
+</script> 
