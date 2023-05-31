@@ -75,11 +75,6 @@ export default defineNuxtConfig({
                 name: 'PL',
                 domain: localeDomains.pl,
             },
-            {
-                code: 'en-pl',
-                name: 'PL',
-                domain: localeDomains.test,
-            },
 
         ],
         defaultLocale: 'en-sg',
