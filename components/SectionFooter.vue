@@ -189,7 +189,7 @@ const switchLocalePath = useSwitchLocalePath();
                   <ul class="">
                     <li id="li-29063" class="dropdown">
                       <a
-                        href="https://evercam.io/features/evercam-construction-project-management-software-integrations"
+                        href="/features/evercam-construction-project-management-software-integrations"
                         >Software Integrations</a
                       >
                     </li>
@@ -236,19 +236,19 @@ const switchLocalePath = useSwitchLocalePath();
                   <ul class="">
                     <li id="li-29056" class="dropdown">
                       <a
-                        href="https://evercam.io/features/construction-time-lapse"
+                        href="/features/construction-time-lapse"
                         >Time-lapse</a
                       >
                     </li>
                     <li id="li-29057" class="dropdown">
                       <a
-                        href="https://evercam.io/features/live-view-of-construction-site"
+                        href="/features/live-view-of-construction-site"
                         >Live View</a
                       >
                     </li>
                     <li id="li-29058" class="dropdown">
                       <a
-                        href="https://evercam.io/features/recordings-with-evercam-construction-site-security-cameras"
+                        href="/features/recordings-with-evercam-construction-site-security-cameras"
                         >Recordings</a
                       >
                     </li>
@@ -259,12 +259,12 @@ const switchLocalePath = useSwitchLocalePath();
                     </li>
                     <li id="li-29059" class="dropdown">
                       <a
-                        href="https://evercam.io/features/x-ray-tool-for-construction-site-projects"
+                        href="/features/x-ray-tool-for-construction-site-projects"
                         >X-Ray</a
                       >
                     </li>
                     <li id="li-492" class="dropdown">
-                      <a href="/bim-time-lapse-integration"
+                      <a href="/features/bim-time-lapse-integration"
                         >BIM Integration</a
                       >
                     </li>
@@ -275,7 +275,7 @@ const switchLocalePath = useSwitchLocalePath();
                     </li>
                     <li id="li-29062" class="dropdown">
                       <a
-                        href="https://evercam.io/features/the-compare-tool-for-construction-sites"
+                        href="/features/the-compare-tool-for-construction-sites"
                         >Compare Tool</a
                       >
                     </li>
