@@ -1,421 +1,194 @@
 <script setup>
-defineProps({ blok: Object });
-const urlPath = useRoute().path;
-const fullPath = useRoute().fullPath;
-const isProjects = urlPath.includes("/projects");
-const isFeatures = urlPath.includes("/features");
-const isPricing = urlPath.includes("/pricing");
-const isBlog = urlPath.includes("/blog");
-const isContact = urlPath.includes("/contact");
-const isHomepage = fullPath.length < 2;
-
-/** Multilanguage Configuration */
-const localePath = useLocalePath();
-const { locale, locales } = useI18n();
-const switchLocalePath = useSwitchLocalePath();
-
+defineProps({ blok: Object })
+const urlPath = useRoute().path
+const localePath = useLocalePath()
+const { locale, locales } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
 const availableLocales = computed(() => {
-  return locales.value.filter((i) => i.code !== locale.value);
-});
+    return locales.value.filter((i) => i.code !== locale.value)
+})
 
-onMounted(() => {
-  if (isFeatures) {
-    document.getElementById("language-dropdown").style.border =
-      "1px solid rgb(255, 255, 255) !important";
-    console.log(
-      "This is the Button",
-      document.getElementById("language-dropdown").style
-    );
-  }
-  if (isHomepage) {
-    document.body.classList.add("home");
-
-    const languageToggle = document.getElementById("language-dropdown");
-    const languageMenu = document.getElementsByClassName("language-dropdown");
-
-    // Handle click outside dropdown
-    document.addEventListener("click", (event) => {
-      const isClickInside = languageToggle.contains(event.target);
-      console.log(languageMenu[0])
-      if (!isClickInside) {
-        languageMenu[0].classList.remove("active");
-      }
-    });
-  }
-});
+const items = [
+    {
+        href: localePath("/projects"),
+        label: "Projects",
+    },
+    {
+        label: "Features",
+        children: [
+            {
+                href: localePath("/features/construction-time-lapse"),
+                label: "Time - lapse",
+            },
+            {
+                href: localePath("/features/live-view-of-construction-site"),
+                label: "Live View",
+            },
+            {
+                href: localePath(
+                    "/features/recordings-with-evercam-construction-site-security-cameras"
+                ),
+                label: "Recordings",
+            },
+            {
+                href: localePath("/features/gate-report"),
+                label: "Gate Report",
+            },
+            {
+                href: localePath(
+                    "/features/x-ray-tool-for-construction-site-projects"
+                ),
+                label: "X - Ray",
+            },
+            {
+                href: localePath(
+                    "/features/evercam-construction-project-management-software-integrations"
+                ),
+                label: "Integrations",
+            },
+            {
+                href: localePath("/features/drone-view"),
+                label: "Drone View",
+            },
+            {
+                href: localePath("/features"),
+                label: "All features",
+            },
+            {
+                href: localePath("/construction-camera-specs"),
+                label: "Camera Specs",
+            },
+        ],
+    },
+    {
+        href: localePath("/pricing"),
+        label: "Pricing",
+    },
+    {
+        href: localePath("/blog"),
+        label: "Blog",
+    },
+    {
+        href: localePath("/contact"),
+        label: "Contact",
+    },
+]
 </script>
 
 <script>
 export default {
-  data() {
-    return {
-      menuActive: false,
-    };
-  },
-  methods: {
-    onClickLocale() {
-      this.menuActive = !this.menuActive;
+    data() {
+        return {
+            menuActive: false,
+        }
     },
-  },
-};
+    methods: {
+        onClickLocale() {
+            this.menuActive = !this.menuActive
+        },
+    },
+}
 </script>
 
 <template>
-  <div v-editable="blok" class="col-md-9" id="main-menu">
-    <nav>
-      <div v-if="isHomepage" id="navbar">
-        <ul class="nav-list">
-          <li v-if="isProjects" id="li-1503" class="dropdown active">
-            <a :href="localePath('/projects')">Projects</a>
-          </li>
-          <li v-else id="li-1503" class="dropdown">
-            <a :href="localePath('/projects')">Projects</a>
-          </li>
-          <li id="li-29119" class="dropdown">
-            <a :href="localePath('/features')">Features</a>
-            <ul class="dropdown-menu">
-              <li id="li-30278" class="dropdown1">
-                <a :href="localePath('/features/construction-time-lapse')"
-                  >Time-lapse</a
-                >
-              </li>
-              <li id="li-29114" class="dropdown1">
-                <a
-                  :href="localePath('/features/live-view-of-construction-site')"
-                  >Live View</a
-                >
-              </li>
-              <li id="li-29117" class="dropdown1">
-                <a
-                  :href="
-                    localePath(
-                      '/features/recordings-with-evercam-construction-site-security-cameras'
-                    )
-                  "
-                  >Recordings</a
-                >
-              </li>
-              <li id="li-29116" class="dropdown1">
-                <a :href="localePath('/features/gate-report')">Gate Report</a>
-              </li>
-              <li id="li-29118" class="dropdown1">
-                <a
-                  :href="
-                    localePath(
-                      '/features/x-ray-tool-for-construction-site-projects'
-                    )
-                  "
-                  >X-Ray</a
-                >
-              </li>
-              <li id="li-29383" class="dropdown1">
-                <a
-                  :href="
-                    localePath(
-                      '/features/evercam-construction-project-management-software-integrations'
-                    )
-                  "
-                  >Integrations</a
-                >
-              </li>
-              <li id="li-34534" class="dropdown1">
-                <a :href="localePath('/features/drone-view')">Drone View</a>
-              </li>
-              <li id="li-29112" class="dropdown1">
-                <a :href="localePath('/features')">All features</a>
-              </li>
-              <li id="li-35131" class="dropdown1">
-                <a :href="localePath('/construction-camera-specs')"
-                  >Camera Specs</a
-                >
-              </li>
-            </ul>
-          </li>
-          <li v-if="isPricing" id="li-353" class="dropdown active">
-            <a :href="localePath('/pricing')">Pricing</a>
-          </li>
-          <li v-else id="li-353" class="dropdown">
-            <a :href="localePath('/pricing')">Pricing</a>
-          </li>
-          <li v-if="isBlog" id="li-570" class="dropdown active">
-            <a :href="localePath('/blog')">Blog</a>
-          </li>
-          <li v-else id="li-570" class="dropdown">
-            <a :href="localePath('/blog')">Blog</a>
-          </li>
-          <li v-if="isContact" id="li-352" class="dropdown active">
-            <a :href="localePath('/contact')">Contact</a>
-          </li>
-          <li v-else id="li-352" class="dropdown">
-            <a :href="localePath('/contact')">Contact</a>
-          </li>
-        </ul>
-        <div class="sign-in-and-phone">
-          <a
-            href="https://dash.evercam.io/v2/users/signin"
-            target="_blank"
-            rel="noopener"
-            >Sign in</a
-          >
-          <span>|</span> <a href="tel:+35319194500">+353 1 919 4500</a>
-        </div>
-        <div
-          v-if="isFeatures"
-          class="language-dropdown"
-          :class="menuActive ? 'active' : ''"
-        >
-          <NuxtLink
-            class="glob-icon country lang-white"
-            id="language-dropdown"
-            @click="onClickLocale()"
-            href=""
-            style="border: 1px solid #fff !important"
-          >
-            <span class="country">
-              {{ locale.replace("en-", "").toUpperCase() }}
-            </span>
-          </NuxtLink>
-          <div
-            class="language-menu"
-          >
-            <a
-              href="#"
-              class="glob-icon country"
-              @click="onClickLocale()"
-              id="language-dropdown-close"
-            >
-              <span class="country">
-                {{ locale.replace("en-", "").toUpperCase() }}
-              </span>
-            </a>
-            <NuxtLink
-              v-for="{ code, name } in availableLocales"
-              :key="code"
-              :to="switchLocalePath(code)"
-            >
-              {{ name.replace("en-", "") }}
-            </NuxtLink>
-          </div>
-        </div>
-        <div
-          v-else
-          class="language-dropdown"
-          :class="menuActive ? 'active' : ''"
-        >
-          <NuxtLink
-            class="glob-icon country lang-white"
-            id="language-dropdown"
-            @click="onClickLocale()"
-            href=""
-          >
-            <span class="country">
-              {{ locale.replace("en-", "").toUpperCase() }}
-            </span>
-          </NuxtLink>
-          <div class="language-menu">
-            <a
-              href="#"
-              class="glob-icon country"
-              @click="onClickLocale()"
-              id="language-dropdown-close"
-            >
-              <span class="country">
-                {{ locale.replace("en-", "").toUpperCase() }}
-              </span>
-            </a>
-            <NuxtLink
-              v-for="{ code, name } in availableLocales"
-              :key="code"
-              :to="switchLocalePath(code)"
-            >
-              {{ name.replace("en-", "") }}
-            </NuxtLink>
-          </div>
-        </div>
+    <div id="main-menu" v-editable="blok" class="col-md-9">
+        <nav>
+            <div id="navbar" class="d-md-flex">
+                <ul class="nav-list">
+                    <li
+                        v-for="(item, i) in items"
+                        :key="i"
+                        class="dropdown"
+                        :class="{ active: urlPath.includes(item.href) }"
+                    >
+                        <a :href="item.href || 'javascript:void(0)'">{{
+                            item.label
+                        }}</a>
+                        <ul
+                            v-if="item.children"
+                            class="dropdown-menu dropdown-menu-custom"
+                        >
+                            <li
+                                v-for="(subItem, i) in item.children"
+                                :key="i"
+                                class="dropdown1"
+                                :class="{
+                                    active: urlPath.includes(subItem.href),
+                                }"
+                            >
+                                <a :href="subItem.href">{{ subItem.label }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
 
-        <div class="language-bar d-block d-sm-none">
-          <a
-            href="#"
-            class="glob-icon country"
-            @click="onClickLocale()"
-            id="language-dropdown-close"
-          >
-            <span class="country">
-              {{ locale.replace("en-", "").toUpperCase() }}
-            </span>
-          </a>
-          <NuxtLink
-            v-for="{ code, name } in availableLocales"
-            :key="code"
-            :to="switchLocalePath(code)"
-          >
-            {{ name.replace("en-", "") }}
-          </NuxtLink>
-          <!-- <a href="https://evercam.uk">UK</a>
-<a href="https://evercam.sg">SG</a>
-<a href="https://evercam.com.au">AU</a>
-<a href="https://evercam.com">US</a>
-<a href="https://evercam.pl">PL</a> -->
-        </div>
-      </div>
-      <div v-else id="navbar">
-        <ul class="nav-list">
-          <li v-if="isProjects" id="li-1502" class="dropdown active">
-            <a :href="localePath('/projects')">Projects</a>
-          </li>
-          <li v-else id="li-1502" class="dropdown">
-            <a :href="localePath('/projects')">Projects</a>
-          </li>
-          <li id="li-29119" class="dropdown">
-            <a :href="localePath('/features')">Features</a>
-            <ul class="dropdown-menu">
-              <li id="li-30278" class="dropdown1">
-                <a :href="localePath('/features/construction-time-lapse')"
-                  >Time-lapse</a
-                >
-              </li>
-              <li id="li-29114" class="dropdown1">
-                <a
-                  :href="localePath('/features/live-view-of-construction-site')"
-                  >Live View</a
-                >
-              </li>
-              <li id="li-29117" class="dropdown1">
-                <a
-                  :href="
-                    localePath(
-                      '/features/recordings-with-evercam-construction-site-security-cameras'
-                    )
-                  "
-                  >Recordings</a
-                >
-              </li>
-              <li id="li-29116" class="dropdown1">
-                <a :href="localePath('/features/gate-report')">Gate Report</a>
-              </li>
-              <li id="li-29118" class="dropdown1">
-                <a
-                  :href="
-                    localePath(
-                      '/features/x-ray-tool-for-construction-site-projects'
-                    )
-                  "
-                  >X-Ray</a
-                >
-              </li>
-              <li id="li-29383" class="dropdown1">
-                <a
-                  :href="
-                    localePath(
-                      '/features/evercam-construction-project-management-software-integrations'
-                    )
-                  "
-                  >Integrations</a
-                >
-              </li>
-              <li id="li-34534" class="dropdown1">
-                <a :href="localePath('/features/drone-view')">Drone View</a>
-              </li>
-              <li id="li-29112" class="dropdown1">
-                <a :href="localePath('/features')">All features</a>
-              </li>
-              <li id="li-35131" class="dropdown1">
-                <a :href="localePath('/construction-camera-specs')"
-                  >Camera Specs</a
-                >
-              </li>
-            </ul>
-          </li>
-          <li v-if="isPricing" id="li-351" class="dropdown active">
-            <a :href="localePath('/pricing')">Pricing</a>
-          </li>
-          <li v-else id="li-351" class="dropdown">
-            <a :href="localePath('/pricing')">Pricing</a>
-          </li>
-          <li v-if="isBlog" id="li-569" class="dropdown active">
-            <a :href="localePath('/blog')">Blog</a>
-          </li>
-          <li v-else id="li-569" class="dropdown">
-            <a :href="localePath('/blog')">Blog</a>
-          </li>
-          <li v-if="isContact" id="li-350" class="dropdown active">
-            <a :href="localePath('/contact')">Contact</a>
-          </li>
-          <li v-else id="li-350" class="dropdown">
-            <a :href="localePath('/contact')">Contact</a>
-          </li>
-        </ul>
-        <div class="sign-in-and-phone">
-          <a
-            href="https://dash.evercam.io/v2/users/signin"
-            target="_blank"
-            rel="noopener"
-            >Sign in</a
-          >
-          <span>|</span> <a href="tel:+35319194500">+353 1 919 4500</a>
-        </div>
-        <div class="language-dropdown" :class="menuActive ? 'active' : ''">
-          <NuxtLink
-            class="glob-icon country lang-white"
-            id="language-dropdown"
-            @click="onClickLocale()"
-            href="#"
-          >
-            <span class="country">
-              {{ locale.replace("en-", "").toUpperCase() }}
-            </span>
-          </NuxtLink>
-          <div class="language-menu">
-            <a
-              href="#"
-              class="glob-icon country"
-              @click="onClickLocale()"
-              id="language-dropdown-close"
-            >
-              <span class="country">
-                {{ locale.replace("en-", "").toUpperCase() }}
-              </span>
-            </a>
-            <NuxtLink
-              v-for="{ code, name } in availableLocales"
-              :key="code"
-              :to="switchLocalePath(code)"
-            >
-              {{ name.replace("en-", "") }}
-            </NuxtLink>
-            <!-- <a href="https://evercam.uk">UK</a>
-  <a href="https://evercam.sg">SG</a>
-  <a href="https://evercam.com.au">AU</a>
-  <a href="https://evercam.com">US</a>
-  <a href="https://evercam.pl">PL</a> -->
-          </div>
-        </div>
+                <div class="d-md-flex align-items-center">
+                    <!-- LOGIN  / PHONE-->
+                    <div class="sign-in-and-phone">
+                        <a
+                            href="https://dash.evercam.io/v2/users/signin"
+                            target="_blank"
+                            rel="noopener"
+                            >Sign in</a
+                        >
+                        <span>|</span>
+                        <a href="tel:+35319194500">+353 1 919 4500</a>
+                    </div>
 
-        <div class="language-bar d-block d-sm-none">
-          <a
-            href="#"
-            class="glob-icon country"
-            @click="onClickLocale()"
-            id="language-dropdown-close"
-          >
-            <span class="country">
-              {{ locale.replace("en-", "").toUpperCase() }}
-            </span>
-          </a>
-          <NuxtLink
-            v-for="{ code, name } in availableLocales"
-            :key="code"
-            :to="switchLocalePath(code)"
-          >
-            {{ name.replace("en-", "") }}
-          </NuxtLink>
-          <!-- <a href="https://evercam.uk">UK</a>
-<a href="https://evercam.sg">SG</a>
-<a href="https://evercam.com.au">AU</a>
-<a href="https://evercam.com">US</a>
-<a href="https://evercam.pl">PL</a> -->
-        </div>
-      </div>
-    </nav>
-  </div>
+                    <!-- LOCALE SELECTION -->
+                    <div
+                        class="language-dropdown"
+                        :class="menuActive ? 'active' : ''"
+                    >
+                        <NuxtLink
+                            id="language-dropdown"
+                            class="glob-icon country lang-white"
+                            href=""
+                            style="border: 1px solid #fff !important"
+                            @click="onClickLocale()"
+                        >
+                            <span class="country cursor-pointer">
+                                {{ locale.replace("en-", "").toUpperCase() }}
+                            </span>
+                        </NuxtLink>
+                        <div class="language-menu cursor-pointer">
+                            <a
+                                id="language-dropdown-close"
+                                href="#"
+                                class="glob-icon country cursor-pointer"
+                                @click="onClickLocale()"
+                            >
+                                <span class="country cursor-pointer">
+                                    {{
+                                        locale.replace("en-", "").toUpperCase()
+                                    }}
+                                </span>
+                            </a>
+                            <NuxtLink
+                                v-for="{ code, name } in availableLocales"
+                                :key="code"
+                                :to="switchLocalePath(code)"
+                            >
+                                {{ name.replace("en-", "") }}
+                            </NuxtLink>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
 </template>
+
+<style>
+@media screen and (max-width: 767px) {
+    .home header #navbar .nav-list > li.dropdown > a,
+    .home header #navbar .nav-list > li.dropdown1 > a {
+        color: black !important;
+    }
+    #navbar li.dropdown > a:hover + ul.dropdown-menu.dropdown-menu-custom,
+    #navbar li.dropdown > ul.dropdown-menu.dropdown-menu-custom:hover {
+        display: block !important;
+        margin-top: 0 !important;
+    }
+}
+</style>
