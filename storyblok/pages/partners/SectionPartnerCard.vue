@@ -1,5 +1,5 @@
 <script setup>
-defineProps({ blok: Object });
+defineProps({ blok: Object })
 </script>
 
 <template>
@@ -23,12 +23,14 @@ defineProps({ blok: Object });
       </p>
       <p>
         <strong>Contact:</strong><br />
-        {{blok.address}}
-        <a v-if="blok.phone" :href="`tel://+`+ blok.phone">+{{blok.phone}}</a><br />
-        <a v-if="blok.email" :href="`mailto:`+ blok.email"
-          >{{blok.email}}</a
+        {{ blok.address }}
+        <a v-if="blok.phone" :href="`tel://+` + blok.phone">+{{ blok.phone }}</a
         ><br />
-        <a v-if="blok.partner_website" :href="blok.partner_website">{{blok.name}}</a>
+        <a v-if="blok.email" :href="`mailto:` + blok.email">{{ blok.email }}</a
+        ><br />
+        <a v-if="blok.partner_website" :href="blok.partner_website">{{
+          blok.name
+        }}</a>
       </p>
       <iframe
         :src="blok.google_maps_embed"

@@ -23,14 +23,14 @@
 </template>
 
 <script setup>
-const props = defineProps({ blok: Object });
+const props = defineProps({ blok: Object })
 
-let button_url = "";
+let button_url = ""
 if (props.blok.button_url.url !== "") {
-  button_url = props.blok.button_url.url;
-//   console.log("This is the button_url", button_url);
+  button_url = props.blok.button_url.url
+  //   console.log("This is the button_url", button_url);
 } else {
-  button_url = props.blok.button_url.cached_url;
-//   console.log("This is the button_url", button_url);
+  button_url = props.blok.button_url.cached_url
+  //   console.log("This is the button_url", button_url);
 }
 </script>

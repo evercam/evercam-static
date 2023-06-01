@@ -1,48 +1,48 @@
 <script setup>
-defineProps({ blok: Object });
-const urlPath = useRoute().path;
-const fullPath = useRoute().fullPath;
-const isProjects = urlPath.includes("/projects");
-const isFeatures = urlPath.includes("/features");
-const isPricing = urlPath.includes("/pricing");
-const isBlog = urlPath.includes("/blog");
-const isContact = urlPath.includes("/contact");
-const isHomepage = fullPath.length < 2;
+defineProps({ blok: Object })
+const urlPath = useRoute().path
+const fullPath = useRoute().fullPath
+const isProjects = urlPath.includes("/projects")
+const isFeatures = urlPath.includes("/features")
+const isPricing = urlPath.includes("/pricing")
+const isBlog = urlPath.includes("/blog")
+const isContact = urlPath.includes("/contact")
+const isHomepage = fullPath.length < 2
 
 /** Multilanguage Configuration */
-const localePath = useLocalePath();
-const { locale, locales } = useI18n();
-const switchLocalePath = useSwitchLocalePath();
+const localePath = useLocalePath()
+const { locale, locales } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
 
 const availableLocales = computed(() => {
-  return locales.value.filter((i) => i.code !== locale.value);
-});
+  return locales.value.filter((i) => i.code !== locale.value)
+})
 
 onMounted(() => {
   if (isFeatures) {
     document.getElementById("language-dropdown").style.border =
-      "1px solid rgb(255, 255, 255) !important";
+      "1px solid rgb(255, 255, 255) !important"
     console.log(
       "This is the Button",
       document.getElementById("language-dropdown").style
-    );
+    )
   }
   if (isHomepage) {
-    document.body.classList.add("home");
+    document.body.classList.add("home")
 
-    const languageToggle = document.getElementById("language-dropdown");
-    const languageMenu = document.getElementsByClassName("language-dropdown");
+    const languageToggle = document.getElementById("language-dropdown")
+    const languageMenu = document.getElementsByClassName("language-dropdown")
 
     // Handle click outside dropdown
     document.addEventListener("click", (event) => {
-      const isClickInside = languageToggle.contains(event.target);
+      const isClickInside = languageToggle.contains(event.target)
       console.log(languageMenu[0])
       if (!isClickInside) {
-        languageMenu[0].classList.remove("active");
+        languageMenu[0].classList.remove("active")
       }
-    });
+    })
   }
-});
+})
 </script>
 
 <script>
@@ -50,14 +50,14 @@ export default {
   data() {
     return {
       menuActive: false,
-    };
+    }
   },
   methods: {
     onClickLocale() {
-      this.menuActive = !this.menuActive;
+      this.menuActive = !this.menuActive
     },
   },
-};
+}
 </script>
 
 <template>
@@ -175,9 +175,7 @@ export default {
               {{ locale.replace("en-", "").toUpperCase() }}
             </span>
           </NuxtLink>
-          <div
-            class="language-menu"
-          >
+          <div class="language-menu">
             <a
               href="#"
               class="glob-icon country"

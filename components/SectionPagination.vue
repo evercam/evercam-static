@@ -2,9 +2,9 @@
 defineProps({
   totalPages: Number,
   currentPage: Number,
-});
+})
 
-defineEmits(["change"]);
+defineEmits(["change"])
 </script>
 
 <template>

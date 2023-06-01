@@ -51,6 +51,9 @@
     "youtube-embed": "^1.0.0"
   },
   "lint-staged": {
-    "*.{js,jsx,vue,tsx,ts}": ["yarn lint:fix", "yarn prettier:fix"]
+    "*.{js,jsx,vue,tsx,ts}": [
+      "yarn lint:fix",
+      "yarn prettier:fix"
+    ]
   }
 }

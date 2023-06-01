@@ -1,9 +1,9 @@
 <script>
 // If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
-import { Carousel, Slide, Navigation } from "vue3-carousel";
+import { Carousel, Slide, Navigation } from "vue3-carousel"
 
 export default defineComponent({
-  name: 'Basic',
+  name: "Basic",
   components: {
     Carousel,
     Slide,
@@ -13,57 +13,57 @@ export default defineComponent({
 </script>
 
 <script setup>
-const props = defineProps({ blok: Object });
+const props = defineProps({ blok: Object })
 
-const resolvedContent = computed(() => renderRichText(props.blok.content));
+const resolvedContent = computed(() => renderRichText(props.blok.content))
 
-const videoSource = ["vimeo.com", "youtube.com", "mp4", ".mp4"];
+const videoSource = ["vimeo.com", "youtube.com", "mp4", ".mp4"]
 
-const blogs = ref(null);
-const storyblokApi = useStoryblokApi();
+const blogs = ref(null)
+const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
   starts_with: "blog",
   is_startpage: false,
   per_page: 5,
-});
-blogs.value = data.stories.slice(0, 5);
+})
+blogs.value = data.stories.slice(0, 5)
 
 const assetHeading = props.blok.asset_heading
   ? props.blok.asset_heading.filename
-  : "https://player.vimeo.com/video/427781103?dnt=1&app_id=122963";
+  : "https://player.vimeo.com/video/427781103?dnt=1&app_id=122963"
 
 /**
  *  Change format Date of Blog post
  */
 
 function formatDate(d) {
-  let date = new Date(d);
+  let date = new Date(d)
 
   if (isNaN(date.getTime())) {
-    return d;
+    return d
   } else {
-    let month = new Array();
-    month[0] = "January";
-    month[1] = "February";
-    month[2] = "March";
-    month[3] = "April";
-    month[4] = "May";
-    month[5] = "Juny";
-    month[6] = "July";
-    month[7] = "August";
-    month[8] = "September";
-    month[9] = "October";
-    month[10] = "November";
-    month[11] = "December";
+    let month = new Array()
+    month[0] = "January"
+    month[1] = "February"
+    month[2] = "March"
+    month[3] = "April"
+    month[4] = "May"
+    month[5] = "Juny"
+    month[6] = "July"
+    month[7] = "August"
+    month[8] = "September"
+    month[9] = "October"
+    month[10] = "November"
+    month[11] = "December"
 
-    let day = date.getDate();
+    let day = date.getDate()
 
     if (day < 10) {
-      day = "0" + day;
+      day = "0" + day
     }
 
-    return month[date.getMonth()] + " " + day + "," + " " + date.getFullYear();
+    return month[date.getMonth()] + " " + day + "," + " " + date.getFullYear()
   }
 }
 
@@ -71,23 +71,23 @@ function formatDate(d) {
  * Check if Youtube and make it embed
  */
 
-const fromYoutube = "www.youtube.com/watch";
-let isYoutube = assetHeading.includes(fromYoutube);
-let assetCheck = "";
-let isVideo = false;
+const fromYoutube = "www.youtube.com/watch"
+let isYoutube = assetHeading.includes(fromYoutube)
+let assetCheck = ""
+let isVideo = false
 
 if (isYoutube) {
-  assetCheck = assetHeading.replace("watch?v=", "embed/");
+  assetCheck = assetHeading.replace("watch?v=", "embed/")
 } else {
-  assetCheck = assetHeading;
+  assetCheck = assetHeading
 }
 
 if (
   videoSource.some(function (v) {
-    return assetCheck.indexOf(v) > -1;
+    return assetCheck.indexOf(v) > -1
   })
 ) {
-  isVideo = true;
+  isVideo = true
 }
 
 /**
@@ -95,7 +95,7 @@ if (
  * Get blog date
  */
 
-let blog_details = ref(null);
+let blog_details = ref(null)
 
 async function fetchBlog(blogTitle) {
   if (blogTitle) {
@@ -103,23 +103,23 @@ async function fetchBlog(blogTitle) {
       version: useRoute().query._storyblok ? "draft" : "published",
       starts_with: "blog/",
       search_term: blogTitle,
-    });
-    return blog.data.stories;
+    })
+    return blog.data.stories
   }
 }
 
 blog_details = await fetchBlog(props.blok.blog_title)
   .then((result) => {
-    return result;
+    return result
   })
-  .catch(console.error.bind(console));
+  .catch(console.error.bind(console))
 
 /**
  * Writer Details
  * Name and Photo
  */
 
-let author_details = ref(null);
+let author_details = ref(null)
 
 async function fetchAuthor(authorUUID) {
   if (authorUUID) {
@@ -127,16 +127,16 @@ async function fetchAuthor(authorUUID) {
       version: useRoute().query._storyblok ? "draft" : "published",
       starts_with: "author/",
       by_uuids: authorUUID,
-    });
-    return author.data.stories;
+    })
+    return author.data.stories
   }
 }
 
 author_details = await fetchAuthor(props.blok.writer_details)
   .then((result) => {
-    return result;
+    return result
   })
-  .catch(console.error.bind(console));
+  .catch(console.error.bind(console))
 </script>
 
 <template>
@@ -161,8 +161,16 @@ author_details = await fetchAuthor(props.blok.writer_details)
                         author_details[0].name
                       }}</span>
                       <div class="all-dates">
-                        <span class="entry-date">Date : {{ formatDate(blog_details[0].first_published_at) }}</span>
-                        <span class="last-date">Last Modified Date : {{ formatDate(blog_details[0].published_at) }}</span>
+                        <span class="entry-date"
+                          >Date :
+                          {{
+                            formatDate(blog_details[0].first_published_at)
+                          }}</span
+                        >
+                        <span class="last-date"
+                          >Last Modified Date :
+                          {{ formatDate(blog_details[0].published_at) }}</span
+                        >
                       </div>
                     </div>
                   </div>

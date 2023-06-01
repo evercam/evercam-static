@@ -21,10 +21,10 @@
       </div>
     </div>
   </div>
-  <SectionFooter/>
+  <SectionFooter />
 </template>
 
 <script setup>
-import SectionNavigationWhite from "./storyblok/SectionNavigationWhite.vue";
-defineProps(['error'])
+import SectionNavigationWhite from "./storyblok/SectionNavigationWhite.vue"
+defineProps(["error"])
 </script>

@@ -1,9 +1,9 @@
 <script setup>
-defineProps({ blok: Object });
+defineProps({ blok: Object })
 </script>
 
 <script>
-import kebabCase from "lodash/kebabCase";
+import kebabCase from "lodash/kebabCase"
 
 export default {
   data() {
@@ -132,46 +132,46 @@ export default {
           selected: true,
         },
       ],
-    };
+    }
   },
   computed: {
     selectedLocation() {
-      return this.locations.filter((location) => location.selected);
+      return this.locations.filter((location) => location.selected)
     },
     selectedCategory() {
-      return this.categories.filter((category) => category.selected);
+      return this.categories.filter((category) => category.selected)
     },
   },
   created() {
-    this.fetchPost();
+    this.fetchPost()
   },
   watch: {
     selectedLocation: function () {
-      this.fetchSuggestions(this.searchInput);
+      this.fetchSuggestions(this.searchInput)
     },
     selectedCategory: function () {
-      this.fetchSuggestions(this.searchInput);
+      this.fetchSuggestions(this.searchInput)
     },
     currentPage: function (value) {
-      this.fetchSuggestions(this.searchInput);
+      this.fetchSuggestions(this.searchInput)
     },
   },
   methods: {
     checkAllLocation() {
       if (!this.isCheckedAllLocation) {
-        return this.locations.map((location) => (location.selected = true));
+        return this.locations.map((location) => (location.selected = true))
       }
-      return this.locations.map((location) => (location.selected = false));
+      return this.locations.map((location) => (location.selected = false))
     },
     checkAllCategory() {
       if (!this.isCheckedAllCategory) {
-        return this.categories.map((category) => (category.selected = true));
+        return this.categories.map((category) => (category.selected = true))
       }
-      return this.categories.map((category) => (category.selected = false));
+      return this.categories.map((category) => (category.selected = false))
     },
     groupingPost: async function () {
-      const storyblokApi = useStoryblokApi();
-      var customPerPage = 50;
+      const storyblokApi = useStoryblokApi()
+      var customPerPage = 50
 
       // console.log(
       //   this.totalPost,
@@ -189,31 +189,31 @@ export default {
           is_startpage: false,
           per_page: customPerPage,
           page: i + 1,
-        });
+        })
 
         data.stories.map((story) => {
           // Group and find locations
           var locationIndex = this.locations.findIndex(
             (location) => location.id == story.content.project_country
-          );
+          )
 
           if (locationIndex >= 0) {
-            this.locations[locationIndex].total += 1;
+            this.locations[locationIndex].total += 1
           }
 
           // Group and find categories
           var categoryIndex = this.categories.findIndex(
             (category) => category.id == story.content.project_category
-          );
+          )
 
           if (categoryIndex >= 0) {
-            this.categories[categoryIndex].total += 1;
+            this.categories[categoryIndex].total += 1
           }
-        });
+        })
       }
     },
     fetchPost: async function () {
-      const storyblokApi = useStoryblokApi();
+      const storyblokApi = useStoryblokApi()
 
       const { data, headers } = await storyblokApi.get("cdn/stories", {
         version: useRoute().query._storyblok ? "draft" : "published",
@@ -221,30 +221,30 @@ export default {
         is_startpage: false,
         page: this.currentPage,
         per_page: this.perPage,
-      });
+      })
 
-      this.projects = data.stories;
-      this.totalPost = parseInt(headers.total);
+      this.projects = data.stories
+      this.totalPost = parseInt(headers.total)
 
       if (data.stories.length < 1) {
-        this.getPost = false;
+        this.getPost = false
       }
 
       if (data.stories.length >= 1) {
-        this.getPost = true;
+        this.getPost = true
       }
 
-      this.groupingPost();
+      this.groupingPost()
     },
     fetchSuggestions: async function () {
-      const storyblokApi = useStoryblokApi();
+      const storyblokApi = useStoryblokApi()
 
-      var optCategories = this.selectedCategory.map((category) => category.id);
-      var optLocations = this.selectedLocation.map((location) => location.id);
+      var optCategories = this.selectedCategory.map((category) => category.id)
+      var optLocations = this.selectedLocation.map((location) => location.id)
 
       // additional since, not all list has id
-      optCategories = optCategories.filter((n) => n != "");
-      optLocations = optLocations.filter((n) => n != "");
+      optCategories = optCategories.filter((n) => n != "")
+      optLocations = optLocations.filter((n) => n != "")
 
       const { data, headers } = await storyblokApi.get("cdn/stories", {
         version: useRoute().query._storyblok ? "draft" : "published",
@@ -261,17 +261,17 @@ export default {
             in: optCategories.join(),
           },
         },
-      });
+      })
 
-      this.projects = data.stories;
-      this.totalPost = parseInt(headers.total);
-      this.getPost = data.stories.length >= 1;
+      this.projects = data.stories
+      this.totalPost = parseInt(headers.total)
+      this.getPost = data.stories.length >= 1
     },
     calculatePagesCount(perPage, totalPost) {
-      return totalPost < perPage ? 1 : Math.ceil(totalPost / perPage);
+      return totalPost < perPage ? 1 : Math.ceil(totalPost / perPage)
     },
   },
-};
+}
 </script>
 
 <template>

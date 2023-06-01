@@ -1,9 +1,9 @@
 <script setup>
-defineProps({ blok: Object });
+defineProps({ blok: Object })
 /** Multilanguage Configuration */
-const localePath = useLocalePath();
-const { locale, locales } = useI18n();
-const switchLocalePath = useSwitchLocalePath();
+const localePath = useLocalePath()
+const { locale, locales } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
 </script>
 
 <style>
@@ -115,12 +115,9 @@ const switchLocalePath = useSwitchLocalePath();
             <li><a href="https://evercam.com.au">AU</a></li>
             <li><a href="https://evercam.com">US</a></li>
             <li><a href="https://evercam.pl">PL</a></li> -->
-            <li v-for="{ code, name } in locales"
-                :key="code">
-              <NuxtLink
-                :to="switchLocalePath(code)"
-              >
-                {{ name.replace('en-','') }}
+            <li v-for="{ code, name } in locales" :key="code">
+              <NuxtLink :to="switchLocalePath(code)">
+                {{ name.replace("en-", "") }}
               </NuxtLink>
             </li>
           </ul>
@@ -194,9 +191,7 @@ const switchLocalePath = useSwitchLocalePath();
                       >
                     </li>
                     <li id="li-29064" class="dropdown">
-                      <a href="/project-management"
-                        >Project Management</a
-                      >
+                      <a href="/project-management">Project Management</a>
                     </li>
                     <li id="li-29065" class="dropdown">
                       <a href="/marketing">Marketing</a>
@@ -253,9 +248,7 @@ const switchLocalePath = useSwitchLocalePath();
                       >
                     </li>
                     <li id="li-28138" class="dropdown">
-                      <a href="/features/gate-report"
-                        >Gate Report</a
-                      >
+                      <a href="/features/gate-report">Gate Report</a>
                     </li>
                     <li id="li-29059" class="dropdown">
                       <a
@@ -264,14 +257,10 @@ const switchLocalePath = useSwitchLocalePath();
                       >
                     </li>
                     <li id="li-492" class="dropdown">
-                      <a href="/bim-time-lapse-integration"
-                        >BIM Integration</a
-                      >
+                      <a href="/bim-time-lapse-integration">BIM Integration</a>
                     </li>
                     <li id="li-29060" class="dropdown">
-                      <a href="/features/the-measuring-tool"
-                        >Measuring Tool</a
-                      >
+                      <a href="/features/the-measuring-tool">Measuring Tool</a>
                     </li>
                     <li id="li-29062" class="dropdown">
                       <a
@@ -280,9 +269,7 @@ const switchLocalePath = useSwitchLocalePath();
                       >
                     </li>
                     <li id="li-29061" class="dropdown">
-                      <a href="/features/edit-tool"
-                        >Edit Tool</a
-                      >
+                      <a href="/features/edit-tool">Edit Tool</a>
                     </li>
                   </ul>
                 </div>
@@ -312,14 +299,10 @@ const switchLocalePath = useSwitchLocalePath();
                 <div class="card-body">
                   <ul class="">
                     <li id="li-25747" class="dropdown">
-                      <a href="/become-an-installer"
-                        >Become An Installer</a
-                      >
+                      <a href="/become-an-installer">Become An Installer</a>
                     </li>
                     <li id="li-1705" class="dropdown">
-                      <a href="/partners"
-                        >Find An Installer</a
-                      >
+                      <a href="/partners">Find An Installer</a>
                     </li>
                   </ul>
                 </div>
@@ -853,7 +836,7 @@ const switchLocalePath = useSwitchLocalePath();
                   href="https://wa.me/353894481651"
                   target="_blank"
                   rel="noopener"
-                  >
+                >
                   <font-awesome-icon icon="fa-brands fa-whatsapp" />
                   <span class="sr-only">Whatsapp </span></a
                 >
@@ -863,21 +846,17 @@ const switchLocalePath = useSwitchLocalePath();
                   href="https://github.com/evercam"
                   target="_blank"
                   rel="noopener"
-                  >
-                  <font-awesome-icon icon="fa-brands fa-github" />
-                  <span
-                    class="sr-only"
-                    >Github
-                  </span>
-                  </a
                 >
+                  <font-awesome-icon icon="fa-brands fa-github" />
+                  <span class="sr-only">Github </span>
+                </a>
               </li>
               <li>
                 <a
                   href="https://www.linkedin.com/company/evercam"
                   target="_blank"
                   rel="noopener"
-                  >
+                >
                   <font-awesome-icon icon="fa-brands fa-linkedin-in" />
                   <span class="sr-only">Linkedin </span></a
                 >
@@ -887,7 +866,7 @@ const switchLocalePath = useSwitchLocalePath();
                   href="https://twitter.com/evrcm"
                   target="_blank"
                   rel="noopener"
-                  >
+                >
                   <font-awesome-icon icon="fa-brands fa-twitter" />
                   <span class="sr-only">Twitter </span></a
                 >
@@ -897,12 +876,9 @@ const switchLocalePath = useSwitchLocalePath();
                   href="https://www.facebook.com/evrcm/"
                   target="_blank"
                   rel="noopener"
-                  >
+                >
                   <font-awesome-icon icon="fa-brands fa-facebook-f" />
-                  <span
-                    class="sr-only"
-                    >Facebook
-                  </span></a
+                  <span class="sr-only">Facebook </span></a
                 >
               </li>
               <li>
@@ -910,18 +886,17 @@ const switchLocalePath = useSwitchLocalePath();
                   href="https://vimeo.com/evercam"
                   target="_blank"
                   rel="noopener"
-                  >
+                >
                   <font-awesome-icon icon="fa-brands fa-vimeo-v" />
                   <span class="sr-only">Vimeo </span>
-                  </a
-                >
+                </a>
               </li>
               <li>
                 <a
                   href="https://www.youtube.com/user/evrcm"
                   target="_blank"
                   rel="noopener"
-                  >
+                >
                   <font-awesome-icon icon="fa-brands fa-youtube" />
                   <span class="sr-only">Youtube </span></a
                 >
@@ -931,11 +906,10 @@ const switchLocalePath = useSwitchLocalePath();
                   href="https://www.instagram.com/EvercamConstructionCameras/"
                   target="_blank"
                   rel="noopener"
-                  >
+                >
                   <font-awesome-icon icon="fa-brands fa-instagram" />
                   <span class="sr-only">Instagram </span>
-                  </a
-                >
+                </a>
               </li>
             </ul>
           </div>

@@ -8,6 +8,6 @@
 </template>
 
 <script setup>
-defineProps({ blok: Object });
+defineProps({ blok: Object })
 const { locale } = useI18n()
 </script>

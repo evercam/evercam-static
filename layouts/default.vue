@@ -1,4 +1,4 @@
 <template>
-    <slot/>
-    <SectionFooter/>
+  <slot />
+  <SectionFooter />
 </template>

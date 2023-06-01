@@ -1,6 +1,6 @@
 <script setup>
-import BlogCardIndividual from "./BlogCardIndividual.vue";
-defineProps({ blok: Object });
+import BlogCardIndividual from "./BlogCardIndividual.vue"
+defineProps({ blok: Object })
 </script>
 
 <script>
@@ -11,19 +11,19 @@ export default {
       currentPage: 1,
       perPage: 30,
       totalPost: 0,
-    };
+    }
   },
   created() {
-    this.fetchPost();
+    this.fetchPost()
   },
   watch: {
     currentPage: function (value) {
-      this.fetchPost(this.searchInput);
+      this.fetchPost(this.searchInput)
     },
   },
   methods: {
     fetchPost: async function () {
-      const storyblokApi = useStoryblokApi();
+      const storyblokApi = useStoryblokApi()
 
       const { data, headers } = await storyblokApi.get("cdn/stories", {
         version: useRoute().query._storyblok ? "draft" : "published",
@@ -32,16 +32,16 @@ export default {
         sort_by: "content.date_published:desc",
         page: this.currentPage,
         per_page: this.perPage,
-      });
+      })
 
-      this.blogs = data.stories;
-      this.totalPost = parseInt(headers.total);
+      this.blogs = data.stories
+      this.totalPost = parseInt(headers.total)
     },
     calculatePagesCount(perPage, totalPost) {
-      return totalPost < perPage ? 1 : Math.ceil(totalPost / perPage);
+      return totalPost < perPage ? 1 : Math.ceil(totalPost / perPage)
     },
   },
-};
+}
 </script>
 
 <style>

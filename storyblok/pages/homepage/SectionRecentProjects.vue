@@ -1,9 +1,9 @@
 <script setup>
-defineProps({ blok: Object });
+defineProps({ blok: Object })
 
-const projects = ref(null);
-const storyblokApi = useStoryblokApi();
-const { locale } = useI18n();
+const projects = ref(null)
+const storyblokApi = useStoryblokApi()
+const { locale } = useI18n()
 
 /** Search by country */
 const { data } = await storyblokApi.get("cdn/stories", {
@@ -12,27 +12,27 @@ const { data } = await storyblokApi.get("cdn/stories", {
   is_startpage: false,
   filter_query: {
     project_country: {
-      in:projectBasedUrl()
+      in: projectBasedUrl(),
     },
-  }
-});
+  },
+})
 
 function projectBasedUrl() {
-  if(locale.value === "en-ie") {
+  if (locale.value === "en-ie") {
     return "94332311-8c5a-447f-bf35-d01f8c6de53c,ba36f6fc-ee8d-4623-8ee9-37178297fe9f,03549e41-cad9-427f-8547-d99255e6eb40"
   }
-  if(locale.value === "en-sg") {
+  if (locale.value === "en-sg") {
     return "94332311-8c5a-447f-bf35-d01f8c6de53c,ba36f6fc-ee8d-4623-8ee9-37178297fe9f,03549e41-cad9-427f-8547-d99255e6eb40"
   }
-  if(locale.value === "en-au") {
+  if (locale.value === "en-au") {
     return "ba36f6fc-ee8d-4623-8ee9-37178297fe9f"
   }
-  if(locale.value === "en-gb") {
+  if (locale.value === "en-gb") {
     return "03549e41-cad9-427f-8547-d99255e6eb40"
   }
 }
 
-projects.value = data.stories;
+projects.value = data.stories
 
 // const imageThumbnail = props.project.image_thumbnail
 //   ? props.project.image_thumbnail.filename
@@ -41,10 +41,10 @@ projects.value = data.stories;
 
 <script>
 // If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
-import { Carousel, Slide, Navigation } from "vue3-carousel";
+import { Carousel, Slide, Navigation } from "vue3-carousel"
 
 export default defineComponent({
-  name: 'Basic',
+  name: "Basic",
   components: {
     Carousel,
     Slide,

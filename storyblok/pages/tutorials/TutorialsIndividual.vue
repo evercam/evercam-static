@@ -1,8 +1,8 @@
 <script>
-import SectionNavigationWhite from "@/storyblok/SectionNavigationWhite.vue";
-import SectionBreadcrumbLeftRight from "@/storyblok/SectionBreadcrumbLeftRight.vue";
-import SectionContainerContent from "../../SectionContainerContent.vue";
-import SectionAskUs from "@/storyblok/SectionAskUs.vue";
+import SectionNavigationWhite from "@/storyblok/SectionNavigationWhite.vue"
+import SectionBreadcrumbLeftRight from "@/storyblok/SectionBreadcrumbLeftRight.vue"
+import SectionContainerContent from "../../SectionContainerContent.vue"
+import SectionAskUs from "@/storyblok/SectionAskUs.vue"
 // import SectionVideoWrapper from "../../SectionVideoWrapper.vue";
 
 export default {
@@ -13,41 +13,41 @@ export default {
     SectionAskUs,
     // SectionVideoWrapper,
   },
-};
+}
 </script>
 
 <script setup>
-const props = defineProps({ blok: Object });
-const urlPath = useRoute().path;
+const props = defineProps({ blok: Object })
+const urlPath = useRoute().path
 
-const resolvedContent = computed(() => renderRichText(props.blok.content));
+const resolvedContent = computed(() => renderRichText(props.blok.content))
 
-const tutorials = ref(null);
-const storyblokApi = useStoryblokApi();
+const tutorials = ref(null)
+const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
   starts_with: "tutorials",
   is_startpage: false,
-});
-tutorials.value = data.stories;
+})
+tutorials.value = data.stories
 
 let assetSource = ""
 
-if(props.blok.video_url.filename != "") {
-  assetSource = props.blok.video_url.filename;
+if (props.blok.video_url.filename != "") {
+  assetSource = props.blok.video_url.filename
 }
 /**
  * Check if Youtube and make it embed
  */
 
-const fromYoutube = "www.youtube.com/watch";
-let isYoutube = assetSource.includes(fromYoutube);
-let assetCheck = "";
+const fromYoutube = "www.youtube.com/watch"
+let isYoutube = assetSource.includes(fromYoutube)
+let assetCheck = ""
 
 if (isYoutube) {
-  assetCheck = assetSource.replace("watch?v=", "embed/");
+  assetCheck = assetSource.replace("watch?v=", "embed/")
 } else {
-  assetCheck = assetSource;
+  assetCheck = assetSource
 }
 </script>
 
@@ -74,14 +74,16 @@ if (isYoutube) {
       </div>
     </figure>
     <div class="standard-content" v-html="resolvedContent"></div>
-    <a v-if="blok.button_name"
+    <a
+      v-if="blok.button_name"
       class="button-red"
       :href="blok.button_url"
       target="_blank"
       rel="noreferrer noopener"
       >{{ blok.button_name }}</a
     >
-    <a v-else
+    <a
+      v-else
       class="button-red"
       href="https://dash.evercam.io/v2/users/signin"
       target="_blank"

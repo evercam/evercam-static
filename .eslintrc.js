@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     "vue/no-multiple-template-root": "off",
     "vue/require-default-prop": "off",
+    "import/first": "off",
     "prettier/prettier": [
       "error",
       {

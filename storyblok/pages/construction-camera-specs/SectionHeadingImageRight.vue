@@ -1,8 +1,8 @@
 <script setup>
-const props = defineProps({ blok: Object });
+const props = defineProps({ blok: Object })
 const resolvedDescription = computed(() =>
   renderRichText(props.blok.description)
-);
+)
 </script>
 
 <template>
@@ -24,9 +24,13 @@ const resolvedDescription = computed(() =>
             <a
               id="download-files"
               class="btn-style"
-              :href="blok.download_url.url ? blok.download_url.url : blok.download_url.cached_url"
+              :href="
+                blok.download_url.url
+                  ? blok.download_url.url
+                  : blok.download_url.cached_url
+              "
               download=""
-              >{{blok.download_name}}</a
+              >{{ blok.download_name }}</a
             >
           </p>
         </div>

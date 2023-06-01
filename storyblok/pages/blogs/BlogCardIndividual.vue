@@ -1,21 +1,21 @@
 <script setup>
-const props = defineProps({ blog: Object, slug: String });
+const props = defineProps({ blog: Object, slug: String })
 
 const imageThumbnail = props.blog.asset_heading
   ? props.blog.asset_heading.filename
-  : "https://a.storyblok.com/f/208852/1920x1083/82ba327790/asset-heading_placeholder.jpg";
+  : "https://a.storyblok.com/f/208852/1920x1083/82ba327790/asset-heading_placeholder.jpg"
 
-const urlPath = useRoute().path;
-let isBlogChild = false;
-let isBlogParent = false;
+const urlPath = useRoute().path
+let isBlogChild = false
+let isBlogParent = false
 
 /** Problem in Another Language */
 if (urlPath.includes("/blog/")) {
-  isBlogChild = true;
+  isBlogChild = true
 }
 
-if (urlPath === '/blog') {
-  isBlogParent = true;
+if (urlPath === "/blog") {
+  isBlogParent = true
 }
 </script>
 
@@ -40,7 +40,7 @@ if (urlPath === '/blog') {
         <h2>
           <a :href="'/' + slug">{{ blog.blog_title }}</a>
         </h2>
-        <p>{{blog.short_description}} […]</p>
+        <p>{{ blog.short_description }} […]</p>
         <div class="text-right">
           <a :href="'/' + slug" class="btn-style">Read More</a>
         </div>
