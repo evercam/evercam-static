@@ -7,7 +7,7 @@ const localePath = useLocalePath();
 export default {
   data() {
     return {
-      menuOpen:false
+      menuOpen: false,
     };
   },
   methods: {
@@ -15,7 +15,7 @@ export default {
       this.menuOpen = !this.menuOpen;
       const mobileMenu = document.getElementById("main-menu");
       console.log("This is the mobile menu", mobileMenu);
-      if(this.menuOpen === true) {
+      if (this.menuOpen === true) {
         mobileMenu.style.display = "block";
         console.log("Is menu Open", this.menuOpen);
       } else {
@@ -48,8 +48,8 @@ export default {
             </a>
             <span
               id="menu-btn"
-              @click="onClickMenuMobile"
               :class="menuOpen ? 'active' : ''"
+              @click="onClickMenuMobile"
             ></span>
           </div>
           <NavigationMenu />
@@ -58,3 +58,9 @@ export default {
     </div>
   </header>
 </template>
+
+<style>
+header.new-design-header {
+  height: 80px;
+}
+</style>
