@@ -44,6 +44,7 @@ export default defineNuxtConfig({
         ],
     },
     i18n: {
+        baseUrl: 'https://evercam.sg',
         locales: [
             {
                 code: 'en-sg',
@@ -84,7 +85,7 @@ export default defineNuxtConfig({
 
         ],
         // defaultLocale: 'en-sg',
-        differentDomains: process.env.NODE_ENV === 'production',
+        differentDomains: true,
         detectBrowserLanguage: false
     },
     image: {
