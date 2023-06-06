@@ -13,7 +13,7 @@ export default defineNuxtConfig({
         'nuxt-gtag'
     ],
     gtag: {
-        id: 'G-FWDSTSQX63'
+        id: process.env.G_TAG
     },
     // Activate this if get [ERROR] No loader is configured for ".node" files: node_modules/fsevents/fsevents.node
     vite: {

@@ -11,7 +11,7 @@ export default {
       projects: null,
       getPost: true,
       currentPage: 1,
-      perPage: 24,
+      perPage: 100,
       totalPost: 0,
       showFilterLocation: false,
       showFilterCategory: false,

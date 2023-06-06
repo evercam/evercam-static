@@ -21,6 +21,9 @@ import ImageCompare from "image-compare-viewer";
 const props = defineProps({ blok: Object });
 
 const resolvedRichText = computed(() => renderRichText(props.blok.content));
+const resolvedRichText2 = computed(() =>
+  renderRichText(props.blok.another_content)
+);
 onMounted(() => {
   const element = document.getElementById("image-compare");
   const options = {
@@ -114,6 +117,11 @@ if (assetSource) {
               </div>
             </div>
           </div>
+          <div
+            style="margin-top: 20px"
+            class="standard-content"
+            v-html="resolvedRichText2"
+          ></div>
           <div class="standard-content">
             <iframe
               v-if="assetCheck"
@@ -124,9 +132,9 @@ if (assetSource) {
           </div>
         </div>
         <div class="col-md-4 right-sidebar">
-          <h3>Project Details</h3>
-          <table class="table">
-            <tbody v-if="blok.project_details">
+          <h3 v-if="blok.project_details.length > 0">Project Details</h3>
+          <table v-if="blok.project_details" class="table">
+            <tbody>
               <tr v-for="list in blok.project_details">
                 <td>{{ list.name }}:</td>
                 <td>
