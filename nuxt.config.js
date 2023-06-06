@@ -47,38 +47,44 @@ export default defineNuxtConfig({
         locales: [
             {
                 code: 'en-sg',
+                iso: 'en-sg',
                 name: 'SG',
                 domain: localeDomains.sg,
             },
             {
                 code: 'en-ie',
+                iso: 'en-ie',
                 name: 'IE',
                 domain: localeDomains.ie,
             },
             {
                 code: 'en-uk',
+                iso: 'en-uk',
                 name: 'UK',
                 domain: localeDomains.uk,
             },
             {
                 code: 'en-au',
+                iso: 'en-au',
                 name: 'AU',
                 domain: localeDomains.au,
             },
             {
                 code: 'en-us',
+                iso: 'en-us',
                 name: 'US',
                 domain: localeDomains.us,
             },
             {
                 code: 'en-pl',
+                iso: 'en-pl',
                 name: 'PL',
                 domain: localeDomains.pl,
             },
 
         ],
-        defaultLocale: 'en-sg',
-        differentDomains: true,
+        // defaultLocale: 'en-sg',
+        differentDomains: process.env.NODE_ENV === 'production',
         detectBrowserLanguage: false
     },
     image: {
