@@ -44,7 +44,6 @@ export default defineNuxtConfig({
         ],
     },
     i18n: {
-        baseUrl: 'https://evercam.sg',
         locales: [
             {
                 code: 'en-sg',
@@ -84,7 +83,7 @@ export default defineNuxtConfig({
             },
 
         ],
-        // defaultLocale: 'en-sg',
+        defaultLocale: 'en-sg',
         differentDomains: true,
         detectBrowserLanguage: false
     },
@@ -102,7 +101,7 @@ export default defineNuxtConfig({
             siteUrl: localeDomains.sg,
             siteName: 'Construction Time-lapse & Project Management Live Cameras | Evercam',
             siteDescription: 'Construction time-lapse cameras & project management software helps in marketing content, project management and dispute avoidance in the construction industry.',
-            language: 'en-SG', // prefer more explicit language codes like `en-AU` over `en`
+            language: 'en-sg', // prefer more explicit language codes like `en-AU` over `en`
         },
         indexable: true
     },
