@@ -56,7 +56,7 @@ export default defineNuxtConfig({
                 domain: localeDomains.ie,
             },
             {
-                code: 'en-uk',
+                code: 'en-gb',
                 name: 'UK',
                 domain: localeDomains.uk,
             },
@@ -71,7 +71,7 @@ export default defineNuxtConfig({
                 domain: localeDomains.us,
             },
             {
-                code: 'en-pl',
+                code: 'pl',
                 name: 'PL',
                 domain: localeDomains.pl,
             },
