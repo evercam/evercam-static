@@ -3,7 +3,6 @@ const localeDomains = require('./config/locale-domains')
 import i18nConfig from './i18n.config';
 
 export default defineNuxtConfig({
-    ssr: true,
     modules: [
         ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_API_KEY }],
         // Activate unlight house only if want to check locally
@@ -57,12 +56,11 @@ export default defineNuxtConfig({
     ],
     runtimeConfig: {
         public: {
-            siteUrl: localeDomains.sg,
+            // siteUrl: localeDomains.sg,
             siteName: 'Construction Time-lapse & Project Management Live Cameras | Evercam',
             siteDescription: 'Construction time-lapse cameras & project management software helps in marketing content, project management and dispute avoidance in the construction industry.',
-            language: 'en-sg', // prefer more explicit language codes like `en-AU` over `en`
+            // language: 'en-sg', // prefer more explicit language codes like `en-AU` over `en`
         },
-        indexable: true
     },
     css: [
         // CSS file in the project
