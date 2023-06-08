@@ -45,7 +45,6 @@ export default defineNuxtConfig({
     },
     i18n: {
         locales: localeDomains,
-        defaultLocale: 'en-sg',
         differentDomains: true,
         detectBrowserLanguage: false
     },
