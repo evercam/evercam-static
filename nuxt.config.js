@@ -46,7 +46,8 @@ export default defineNuxtConfig({
     i18n: {
         locales: localeDomains,
         differentDomains: true,
-        detectBrowserLanguage: false
+        detectBrowserLanguage: false,
+        defaultLocale: 'en-sg',
     },
     image: {
         provider: 'storyblok',
