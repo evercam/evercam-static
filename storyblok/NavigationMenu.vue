@@ -1,9 +1,13 @@
 <script setup>
 defineProps({ blok: Object })
+const switchLocalePath = useSwitchLocalePath()
 const urlPath = useRoute().path
 const localePath = useLocalePath()
 const { locale, locales } = useI18n()
-const switchLocalePath = useSwitchLocalePath()
+
+const currentLocale = computed(() => {
+    return locales.value.find((i) => i.code === locale.value)
+})
 const availableLocales = computed(() => {
     return locales.value.filter((i) => i.code !== locale.value)
 })
@@ -138,7 +142,7 @@ export default {
                     <!-- LOCALE SELECTION -->
                     <div
                         class="language-dropdown"
-                        :class="menuActive ? 'active' : ''"
+                        :class="{ 'active': menuActive }"
                     >
                         <NuxtLink
                             id="language-dropdown"
@@ -148,7 +152,7 @@ export default {
                             @click="onClickLocale()"
                         >
                             <span class="country cursor-pointer">
-                                {{ locale.replace("en-", "").toUpperCase() }}
+                                {{ currentLocale.name }}
                             </span>
                         </NuxtLink>
                         <div class="language-menu cursor-pointer">
@@ -160,7 +164,7 @@ export default {
                             >
                                 <span class="country cursor-pointer">
                                     {{
-                                        locale.replace("en-", "").toUpperCase()
+                                        currentLocale.name
                                     }}
                                 </span>
                             </a>
@@ -169,7 +173,7 @@ export default {
                                 :key="code"
                                 :to="switchLocalePath(code)"
                             >
-                                {{ name.replace("en-", "") }}
+                                {{ name }}
                             </NuxtLink>
                         </div>
                     </div>
