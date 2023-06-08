@@ -1,7 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 const localeDomains = require('./config/locale-domains')
+import i18nConfig from './i18n.config';
 
 export default defineNuxtConfig({
+    ssr: true,
     modules: [
         ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_API_KEY }],
         // Activate unlight house only if want to check locally
@@ -43,50 +45,7 @@ export default defineNuxtConfig({
             '/sitemap.xml',
         ],
     },
-    i18n: {
-        locales: [
-            {
-                code: 'en-sg',
-                iso: 'en-sg',
-                name: 'SG',
-                domain: localeDomains.sg,
-            },
-            {
-                code: 'en-ie',
-                iso: 'en-ie',
-                name: 'IE',
-                domain: localeDomains.ie,
-            },
-            {
-                code: 'en-uk',
-                iso: 'en-uk',
-                name: 'UK',
-                domain: localeDomains.uk,
-            },
-            {
-                code: 'en-au',
-                iso: 'en-au',
-                name: 'AU',
-                domain: localeDomains.au,
-            },
-            {
-                code: 'en-us',
-                iso: 'en-us',
-                name: 'US',
-                domain: localeDomains.us,
-            },
-            {
-                code: 'en-pl',
-                iso: 'en-pl',
-                name: 'PL',
-                domain: localeDomains.pl,
-            },
-
-        ],
-        defaultLocale: 'en-sg',
-        differentDomains: true,
-        detectBrowserLanguage: false
-    },
+    i18n: i18nConfig,
     image: {
         provider: 'storyblok',
         storyblok: {
