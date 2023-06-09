@@ -60,8 +60,11 @@ export default defineNuxtConfig({
     ],
     runtimeConfig: {
         public: {
+            siteUrl: 'https://evercam.sg',
             siteName: 'Construction Time-lapse & Project Management Live Cameras | Evercam',
             siteDescription: 'Construction time-lapse cameras & project management software helps in marketing content, project management and dispute avoidance in the construction industry.',
+            language: 'en-sg', // prefer more explicit language codes like `en-AU` over `en`
+            googleMapKey: process.env.GOOGLE_MAP_KEY || '',
         },
         indexable: true
     },
