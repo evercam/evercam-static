@@ -101,7 +101,7 @@ export default {
                   :key="page"
                   :class="currentPage == page ? 'active' : ''"
                 >
-                  <a href="#" @click="this.currentPage = page"
+                  <a href="#" @click="currentPage = page"
                     ><span>{{ page }}</span></a
                   >
                 </li>

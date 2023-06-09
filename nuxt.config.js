@@ -71,7 +71,10 @@ export default defineNuxtConfig({
         '@fortawesome/fontawesome-svg-core/styles.css',
     ],
     build: {
-        transpile: ['@fortawesome/vue-fontawesome'],
+        transpile: [
+            '@fortawesome/vue-fontawesome',
+            '@googlemaps/js-api-loader'
+        ],
     },
     app: {
         head: {

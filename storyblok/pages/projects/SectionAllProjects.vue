@@ -2,12 +2,36 @@
 defineProps({ blok: Object });
 </script>
 
+<style>
+#map {
+  border: 1px solid black;
+  width: 100%;
+  height: 900px;
+  @media screen and (max-width: $screen-xs) {
+    height: 300px;
+    width: 100%;
+  }
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
+
 <script>
-import kebabCase from "lodash/kebabCase";
+import { Loader } from "@googlemaps/js-api-loader";
 
 export default {
   data() {
     return {
+      map: null,
+      tabs: {
+        gridView: true,
+        mapView: false,
+      },
       projects: null,
       getPost: true,
       currentPage: 1,
@@ -132,6 +156,208 @@ export default {
           selected: true,
         },
       ],
+      mapStyleJson: [
+        {
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#f5f5f5",
+            },
+          ],
+        },
+        {
+          elementType: "labels.icon",
+          stylers: [
+            {
+              visibility: "off",
+            },
+          ],
+        },
+        {
+          elementType: "labels.text.fill",
+          stylers: [
+            {
+              color: "#616161",
+            },
+          ],
+        },
+        {
+          elementType: "labels.text.stroke",
+          stylers: [
+            {
+              color: "#f5f5f5",
+            },
+          ],
+        },
+        {
+          featureType: "administrative.country",
+          elementType: "geometry.stroke",
+          stylers: [
+            {
+              color: "#e4e4e4",
+            },
+          ],
+        },
+        {
+          featureType: "administrative.land_parcel",
+          elementType: "labels.text.fill",
+          stylers: [
+            {
+              color: "#bdbdbd",
+            },
+          ],
+        },
+        {
+          featureType: "administrative.locality",
+          elementType: "geometry.fill",
+          stylers: [
+            {
+              color: "#00ff00",
+            },
+          ],
+        },
+        {
+          featureType: "administrative.province",
+          stylers: [
+            {
+              visibility: "off",
+            },
+          ],
+        },
+        {
+          featureType: "landscape.natural.terrain",
+          stylers: [
+            {
+              visibility: "off",
+            },
+          ],
+        },
+        {
+          featureType: "poi",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#eeeeee",
+            },
+          ],
+        },
+        {
+          featureType: "poi",
+          elementType: "labels.text.fill",
+          stylers: [
+            {
+              color: "#757575",
+            },
+          ],
+        },
+        {
+          featureType: "poi.park",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#e5e5e5",
+            },
+          ],
+        },
+        {
+          featureType: "poi.park",
+          elementType: "labels.text.fill",
+          stylers: [
+            {
+              color: "#9e9e9e",
+            },
+          ],
+        },
+        {
+          featureType: "road",
+          stylers: [
+            {
+              visibility: "off",
+            },
+          ],
+        },
+        {
+          featureType: "road",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#ffffff",
+            },
+          ],
+        },
+        {
+          featureType: "road.arterial",
+          elementType: "labels.text.fill",
+          stylers: [
+            {
+              color: "#757575",
+            },
+          ],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#dadada",
+            },
+          ],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "labels.text.fill",
+          stylers: [
+            {
+              color: "#616161",
+            },
+          ],
+        },
+        {
+          featureType: "road.local",
+          elementType: "labels.text.fill",
+          stylers: [
+            {
+              color: "#9e9e9e",
+            },
+          ],
+        },
+        {
+          featureType: "transit.line",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#e5e5e5",
+            },
+          ],
+        },
+        {
+          featureType: "transit.station",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#eeeeee",
+            },
+          ],
+        },
+        {
+          featureType: "water",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#c9c9c9",
+            },
+          ],
+        },
+        {
+          featureType: "water",
+          elementType: "labels.text.fill",
+          stylers: [
+            {
+              color: "#9e9e9e",
+            },
+          ],
+        },
+      ],
     };
   },
   computed: {
@@ -157,6 +383,124 @@ export default {
     },
   },
   methods: {
+    switchTab(type) {
+      if (type == "map") {
+        this.tabs.gridView = false;
+        this.tabs.mapView = true;
+
+        this.loadGoogleMap();
+      } else {
+        this.tabs.gridView = true;
+        this.tabs.mapView = false;
+      }
+    },
+    loadGoogleMap: async function() { 
+      const loader = new Loader({
+        apiKey: useRuntimeConfig().public.googleMapKey,
+      });
+
+      loader.load().then(async () => {
+        google.maps.event.clearInstanceListeners(window);
+        google.maps.event.clearInstanceListeners(document);
+
+        var latlng = new google.maps.LatLng(53.349804, -6.26031);
+
+        this.map = new google.maps.Map(document.getElementById("map"), {
+          center: latlng,
+          zoom: 18,
+          styles: this.mapStyleJson,
+        });
+
+        this.setMarkers();
+      });
+    },
+    parseLatLong(urlString){
+      const url = new URL(urlString);
+      const params = new URLSearchParams(url.search);
+      
+      const qValue = params.get('q');
+      const [latitude, longitude] = qValue.split(',');
+
+      return {
+        'lat': latitude,
+        'long': longitude,
+      }
+    },
+    setMarkers: function () {
+      var _this = this;
+      var marker, i;
+      var bounds = new google.maps.LatLngBounds();
+
+      for (i = 0; i < this.projects.length; i++) {
+        var title = this.projects[i]["name"];
+        var lat = "";
+        var long = "";
+        var image = this.projects[i]["content"]["image_thumbnail"] ?? "";
+        var link = this.projects[i]["full_slug"] ?? "";
+        var detail = this.projects[i]["detail"] ?? "";
+
+        if(this.projects[i].content.maps) {
+          let tempData = this.parseLatLong(this.projects[i].content.maps)
+
+          lat = tempData.lat
+          long = tempData.long
+        }
+
+        if (lat !== "" && long !== "") {
+          if (lat !== undefined && long !== undefined) {
+            if (lat !== null && long !== null) {
+              if (!Number.isNaN(lat) && !Number.isNaN(long)) {
+                var latlngset = new google.maps.LatLng(lat, long);
+                var marker = new google.maps.Marker({
+                  map: this.map,
+                  title: title,
+                  position: latlngset,
+                });
+                this.map.setCenter(marker.getPosition());
+
+                this.map.setCenter(bounds.getCenter());
+
+                this.map.fitBounds(bounds);
+                this.map.setZoom(this.map.getZoom() - 1);
+
+                bounds.extend(marker.getPosition());
+
+                var content =
+                  '<h3><a href="' +
+                  link +
+                  '">' +
+                  title +
+                  '</a></h3><div class="image-div"><img src="' +
+                  image +
+                  '"></div><p>' +
+                  detail +
+                  "</p>";
+
+                var infowindow = new google.maps.InfoWindow();
+
+                google.maps.event.addListener(
+                  marker,
+                  "click",
+                  (function (marker, content, infowindow) {
+                    return function () {
+                      if (_this.activeInfoWindow) {
+                        _this.activeInfoWindow.close();
+                      }
+                      infowindow.setOptions({
+                        content: content,
+                      });
+                      infowindow.open(_this.map, marker);
+                      _this.map.setCenter(marker.getPosition());
+                      _this.activeInfoWindow = infowindow;
+                    };
+                  })(marker, content, infowindow)
+                );
+              }
+            }
+          }
+        }
+      }
+    },
     checkAllLocation() {
       if (!this.isCheckedAllLocation) {
         return this.locations.map((location) => (location.selected = true));
@@ -173,11 +517,6 @@ export default {
       const storyblokApi = useStoryblokApi();
       var customPerPage = 50;
 
-      // console.log(
-      //   this.totalPost,
-      //   "grouping post",
-      //   this.calculatePagesCount(100, this.totalPost)
-      // );
       for (
         var i = 0;
         i <= this.calculatePagesCount(customPerPage, this.totalPost);
@@ -266,6 +605,9 @@ export default {
       this.projects = data.stories;
       this.totalPost = parseInt(headers.total);
       this.getPost = data.stories.length >= 1;
+
+      // reload google maps
+      this.loadGoogleMap();
     },
     calculatePagesCount(perPage, totalPost) {
       return totalPost < perPage ? 1 : Math.ceil(totalPost / perPage);
@@ -431,14 +773,21 @@ export default {
       </div>
       <div class="switches-wrapper">
         <div id="toogle-switch">
-          <a href="#" class=""
+          <a
+            href="#"
+            @click="switchTab('map')"
+            :class="tabs.mapView ? 'active' : ''"
             ><span><font-awesome-icon :icon="['fas', 'map-marker-alt']" /></span
             >Map View</a
           >
-          <a href="#" class="active"
-            ><span><font-awesome-icon :icon="['fas', 'th-large']" /></span
-            >GridView</a
+          <a
+            href="#"
+            @click="switchTab('grid')"
+            :class="tabs.gridView ? 'active' : ''"
           >
+            <span> <font-awesome-icon :icon="['fas', 'th-large']" /> </span
+            >GridView
+          </a>
           <a
             @click="showFilterOnMobile = !showFilterOnMobile"
             href="#"
@@ -448,10 +797,14 @@ export default {
           >
         </div>
       </div>
-      <section id="projects-map" class="container">
-        <div id="default"></div>
+
+      <!-- Map View -->
+      <section v-if="tabs.mapView" class="container">
+        <div id="map"></div>
       </section>
-      <div id="filterprojects" class="active">
+
+      <!-- Grid View -->
+      <div v-if="tabs.gridView" id="filterprojects" class="active">
         <div class="filter-projects">
           <div class="row">
             <ProjectCard
@@ -463,30 +816,31 @@ export default {
             <span v-if="!getPost" class="no-result">No project found</span>
           </div>
         </div>
-      </div>
-      <div v-if="totalPost > perPage" class="paginate">
-        <div style="margin-right: 10px">
-          <p>
-            Showing {{ currentPage * perPage - perPage + 1 }} - {{ " " }}
-            {{ Math.min(currentPage * perPage, totalPost) }} of
-            {{ totalPost }}
-          </p>
-        </div>
 
-        <div>
-          <nav class="text-right pagination-wrapper">
-            <ul class="pagination">
-              <li
-                v-for="page in calculatePagesCount(perPage, totalPost)"
-                :key="page"
-                :class="currentPage == page ? 'active' : ''"
-              >
-                <a href="#" @click="currentPage = page"
-                  ><span>{{ page }}</span></a
+        <div v-if="totalPost > perPage" class="paginate">
+          <div style="margin-right: 10px">
+            <p>
+              Showing {{ currentPage * perPage - perPage + 1 }} - {{ " " }}
+              {{ Math.min(currentPage * perPage, totalPost) }} of
+              {{ totalPost }}
+            </p>
+          </div>
+
+          <div>
+            <nav class="text-right pagination-wrapper">
+              <ul class="pagination">
+                <li
+                  v-for="page in calculatePagesCount(perPage, totalPost)"
+                  :key="page"
+                  :class="currentPage == page ? 'active' : ''"
                 >
-              </li>
-            </ul>
-          </nav>
+                  <a href="#" @click="currentPage = page"
+                    ><span>{{ page }}</span></a
+                  >
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
