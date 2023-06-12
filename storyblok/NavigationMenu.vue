@@ -1,5 +1,14 @@
 <script setup>
+import { ref } from 'vue'
 defineProps({ blok: Object })
+
+const foo = ref('foo')
+const bar = ref('bar')
+defineExpose({
+  foo,
+  bar,
+})
+
 const switchLocalePath = useSwitchLocalePath()
 const urlPath = useRoute().path
 const localePath = useLocalePath()
@@ -136,7 +145,7 @@ export default {
                             >Sign in</a
                         >
                         <span>|</span>
-                        <a href="tel:+35319194500">+353 1 919 4500</a>
+                        <a v-if="blok.phone_number" :href="'tel:+' + blok.phone_number">+{{ blok.phone_number }}</a>
                     </div>
 
                     <!-- LOCALE SELECTION -->
