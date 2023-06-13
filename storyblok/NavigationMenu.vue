@@ -1,13 +1,5 @@
 <script setup>
-import { ref } from 'vue'
 defineProps({ blok: Object })
-
-const foo = ref('foo')
-const bar = ref('bar')
-defineExpose({
-  foo,
-  bar,
-})
 
 const switchLocalePath = useSwitchLocalePath()
 const urlPath = useRoute().path
