@@ -23,6 +23,7 @@ body {
 
 <script>
 import { Loader } from "@googlemaps/js-api-loader";
+import mapStyleJson from "../../../config/map-style";
 
 export default {
   data() {
@@ -35,7 +36,7 @@ export default {
       projects: null,
       getPost: true,
       currentPage: 1,
-      perPage: 100,
+      perPage: 24,
       totalPost: 0,
       showFilterLocation: false,
       showFilterCategory: false,
@@ -156,208 +157,7 @@ export default {
           selected: true,
         },
       ],
-      mapStyleJson: [
-        {
-          elementType: "geometry",
-          stylers: [
-            {
-              color: "#f5f5f5",
-            },
-          ],
-        },
-        {
-          elementType: "labels.icon",
-          stylers: [
-            {
-              visibility: "off",
-            },
-          ],
-        },
-        {
-          elementType: "labels.text.fill",
-          stylers: [
-            {
-              color: "#616161",
-            },
-          ],
-        },
-        {
-          elementType: "labels.text.stroke",
-          stylers: [
-            {
-              color: "#f5f5f5",
-            },
-          ],
-        },
-        {
-          featureType: "administrative.country",
-          elementType: "geometry.stroke",
-          stylers: [
-            {
-              color: "#e4e4e4",
-            },
-          ],
-        },
-        {
-          featureType: "administrative.land_parcel",
-          elementType: "labels.text.fill",
-          stylers: [
-            {
-              color: "#bdbdbd",
-            },
-          ],
-        },
-        {
-          featureType: "administrative.locality",
-          elementType: "geometry.fill",
-          stylers: [
-            {
-              color: "#00ff00",
-            },
-          ],
-        },
-        {
-          featureType: "administrative.province",
-          stylers: [
-            {
-              visibility: "off",
-            },
-          ],
-        },
-        {
-          featureType: "landscape.natural.terrain",
-          stylers: [
-            {
-              visibility: "off",
-            },
-          ],
-        },
-        {
-          featureType: "poi",
-          elementType: "geometry",
-          stylers: [
-            {
-              color: "#eeeeee",
-            },
-          ],
-        },
-        {
-          featureType: "poi",
-          elementType: "labels.text.fill",
-          stylers: [
-            {
-              color: "#757575",
-            },
-          ],
-        },
-        {
-          featureType: "poi.park",
-          elementType: "geometry",
-          stylers: [
-            {
-              color: "#e5e5e5",
-            },
-          ],
-        },
-        {
-          featureType: "poi.park",
-          elementType: "labels.text.fill",
-          stylers: [
-            {
-              color: "#9e9e9e",
-            },
-          ],
-        },
-        {
-          featureType: "road",
-          stylers: [
-            {
-              visibility: "off",
-            },
-          ],
-        },
-        {
-          featureType: "road",
-          elementType: "geometry",
-          stylers: [
-            {
-              color: "#ffffff",
-            },
-          ],
-        },
-        {
-          featureType: "road.arterial",
-          elementType: "labels.text.fill",
-          stylers: [
-            {
-              color: "#757575",
-            },
-          ],
-        },
-        {
-          featureType: "road.highway",
-          elementType: "geometry",
-          stylers: [
-            {
-              color: "#dadada",
-            },
-          ],
-        },
-        {
-          featureType: "road.highway",
-          elementType: "labels.text.fill",
-          stylers: [
-            {
-              color: "#616161",
-            },
-          ],
-        },
-        {
-          featureType: "road.local",
-          elementType: "labels.text.fill",
-          stylers: [
-            {
-              color: "#9e9e9e",
-            },
-          ],
-        },
-        {
-          featureType: "transit.line",
-          elementType: "geometry",
-          stylers: [
-            {
-              color: "#e5e5e5",
-            },
-          ],
-        },
-        {
-          featureType: "transit.station",
-          elementType: "geometry",
-          stylers: [
-            {
-              color: "#eeeeee",
-            },
-          ],
-        },
-        {
-          featureType: "water",
-          elementType: "geometry",
-          stylers: [
-            {
-              color: "#c9c9c9",
-            },
-          ],
-        },
-        {
-          featureType: "water",
-          elementType: "labels.text.fill",
-          stylers: [
-            {
-              color: "#9e9e9e",
-            },
-          ],
-        },
-      ],
+      mapStyleJson: mapStyleJson,
     };
   },
   computed: {
@@ -394,8 +194,8 @@ export default {
         this.tabs.mapView = false;
       }
     },
-    loadGoogleMap: async function() { 
-      const loader = new Loader({
+    loadGoogleMap: async function () {
+      const loader = await new Loader({
         apiKey: useRuntimeConfig().public.googleMapKey,
       });
 
@@ -414,17 +214,17 @@ export default {
         this.setMarkers();
       });
     },
-    parseLatLong(urlString){
+    parseLatLong(urlString) {
       const url = new URL(urlString);
       const params = new URLSearchParams(url.search);
-      
-      const qValue = params.get('q');
-      const [latitude, longitude] = qValue.split(',');
+
+      const qValue = params.get("q");
+      const [latitude, longitude] = qValue.split(",");
 
       return {
-        'lat': latitude,
-        'long': longitude,
-      }
+        lat: latitude,
+        long: longitude,
+      };
     },
     setMarkers: function () {
       var _this = this;
@@ -439,65 +239,59 @@ export default {
         var link = this.projects[i]["full_slug"] ?? "";
         var detail = this.projects[i]["detail"] ?? "";
 
-        if(this.projects[i].content.maps) {
-          let tempData = this.parseLatLong(this.projects[i].content.maps)
+        if (this.projects[i].content.maps) {
+          let tempData = this.parseLatLong(this.projects[i].content.maps);
 
-          lat = tempData.lat
-          long = tempData.long
+          lat = tempData.lat;
+          long = tempData.long;
         }
 
-        if (lat !== "" && long !== "") {
-          if (lat !== undefined && long !== undefined) {
-            if (lat !== null && long !== null) {
-              if (!Number.isNaN(lat) && !Number.isNaN(long)) {
-                var latlngset = new google.maps.LatLng(lat, long);
-                var marker = new google.maps.Marker({
-                  map: this.map,
-                  title: title,
-                  position: latlngset,
+        if (lat && long && !isNaN(lat) && !isNaN(long)) {
+          var latlngset = new google.maps.LatLng(lat, long);
+          var marker = new google.maps.Marker({
+            map: this.map,
+            title: title,
+            position: latlngset,
+          });
+          this.map.setCenter(marker.getPosition());
+
+          this.map.setCenter(bounds.getCenter());
+
+          this.map.fitBounds(bounds);
+          this.map.setZoom(this.map.getZoom() - 1);
+
+          bounds.extend(marker.getPosition());
+
+          var content =
+            '<h3><a href="' +
+            link +
+            '">' +
+            title +
+            '</a></h3><div class="image-div"><img src="' +
+            image +
+            '"></div><p>' +
+            detail +
+            "</p>";
+
+          var infowindow = new google.maps.InfoWindow();
+
+          google.maps.event.addListener(
+            marker,
+            "click",
+            (function (marker, content, infowindow) {
+              return function () {
+                if (_this.activeInfoWindow) {
+                  _this.activeInfoWindow.close();
+                }
+                infowindow.setOptions({
+                  content: content,
                 });
-                this.map.setCenter(marker.getPosition());
-
-                this.map.setCenter(bounds.getCenter());
-
-                this.map.fitBounds(bounds);
-                this.map.setZoom(this.map.getZoom() - 1);
-
-                bounds.extend(marker.getPosition());
-
-                var content =
-                  '<h3><a href="' +
-                  link +
-                  '">' +
-                  title +
-                  '</a></h3><div class="image-div"><img src="' +
-                  image +
-                  '"></div><p>' +
-                  detail +
-                  "</p>";
-
-                var infowindow = new google.maps.InfoWindow();
-
-                google.maps.event.addListener(
-                  marker,
-                  "click",
-                  (function (marker, content, infowindow) {
-                    return function () {
-                      if (_this.activeInfoWindow) {
-                        _this.activeInfoWindow.close();
-                      }
-                      infowindow.setOptions({
-                        content: content,
-                      });
-                      infowindow.open(_this.map, marker);
-                      _this.map.setCenter(marker.getPosition());
-                      _this.activeInfoWindow = infowindow;
-                    };
-                  })(marker, content, infowindow)
-                );
-              }
-            }
-          }
+                infowindow.open(_this.map, marker);
+                _this.map.setCenter(marker.getPosition());
+                _this.activeInfoWindow = infowindow;
+              };
+            })(marker, content, infowindow)
+          );
         }
       }
     },
@@ -800,7 +594,7 @@ export default {
 
       <!-- Map View -->
       <section v-if="tabs.mapView" class="container">
-        <div id="map"></div>
+        <div v-once id="map"></div>
       </section>
 
       <!-- Grid View -->
