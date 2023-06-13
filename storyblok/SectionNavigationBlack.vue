@@ -52,7 +52,7 @@ export default {
               @click="onClickMenuMobile"
             ></span>
           </div>
-          <NavigationMenu />
+          <NavigationMenu :blok="blok" />
         </div>
       </div>
     </div>
