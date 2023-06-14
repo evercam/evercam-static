@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       map: null,
+      mapLoaded: false,
       tabs: {
         gridView: true,
         mapView: false,
@@ -188,7 +189,10 @@ export default {
         this.tabs.gridView = false;
         this.tabs.mapView = true;
 
-        this.loadGoogleMap();
+        if (!this.mapLoaded) {
+          this.loadGoogleMap();
+          this.mapLoaded = true;
+        }
       } else {
         this.tabs.gridView = true;
         this.tabs.mapView = false;
@@ -199,20 +203,20 @@ export default {
         apiKey: useRuntimeConfig().public.googleMapKey,
       });
 
-      loader.load().then(async () => {
-        google.maps.event.clearInstanceListeners(window);
-        google.maps.event.clearInstanceListeners(document);
+      await loader.load();
 
-        var latlng = new google.maps.LatLng(53.349804, -6.26031);
+      google.maps.event.clearInstanceListeners(window);
+      google.maps.event.clearInstanceListeners(document);
 
-        this.map = new google.maps.Map(document.getElementById("map"), {
-          center: latlng,
-          zoom: 18,
-          styles: this.mapStyleJson,
-        });
+      var latlng = new google.maps.LatLng(53.349804, -6.26031);
 
-        this.setMarkers();
+      this.map = new google.maps.Map(document.getElementById("map"), {
+        center: latlng,
+        zoom: 18,
+        styles: this.mapStyleJson,
       });
+
+      this.setMarkers();
     },
     parseLatLong(urlString) {
       const url = new URL(urlString);
@@ -593,7 +597,7 @@ export default {
       </div>
 
       <!-- Map View -->
-      <section v-if="tabs.mapView" class="container">
+      <section class="container" v-show="tabs.mapView">
         <div v-once id="map"></div>
       </section>
 
