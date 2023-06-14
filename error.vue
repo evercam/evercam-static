@@ -1,5 +1,5 @@
 <template>
-  <SectionNavigationWhite />
+  <SectionNavigationWhite :blok="blok" />
   <div id="banner-404">
     <div class="video-container">
       <!--<div class="filter"></div>-->

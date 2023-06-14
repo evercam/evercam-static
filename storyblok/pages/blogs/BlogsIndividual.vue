@@ -140,7 +140,7 @@ author_details = await fetchAuthor(props.blok.writer_details)
 </script>
 
 <template>
-  <SectionNavigationWhite />
+  <SectionNavigationWhite :blok="blok" />
   <SectionBreadcrumbLeftRight class="d-none" />
 
   <section class="single-blog">

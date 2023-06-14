@@ -52,7 +52,7 @@ if (isYoutube) {
 </script>
 
 <template>
-  <SectionNavigationWhite />
+  <SectionNavigationWhite :blok="blok" />
   <SectionBreadcrumbLeftRight />
   <div v-editable="blok" class="standard-content container">
     <figure

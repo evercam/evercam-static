@@ -13,6 +13,8 @@ const availableLocales = computed(() => {
     return locales.value.filter((i) => i.code !== locale.value)
 })
 
+// const phoneNumber = blok.phone_number ? blok.phone_number : "35319194500"
+
 const items = [
     {
         href: localePath("/projects"),
@@ -138,6 +140,9 @@ export default {
                         >
                         <span>|</span>
                         <a v-if="blok.phone_number" :href="'tel:+' + blok.phone_number">+{{ blok.phone_number }}</a>
+                        <a v-else href="tel:+35319194500">+353 1 919 4500</a>
+                        <!-- <a :href="'tel:+' + phoneNumber">+{{ phoneNumber }}</a> -->
+                        <!-- phoneNumber -->
                     </div>
 
                     <!-- LOCALE SELECTION -->
