@@ -84,7 +84,7 @@ if (assetSource) {
 </script>
 
 <template>
-  <SectionNavigationWhite />
+  <SectionNavigationWhite :blok="blok" />
   <SectionBreadcrumbLeftAll />
   <section
     class="single-blog projects-single"

@@ -1,5 +1,5 @@
 <script setup>
-defineProps({ blok: Object })
+const props = defineProps({ blok: Object })
 
 const switchLocalePath = useSwitchLocalePath()
 const urlPath = useRoute().path
@@ -12,6 +12,9 @@ const currentLocale = computed(() => {
 const availableLocales = computed(() => {
     return locales.value.filter((i) => i.code !== locale.value)
 })
+
+const phoneNumber = computed(() => props.blok.phone_number || "35319194500")
+const telLink = computed(() => `tel:+${phoneNumber}`)
 
 const items = [
     {
@@ -137,7 +140,8 @@ export default {
                             >Sign in</a
                         >
                         <span>|</span>
-                        <a v-if="blok.phone_number" :href="'tel:+' + blok.phone_number">+{{ blok.phone_number }}</a>
+                        <!-- phoneNumber -->
+                        <a :href="telLink">+{{ phoneNumber }}</a>
                     </div>
 
                     <!-- LOCALE SELECTION -->

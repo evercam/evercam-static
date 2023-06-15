@@ -196,7 +196,7 @@ onNuxtReady(async () => {
 </script>
 
 <template>
-  <SectionNavigationTransparent />
+  <SectionNavigationTransparent :blok="blok" />
   <section
     v-if="isHeaderForm"
     id="ask-us"

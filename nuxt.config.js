@@ -60,8 +60,11 @@ export default defineNuxtConfig({
     ],
     runtimeConfig: {
         public: {
+            siteUrl: localeDomains.getDomainByLocale(process.env.DEFAULT_LOCALE),
             siteName: 'Construction Time-lapse & Project Management Live Cameras | Evercam',
             siteDescription: 'Construction time-lapse cameras & project management software helps in marketing content, project management and dispute avoidance in the construction industry.',
+            language: process.env.DEFAULT_LOCALE, // prefer more explicit language codes like `en-AU` over `en`
+            googleMapKey: process.env.GOOGLE_MAP_KEY || '',
         },
         indexable: true
     },
@@ -71,7 +74,10 @@ export default defineNuxtConfig({
         '@fortawesome/fontawesome-svg-core/styles.css',
     ],
     build: {
-        transpile: ['@fortawesome/vue-fontawesome'],
+        transpile: [
+            '@fortawesome/vue-fontawesome',
+            '@googlemaps/js-api-loader'
+        ],
     },
     app: {
         head: {

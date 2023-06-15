@@ -56,7 +56,7 @@ export default {
               :class="menuOpen ? 'active' : ''"
             ></span>
           </div>
-          <NavigationMenu />
+          <NavigationMenu :blok="blok" />
         </div>
       </div>
     </div>
