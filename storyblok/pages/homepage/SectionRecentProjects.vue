@@ -19,16 +19,22 @@ const { data } = await storyblokApi.get("cdn/stories", {
 
 function projectBasedUrl() {
   if(locale.value === "en-ie") {
-    return "94332311-8c5a-447f-bf35-d01f8c6de53c,ba36f6fc-ee8d-4623-8ee9-37178297fe9f,03549e41-cad9-427f-8547-d99255e6eb40"
+    return "94332311-8c5a-447f-bf35-d01f8c6de53c,ba36f6fc-ee8d-4623-8ee9-37178297fe9f,03549e41-cad9-427f-8547-d99255e6eb40,f6547d6e-d16c-4c20-ab81-b919aa4c2a17,bca81fbe-0317-4d5b-bbe2-5ace823bb8b4"
   }
   if(locale.value === "en-sg") {
-    return "94332311-8c5a-447f-bf35-d01f8c6de53c,ba36f6fc-ee8d-4623-8ee9-37178297fe9f,03549e41-cad9-427f-8547-d99255e6eb40"
+    return "99ca21c1-5030-4289-aa4b-ba9b2535b98b"
   }
   if(locale.value === "en-au") {
     return "ba36f6fc-ee8d-4623-8ee9-37178297fe9f"
   }
   if(locale.value === "en-gb") {
     return "03549e41-cad9-427f-8547-d99255e6eb40"
+  }
+  if(locale.value === "en-us") {
+    return "bca81fbe-0317-4d5b-bbe2-5ace823bb8b4"
+  }
+  if(locale.value === "pl") {
+    return "f6547d6e-d16c-4c20-ab81-b919aa4c2a17"
   }
 }
 
