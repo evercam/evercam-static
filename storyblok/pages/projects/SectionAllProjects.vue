@@ -200,7 +200,6 @@ export default {
       // additional since, not all list has id
       selectedCategories = selectedCategories.filter((n) => n != "");
       selectedLocations = selectedLocations.filter((n) => n != "");
-      const regex = new RegExp(`.*${this.searchText}.*`, "i"); // Create a regex pattern with wildcard matching
 
       this.projectsFiltered.data = this.projectsFiltered.data.filter(
         (project) => {
