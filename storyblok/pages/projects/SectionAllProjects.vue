@@ -7,7 +7,7 @@ defineProps({ blok: Object });
   border: 1px solid black;
   width: 100%;
   height: 900px;
-  @media screen and (max-width: $screen-xs) {
+  @media screen and (max-width: 768px) {
     height: 300px;
     width: 100%;
   }
@@ -28,17 +28,28 @@ import mapStyleJson from "../../../config/map-style";
 export default {
   data() {
     return {
+      locale: this.$i18n.locale,
       map: null,
       mapLoaded: false,
       tabs: {
         gridView: true,
         mapView: false,
       },
-      projects: null,
+      projects: {
+        data: [],
+        total: 0,
+      },
+      projectsFiltered: {
+        data: [],
+        total: 0,
+        totalPage: 0,
+        itemPerPage: 24,
+        currentPage: 1,
+      },
       getPost: true,
       currentPage: 1,
       perPage: 24,
-      totalPost: 0,
+      totalProject: 0,
       showFilterLocation: false,
       showFilterCategory: false,
       isCheckedAllCategory: true,
@@ -50,36 +61,42 @@ export default {
         {
           id: "ba36f6fc-ee8d-4623-8ee9-37178297fe9f",
           value: "Australia",
+          code: "en-au",
           total: 0,
           selected: true,
         },
         {
           id: "94332311-8c5a-447f-bf35-d01f8c6de53c",
           value: "Ireland",
+          code: "en-ie",
           total: 0,
           selected: true,
         },
         {
           id: "f6547d6e-d16c-4c20-ab81-b919aa4c2a17",
           value: "Poland",
+          code: "pl",
           total: 0,
           selected: true,
         },
         {
           id: "99ca21c1-5030-4289-aa4b-ba9b2535b98b",
           value: "Singapore",
+          code: "en-sg",
           total: 0,
           selected: true,
         },
         {
           id: "03549e41-cad9-427f-8547-d99255e6eb40",
           value: "United Kingdom",
+          code: "en-gb",
           total: 0,
           selected: true,
         },
         {
           id: "bca81fbe-0317-4d5b-bbe2-5ace823bb8b4",
           value: "United States",
+          code: "en-us",
           total: 0,
           selected: true,
         },
@@ -168,20 +185,63 @@ export default {
     selectedCategory() {
       return this.categories.filter((category) => category.selected);
     },
+    fetchFilteredProject() {
+      this.projectsFiltered.data = this.projects.data;
+      this.projectsFiltered.total = this.projectsFiltered.data.length;
+
+      let selectedCategories = this.selectedCategory.map(
+        (category) => category.id
+      );
+      let selectedLocations = this.selectedLocation.map(
+        (location) => location.id
+      );
+      const searchQuery = this.searchText.toLowerCase();
+
+      // additional since, not all list has id
+      selectedCategories = selectedCategories.filter((n) => n != "");
+      selectedLocations = selectedLocations.filter((n) => n != "");
+
+      this.projectsFiltered.data = this.projectsFiltered.data.filter(
+        (project) => {
+
+          // Check if the project's category is selected
+          if (!selectedCategories.includes(project.content.project_category)) {
+            return false;
+          }
+
+          // Check if the project's location is selected
+          if (!selectedLocations.includes(project.content.project_country)) {
+            return false;
+          }
+
+          // Check if the search query matches any field in the project object
+          if (
+            searchQuery &&
+            !Object.values(project.content).some((value) => {
+              if (typeof value === "string") {
+                return value.toLowerCase().includes(searchQuery);
+              }
+              return false;
+            })
+          ) {
+            return false;
+          }
+
+          // Include the project in the filtered list
+          return true;
+        }
+      );
+      this.projectsFiltered.total = this.projectsFiltered.data.length;
+
+      this.paginate();
+
+      // reload google maps
+      this.loadGoogleMap();
+    },
   },
   created() {
-    this.fetchPost();
-  },
-  watch: {
-    selectedLocation: function () {
-      this.fetchSuggestions(this.searchInput);
-    },
-    selectedCategory: function () {
-      this.fetchSuggestions(this.searchInput);
-    },
-    currentPage: function (value) {
-      this.fetchSuggestions(this.searchInput);
-    },
+    // this.fetchFilteredProject();
+    this.fetchAllProject();
   },
   methods: {
     switchTab(type) {
@@ -235,16 +295,19 @@ export default {
       var marker, i;
       var bounds = new google.maps.LatLngBounds();
 
-      for (i = 0; i < this.projects.length; i++) {
-        var title = this.projects[i]["name"];
+      for (i = 0; i < this.projectsFiltered.data.length; i++) {
+        var title = this.projectsFiltered.data[i]["name"];
         var lat = "";
         var long = "";
-        var image = this.projects[i]["content"]["image_thumbnail"] ?? "";
-        var link = this.projects[i]["full_slug"] ?? "";
-        var detail = this.projects[i]["detail"] ?? "";
+        var image =
+          this.projectsFiltered.data[i]["content"]["image_thumbnail"] ?? "";
+        var link = this.projectsFiltered.data[i]["full_slug"] ?? "";
+        var detail = this.projectsFiltered.data[i]["detail"] ?? "";
 
-        if (this.projects[i].content.maps) {
-          let tempData = this.parseLatLong(this.projects[i].content.maps);
+        if (this.projectsFiltered.data[i].content.maps) {
+          let tempData = this.parseLatLong(
+            this.projectsFiltered.data[i].content.maps
+          );
 
           lat = tempData.lat;
           long = tempData.long;
@@ -311,16 +374,39 @@ export default {
       }
       return this.categories.map((category) => (category.selected = false));
     },
-    groupingPost: async function () {
+    fetchAllProject: async function () {
       const storyblokApi = useStoryblokApi();
       var customPerPage = 50;
 
-      for (
-        var i = 0;
-        i <= this.calculatePagesCount(customPerPage, this.totalPost);
-        i++
-      ) {
-        const { data, headers } = await storyblokApi.get("cdn/stories", {
+      // Maximum entries we can get is 100, there for we need to use pagination to retrieve all data.
+      // Step to Retrieve All Projects:
+      // 1. Get Total Count For Projects
+      // 2. Group and count by locations & categories
+      // 3. Retrieve All projects
+      // 4. Sort Projects based on user locale
+      // 5. Create Pagination
+
+      // We only need total post, so using page = 1 and per_page = 1 is enough
+      const { data, headers } = await storyblokApi.get("cdn/stories", {
+        version: useRoute().query._storyblok ? "draft" : "published",
+        starts_with: "projects",
+        is_startpage: false,
+        page: 1,
+        per_page: 1,
+      });
+
+      this.projects.total = parseInt(headers.total);
+      const totalPagination = this.calculatePagesCount(
+        customPerPage,
+        this.projects.total
+      );
+
+      // ****************************
+      // Retrieve All Projects
+      // ****************************
+
+      for (var i = 0; i <= totalPagination; i++) {
+        const { data } = await storyblokApi.get("cdn/stories", {
           version: useRoute().query._storyblok ? "draft" : "published",
           starts_with: "projects",
           is_startpage: false,
@@ -328,87 +414,101 @@ export default {
           page: i + 1,
         });
 
-        data.stories.map((story) => {
-          // Group and find locations
-          var locationIndex = this.locations.findIndex(
-            (location) => location.id == story.content.project_country
-          );
-
-          if (locationIndex >= 0) {
-            this.locations[locationIndex].total += 1;
-          }
-
-          // Group and find categories
-          var categoryIndex = this.categories.findIndex(
-            (category) => category.id == story.content.project_category
-          );
-
-          if (categoryIndex >= 0) {
-            this.categories[categoryIndex].total += 1;
-          }
-        });
+        this.projects.data.push(...data.stories);
       }
-    },
-    fetchPost: async function () {
-      const storyblokApi = useStoryblokApi();
 
-      const { data, headers } = await storyblokApi.get("cdn/stories", {
-        version: useRoute().query._storyblok ? "draft" : "published",
-        starts_with: "projects",
-        is_startpage: false,
-        page: this.currentPage,
-        per_page: this.perPage,
+      // ****************************
+      // Sort The Projects based on User Country
+      // ****************************
+      this.sortProjectsByUserLocale();
+
+      // ****************************
+      // Count Categories & Country
+      // ****************************
+      this.groupByCategoriesAndLocation();
+    },
+    sortProjectsByUserLocale() {
+      // Select Stories by User Country
+      const userLocale = this.locations.find(
+        (location) => location.code === this.$i18n.locale
+      );
+
+      this.projects.data.sort((a, b) => {
+        if (
+          a.content.project_country === userLocale.id &&
+          b.content.project_country !== userLocale.id
+        ) {
+
+          return -1; // `a` comes first if content.project_country is 'A'
+        } else if (
+          a.content.project_country !== userLocale.id &&
+          b.content.project_country === userLocale.id
+        ) {
+
+          return 1; // `b` comes first if content.project_country is 'A'
+        } else {
+
+          return a.content.project_country.localeCompare(
+            b.content.project_country
+          ); // Sort by name if content.project_country is the same or not 'A'
+        }
       });
-
-      this.projects = data.stories;
-      this.totalPost = parseInt(headers.total);
-
-      if (data.stories.length < 1) {
-        this.getPost = false;
-      }
-
-      if (data.stories.length >= 1) {
-        this.getPost = true;
-      }
-
-      this.groupingPost();
     },
-    fetchSuggestions: async function () {
-      const storyblokApi = useStoryblokApi();
+    groupByCategoriesAndLocation() {
+      this.projects.data.map((story) => {
+        // Group and find locations
+        var locationIndex = this.locations.findIndex(
+          (location) => location.id == story.content.project_country
+        );
 
-      var optCategories = this.selectedCategory.map((category) => category.id);
-      var optLocations = this.selectedLocation.map((location) => location.id);
+        if (locationIndex >= 0) {
+          this.locations[locationIndex].total += 1;
+        }
 
-      // additional since, not all list has id
-      optCategories = optCategories.filter((n) => n != "");
-      optLocations = optLocations.filter((n) => n != "");
+        // Group and find categories
+        var categoryIndex = this.categories.findIndex(
+          (category) => category.id == story.content.project_category
+        );
 
-      const { data, headers } = await storyblokApi.get("cdn/stories", {
-        version: useRoute().query._storyblok ? "draft" : "published",
-        starts_with: "projects",
-        is_startpage: false,
-        search_term: this.searchText || null,
-        page: this.currentPage,
-        per_page: this.perPage,
-        filter_query: {
-          project_country: {
-            in: optLocations.join(),
-          },
-          project_category: {
-            in: optCategories.join(),
-          },
-        },
+        if (categoryIndex >= 0) {
+          this.categories[categoryIndex].total += 1;
+        }
       });
-
-      this.projects = data.stories;
-      this.totalPost = parseInt(headers.total);
-      this.getPost = data.stories.length >= 1;
-
-      // reload google maps
-      this.loadGoogleMap();
     },
-    calculatePagesCount(perPage, totalPost) {
-      return totalPost < perPage ? 1 : Math.ceil(totalPost / perPage);
+
+    setPage: function (pageNumber) {
+      this.projectsFiltered.currentPage = pageNumber;
+      this.fetchFilteredProject();
+    },
+    paginate: function () {
+      var itemsPerPage = this.projectsFiltered.itemPerPage;
+      var totalData = this.projectsFiltered.total;
+      var currentPage = this.projectsFiltered.currentPage;
+      var totalPage = this.calculatePagesCount(itemsPerPage, totalData);
+
+      this.projectsFiltered.totalPage = totalPage;
+
+      if (
+        !this.projectsFiltered.data ||
+        this.projectsFiltered.data.length < 1
+      ) {
+        return;
+      }
+
+      if (currentPage >= totalPage) {
+        currentPage = totalPage;
+      }
+
+      var index = currentPage * itemsPerPage - itemsPerPage;
+
+      this.projectsFiltered.data = this.projectsFiltered.data.slice(
+        index,
+        index + itemsPerPage
+      );
+
+    },
+    calculatePagesCount(perPage, totalProject) {
+      return totalProject < perPage ? 1 : Math.ceil(totalProject / perPage);
     },
   },
 };
@@ -551,12 +651,12 @@ export default {
               <div class="search-box">
                 <div class="input-group">
                   <SearchProject
-                    :search="fetchSuggestions"
+                    :search="fetchFilteredProject"
                     v-model="searchText"
                   />
                   <div class="input-group-append">
                     <button
-                      :on-click="fetchSuggestions"
+                      :on-click="fetchFilteredProject"
                       type="button"
                       class="btn btn-outline-secondary"
                     >
@@ -606,7 +706,7 @@ export default {
         <div class="filter-projects">
           <div class="row">
             <ProjectCard
-              v-for="project in projects"
+              v-for="project in projectsFiltered.data"
               :key="project.uuid"
               :project="project.content"
               :slug="project.full_slug"
@@ -615,12 +715,27 @@ export default {
           </div>
         </div>
 
-        <div v-if="totalPost > perPage" class="paginate">
+        <div
+          v-if="projectsFiltered.total > projectsFiltered.itemPerPage"
+          class="paginate"
+        >
           <div style="margin-right: 10px">
             <p>
-              Showing {{ currentPage * perPage - perPage + 1 }} - {{ " " }}
-              {{ Math.min(currentPage * perPage, totalPost) }} of
-              {{ totalPost }}
+              Showing
+              {{
+                projectsFiltered.currentPage * projectsFiltered.itemPerPage -
+                projectsFiltered.itemPerPage +
+                1
+              }}
+              - {{ " " }}
+              {{
+                Math.min(
+                  projectsFiltered.currentPage * projectsFiltered.itemPerPage,
+                  projectsFiltered.total
+                )
+              }}
+              of
+              {{ projectsFiltered.total }}
             </p>
           </div>
 
@@ -628,11 +743,14 @@ export default {
             <nav class="text-right pagination-wrapper">
               <ul class="pagination">
                 <li
-                  v-for="page in calculatePagesCount(perPage, totalPost)"
+                  v-for="page in calculatePagesCount(
+                    projectsFiltered.itemPerPage,
+                    projectsFiltered.total
+                  )"
                   :key="page"
-                  :class="currentPage == page ? 'active' : ''"
+                  :class="projectsFiltered.currentPage == page ? 'active' : ''"
                 >
-                  <a href="#" @click="currentPage = page"
+                  <a href="#" @click="setPage(page)"
                     ><span>{{ page }}</span></a
                   >
                 </li>
