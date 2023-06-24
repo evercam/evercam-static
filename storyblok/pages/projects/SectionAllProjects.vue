@@ -203,7 +203,6 @@ export default {
 
       this.projectsFiltered.data = this.projectsFiltered.data.filter(
         (project) => {
-
           // Check if the project's category is selected
           if (!selectedCategories.includes(project.content.project_category)) {
             return false;
@@ -245,36 +244,35 @@ export default {
   },
   methods: {
     switchTab(type) {
-      if (type == "map") {
-        this.tabs.gridView = false;
-        this.tabs.mapView = true;
+      const isMapView = type === "map";
+      this.tabs.gridView = !isMapView;
+      this.tabs.mapView = isMapView;
 
-        if (!this.mapLoaded) {
-          this.loadGoogleMap();
-          this.mapLoaded = true;
-        }
-      } else {
-        this.tabs.gridView = true;
-        this.tabs.mapView = false;
+      if (isMapView && !this.mapLoaded) {
+        this.loadGoogleMap();
+        this.mapLoaded = true;
       }
     },
     loadGoogleMap: async function () {
-      const loader = await new Loader({
-        apiKey: useRuntimeConfig().public.googleMapKey,
-      });
-
+      const {
+        public: { googleMapKey },
+      } = useRuntimeConfig();
+      const loader = await new Loader({ apiKey: googleMapKey });
       await loader.load();
 
       google.maps.event.clearInstanceListeners(window);
       google.maps.event.clearInstanceListeners(document);
 
-      var latlng = new google.maps.LatLng(53.349804, -6.26031);
-
-      this.map = new google.maps.Map(document.getElementById("map"), {
+      const latlng = new google.maps.LatLng(53.349804, -6.26031);
+      const mapOptions = {
         center: latlng,
         zoom: 18,
         styles: this.mapStyleJson,
-      });
+      };
+      this.map = new google.maps.Map(
+        document.getElementById("map"),
+        mapOptions
+      );
 
       this.setMarkers();
     },
@@ -290,75 +288,55 @@ export default {
         long: longitude,
       };
     },
-    setMarkers: function () {
-      var _this = this;
-      var marker, i;
-      var bounds = new google.maps.LatLngBounds();
+    setMarkers() {
+      const bounds = new google.maps.LatLngBounds();
 
-      for (i = 0; i < this.projectsFiltered.data.length; i++) {
-        var title = this.projectsFiltered.data[i]["name"];
-        var lat = "";
-        var long = "";
-        var image =
-          this.projectsFiltered.data[i]["content"]["image_thumbnail"] ?? "";
-        var link = this.projectsFiltered.data[i]["full_slug"] ?? "";
-        var detail = this.projectsFiltered.data[i]["detail"] ?? "";
+      for (const project of this.projectsFiltered.data) {
+        const title = project.name;
+        let lat = "";
+        let long = "";
+        const image = project.content.image_thumbnail ?? "";
+        const link = project.full_slug ?? "";
+        const detail = project.detail ?? "";
 
-        if (this.projectsFiltered.data[i].content.maps) {
-          let tempData = this.parseLatLong(
-            this.projectsFiltered.data[i].content.maps
+        if (project.content.maps) {
+          const { lat: tempLat, long: tempLong } = this.parseLatLong(
+            project.content.maps
           );
-
-          lat = tempData.lat;
-          long = tempData.long;
+          lat = tempLat;
+          long = tempLong;
         }
 
         if (lat && long && !isNaN(lat) && !isNaN(long)) {
-          var latlngset = new google.maps.LatLng(lat, long);
-          var marker = new google.maps.Marker({
+          const latlngset = new google.maps.LatLng(lat, long);
+          const marker = new google.maps.Marker({
             map: this.map,
-            title: title,
+            title,
             position: latlngset,
           });
+
           this.map.setCenter(marker.getPosition());
-
           this.map.setCenter(bounds.getCenter());
-
           this.map.fitBounds(bounds);
           this.map.setZoom(this.map.getZoom() - 1);
 
           bounds.extend(marker.getPosition());
 
-          var content =
-            '<h3><a href="' +
-            link +
-            '">' +
-            title +
-            '</a></h3><div class="image-div"><img src="' +
-            image +
-            '"></div><p>' +
-            detail +
-            "</p>";
+          const content = `<h3><a href="${link}">${title}</a></h3><div class="image-div"><img src="${image}"></div><p>${detail}</p>`;
 
-          var infowindow = new google.maps.InfoWindow();
+          const infowindow = new google.maps.InfoWindow();
 
-          google.maps.event.addListener(
-            marker,
-            "click",
-            (function (marker, content, infowindow) {
-              return function () {
-                if (_this.activeInfoWindow) {
-                  _this.activeInfoWindow.close();
-                }
-                infowindow.setOptions({
-                  content: content,
-                });
-                infowindow.open(_this.map, marker);
-                _this.map.setCenter(marker.getPosition());
-                _this.activeInfoWindow = infowindow;
-              };
-            })(marker, content, infowindow)
-          );
+          google.maps.event.addListener(marker, "click", () => {
+            if (this.activeInfoWindow) {
+              this.activeInfoWindow.close();
+            }
+            infowindow.setOptions({
+              content,
+            });
+            infowindow.open(this.map, marker);
+            this.map.setCenter(marker.getPosition());
+            this.activeInfoWindow = infowindow;
+          });
         }
       }
     },
@@ -375,18 +353,11 @@ export default {
       return this.categories.map((category) => (category.selected = false));
     },
     fetchAllProject: async function () {
+      // Get the Storyblok API instance
       const storyblokApi = useStoryblokApi();
-      var customPerPage = 50;
-
-      // Maximum entries we can get is 100, there for we need to use pagination to retrieve all data.
-      // Step to Retrieve All Projects:
-      // 1. Get Total Count For Projects
-      // 2. Group and count by locations & categories
-      // 3. Retrieve All projects
-      // 4. Sort Projects based on user locale
-      // 5. Create Pagination
-
-      // We only need total post, so using page = 1 and per_page = 1 is enough
+      // Define the number of projects to retrieve per page
+      const customPerPage = 50;
+      // Fetch the first page of projects and its headers
       const { data, headers } = await storyblokApi.get("cdn/stories", {
         version: useRoute().query._storyblok ? "draft" : "published",
         starts_with: "projects",
@@ -394,121 +365,103 @@ export default {
         page: 1,
         per_page: 1,
       });
-
+      // Set the total number of projects to the value from the headers
       this.projects.total = parseInt(headers.total);
+      // Calculate the total number of pagination pages needed
       const totalPagination = this.calculatePagesCount(
         customPerPage,
         this.projects.total
       );
-
-      // ****************************
-      // Retrieve All Projects
-      // ****************************
-
-      for (var i = 0; i <= totalPagination; i++) {
-        const { data } = await storyblokApi.get("cdn/stories", {
+      // Fetch all the pages of projects in parallel using an array of Promises
+      const allPromises = Array.from({ length: totalPagination }, (_, i) =>
+        storyblokApi.get("cdn/stories", {
           version: useRoute().query._storyblok ? "draft" : "published",
           starts_with: "projects",
           is_startpage: false,
           per_page: customPerPage,
           page: i + 1,
-        });
-
-        this.projects.data.push(...data.stories);
-      }
-
-      // ****************************
-      // Sort The Projects based on User Country
-      // ****************************
+        })
+      );
+      // Wait for all the Promises to resolve and get the data
+      const allData = await Promise.all(allPromises);
+      // Flatten the array of project data from all the pages
+      this.projects.data = allData.flatMap(({ data }) => data.stories);
+      // Sort the project data by the user's locale
       this.sortProjectsByUserLocale();
-
-      // ****************************
-      // Count Categories & Country
-      // ****************************
+      // Group the project data by categories and location
       this.groupByCategoriesAndLocation();
     },
     sortProjectsByUserLocale() {
-      // Select Stories by User Country
       const userLocale = this.locations.find(
         (location) => location.code === this.$i18n.locale
       );
 
-      this.projects.data.sort((a, b) => {
-        if (
-          a.content.project_country === userLocale.id &&
-          b.content.project_country !== userLocale.id
-        ) {
+      const projectCountryComparator = (a, b) => {
+        const aIsUserLocale = a.content.project_country === userLocale.id;
+        const bIsUserLocale = b.content.project_country === userLocale.id;
 
-          return -1; // `a` comes first if content.project_country is 'A'
-        } else if (
-          a.content.project_country !== userLocale.id &&
-          b.content.project_country === userLocale.id
-        ) {
-
-          return 1; // `b` comes first if content.project_country is 'A'
+        if (aIsUserLocale && !bIsUserLocale) {
+          return -1;
+        } else if (!aIsUserLocale && bIsUserLocale) {
+          return 1;
         } else {
-
           return a.content.project_country.localeCompare(
             b.content.project_country
-          ); // Sort by name if content.project_country is the same or not 'A'
+          );
         }
-      });
+      };
+
+      this.projects.data.sort(projectCountryComparator);
     },
     groupByCategoriesAndLocation() {
-      this.projects.data.map((story) => {
+      for (const story of this.projects.data) {
         // Group and find locations
-        var locationIndex = this.locations.findIndex(
-          (location) => location.id == story.content.project_country
+        const location = this.locations.find(
+          (location) => location.id === story.content.project_country
         );
 
-        if (locationIndex >= 0) {
-          this.locations[locationIndex].total += 1;
+        if (location) {
+          location.total++;
         }
 
         // Group and find categories
-        var categoryIndex = this.categories.findIndex(
-          (category) => category.id == story.content.project_category
+        const category = this.categories.find(
+          (category) => category.id === story.content.project_category
         );
 
-        if (categoryIndex >= 0) {
-          this.categories[categoryIndex].total += 1;
+        if (category) {
+          category.total++;
         }
-      });
+      }
     },
 
     setPage: function (pageNumber) {
       this.projectsFiltered.currentPage = pageNumber;
       this.fetchFilteredProject();
     },
-    paginate: function () {
-      var itemsPerPage = this.projectsFiltered.itemPerPage;
-      var totalData = this.projectsFiltered.total;
-      var currentPage = this.projectsFiltered.currentPage;
-      var totalPage = this.calculatePagesCount(itemsPerPage, totalData);
-
+    paginate() {
+      const {
+        itemPerPage,
+        total: totalData,
+        currentPage,
+      } = this.projectsFiltered;
+      const totalPage = this.calculatePagesCount(itemPerPage, totalData);
       this.projectsFiltered.totalPage = totalPage;
 
-      if (
-        !this.projectsFiltered.data ||
-        this.projectsFiltered.data.length < 1
-      ) {
+      if (!this.projectsFiltered.data || !this.projectsFiltered.data.length)
         return;
-      }
 
-      if (currentPage >= totalPage) {
-        currentPage = totalPage;
-      }
-
-      var index = currentPage * itemsPerPage - itemsPerPage;
-
+      const currentPageAdjusted = Math.min(currentPage, totalPage);
+      const index = currentPageAdjusted * itemPerPage - itemPerPage;
+      const endIndex = index + itemPerPage;
       this.projectsFiltered.data = this.projectsFiltered.data.slice(
         index,
-        index + itemsPerPage
+        endIndex
       );
-
     },
     calculatePagesCount(perPage, totalProject) {
-      return totalProject < perPage ? 1 : Math.ceil(totalProject / perPage);
+      const pagesCount = Math.ceil(totalProject / perPage);
+      return pagesCount || 1;
     },
   },
 };
