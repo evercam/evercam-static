@@ -18,10 +18,14 @@ const { data } = await storyblokApi.get('cdn/stories/global/site-config', {
 })
 
 story.value = data.story
-
 </script>
 
 <template>
   <slot />
-  <SectionFooter :phone_number="story.content.phone_number" :address_details="story.content.address_details" :address_link="story.content.address_link" />
+  <div v-if="story.content">
+    <SectionFooter :phone_number="story.content.phone_number" :address_details="story.content.address_details" :address_link="story.content.address_link" />
+  </div>
+  <div v-else>
+    <FooterFallback />
+  </div>
 </template>

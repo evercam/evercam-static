@@ -1,16 +1,10 @@
 <script setup>
 import { listCameras, listProductivity, listFeatures, listAbout, listPartners, listApp, listSocials } from "../config/navigation-list";
 const props = defineProps({
-  blok: Object,
-  phone_number: String,
-  address_details: String,
-  address_link: String,
+  blok: Object
 });
 /** Multilanguage Configuration */
 const localePath = useLocalePath();
-
-const phoneNumber = props.phone_number || "";
-const telLink = computed(() => `tel:+${phoneNumber}`);
 </script>
 
 <style>
@@ -106,13 +100,10 @@ const telLink = computed(() => `tel:+${phoneNumber}`);
         <div class="col-md-3 slideRight order-md-4 footer-address">
           <h3>Contact</h3>
           <p>
-            <a :href="props.address_link" target="_blank">{{
-              props.address_details
-            }}</a>
+            <a href="https://goo.gl/maps/jhDWBGdppEBUpckF9" target="_blank">6-7 Granby Row, Dublin 1, Ireland</a>
             <br />
             <!-- phoneNumber -->
-            <a :href="telLink">+{{ phoneNumber }}</a>
-            <!-- <br>-->
+            <a href="tel:+353 1 919 4588">+353 1 919 4588</a>
           </p>
           <h3>Other Locations</h3>
           <AvailableLocales />
