@@ -17,7 +17,7 @@ export default defineCachedEventHandler(async (event) => {
         ...routes.map(
             route => [
                 '<url>',
-                `  <loc>${runtimeConfig.public.siteUrl}/${route.full_slug}</loc>`,
+                `  <loc>${runtimeConfig.public.siteUrl}${route.full_slug}</loc>`,
                 '</url>',
             ].join(''),
         ),
