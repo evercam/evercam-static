@@ -44,11 +44,12 @@ export default defineNuxtConfig({
             routes: ['/', '/sitemap_index.xml'],
         },
     },
-    // robots: {
-    //     sitemap: [
-    //         '/sitemap.xml',
-    //     ],
-    // },
+    robots: {
+        sitemap: [
+            '/sitemap_index.xml',
+        ],
+        disallow: [],
+    },
     i18n: {
         locales: localeDomains,
         differentDomains: true,
