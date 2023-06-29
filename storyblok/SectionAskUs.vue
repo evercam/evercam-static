@@ -191,8 +191,8 @@ window.addEventListener('message', function () {
               <p role="status" aria-live="polite" aria-atomic="true"></p>
               <ul></ul>
             </div>
-            <div>
-              <div id="zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI"></div>
+            <div style="overflow: hidden;">
+              <div id="zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI" style="transform: scale(1.14);"></div>
             </div>
             <!--<form
               action="/#wpcf7-f27498-o1"
