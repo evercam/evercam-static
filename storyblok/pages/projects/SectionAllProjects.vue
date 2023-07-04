@@ -185,54 +185,30 @@ export default {
     selectedCategory() {
       return this.categories.filter((category) => category.selected);
     },
-    fetchFilteredProject() {
-      this.projectsFiltered.data = this.projects.data;
-      this.projectsFiltered.total = this.projectsFiltered.data.length;
-
-      let selectedCategories = this.selectedCategory.map(
-        (category) => category.id
-      );
-      let selectedLocations = this.selectedLocation.map(
-        (location) => location.id
-      );
+    fetchFilteredProject: function () {
+      const selectedCategories = this.selectedCategory
+        .filter((category) => category.id !== "")
+        .map((category) => category.id);
+      const selectedLocations = this.selectedLocation
+        .filter((location) => location.id !== "")
+        .map((location) => location.id);
       const searchQuery = this.searchText.toLowerCase();
 
-      // additional since, not all list has id
-      selectedCategories = selectedCategories.filter((n) => n != "");
-      selectedLocations = selectedLocations.filter((n) => n != "");
+      this.projectsFiltered.data = this.projects.data.filter((project) => {
+        const categoryMatch = selectedCategories.includes(
+          project.content.project_category
+        );
+        const locationMatch = selectedLocations.includes(
+          project.content.project_country
+        );
+        const searchMatch = Object.values(project.content).some((value) => {
+          if (typeof value !== "string") return false;
+          return value.toLowerCase().includes(searchQuery);
+        });
+        return categoryMatch && locationMatch && searchMatch;
+      });
 
-      this.projectsFiltered.data = this.projectsFiltered.data.filter(
-        (project) => {
-
-          // Check if the project's category is selected
-          if (!selectedCategories.includes(project.content.project_category)) {
-            return false;
-          }
-
-          // Check if the project's location is selected
-          if (!selectedLocations.includes(project.content.project_country)) {
-            return false;
-          }
-
-          // Check if the search query matches any field in the project object
-          if (
-            searchQuery &&
-            !Object.values(project.content).some((value) => {
-              if (typeof value === "string") {
-                return value.toLowerCase().includes(searchQuery);
-              }
-              return false;
-            })
-          ) {
-            return false;
-          }
-
-          // Include the project in the filtered list
-          return true;
-        }
-      );
       this.projectsFiltered.total = this.projectsFiltered.data.length;
-
       this.paginate();
 
       // reload google maps
@@ -240,10 +216,12 @@ export default {
     },
   },
   created() {
-    // this.fetchFilteredProject();
     this.fetchAllProject();
   },
   methods: {
+    filterProjects() {
+      this.fetchFilteredProject;
+    },
     switchTab(type) {
       if (type == "map") {
         this.tabs.gridView = false;
@@ -259,24 +237,26 @@ export default {
       }
     },
     loadGoogleMap: async function () {
-      const loader = await new Loader({
-        apiKey: useRuntimeConfig().public.googleMapKey,
-      });
+      if (process.client) {
+        const loader = await new Loader({
+          apiKey: useRuntimeConfig().public.googleMapKey,
+        });
 
-      await loader.load();
+        await loader.load();
 
-      google.maps.event.clearInstanceListeners(window);
-      google.maps.event.clearInstanceListeners(document);
+        google.maps.event.clearInstanceListeners(window);
+        google.maps.event.clearInstanceListeners(document);
 
-      var latlng = new google.maps.LatLng(53.349804, -6.26031);
+        var latlng = new google.maps.LatLng(53.349804, -6.26031);
 
-      this.map = new google.maps.Map(document.getElementById("map"), {
-        center: latlng,
-        zoom: 18,
-        styles: this.mapStyleJson,
-      });
+        this.map = new google.maps.Map(document.getElementById("map"), {
+          center: latlng,
+          zoom: 18,
+          styles: this.mapStyleJson,
+        });
 
-      this.setMarkers();
+        this.setMarkers();
+      }
     },
     parseLatLong(urlString) {
       const url = new URL(urlString);
@@ -376,18 +356,9 @@ export default {
     },
     fetchAllProject: async function () {
       const storyblokApi = useStoryblokApi();
-      var customPerPage = 50;
+      const customPerPage = 50;
 
-      // Maximum entries we can get is 100, there for we need to use pagination to retrieve all data.
-      // Step to Retrieve All Projects:
-      // 1. Get Total Count For Projects
-      // 2. Group and count by locations & categories
-      // 3. Retrieve All projects
-      // 4. Sort Projects based on user locale
-      // 5. Create Pagination
-
-      // We only need total post, so using page = 1 and per_page = 1 is enough
-      const { data, headers } = await storyblokApi.get("cdn/stories", {
+      const { headers } = await storyblokApi.get("cdn/stories", {
         version: useRoute().query._storyblok ? "draft" : "published",
         starts_with: "projects",
         is_startpage: false,
@@ -401,21 +372,19 @@ export default {
         this.projects.total
       );
 
-      // ****************************
-      // Retrieve All Projects
-      // ****************************
+      const dataPromises = Array.from({ length: totalPagination }, (_, i) =>
+        storyblokApi
+          .get("cdn/stories", {
+            version: useRoute().query._storyblok ? "draft" : "published",
+            starts_with: "projects",
+            is_startpage: false,
+            per_page: customPerPage,
+            page: i + 1,
+          })
+          .then(({ data }) => data.stories)
+      );
 
-      for (var i = 0; i <= totalPagination; i++) {
-        const { data } = await storyblokApi.get("cdn/stories", {
-          version: useRoute().query._storyblok ? "draft" : "published",
-          starts_with: "projects",
-          is_startpage: false,
-          per_page: customPerPage,
-          page: i + 1,
-        });
-
-        this.projects.data.push(...data.stories);
-      }
+      this.projects.data = (await Promise.all(dataPromises)).flat();
 
       // ****************************
       // Sort The Projects based on User Country
@@ -438,16 +407,13 @@ export default {
           a.content.project_country === userLocale.id &&
           b.content.project_country !== userLocale.id
         ) {
-
           return -1; // `a` comes first if content.project_country is 'A'
         } else if (
           a.content.project_country !== userLocale.id &&
           b.content.project_country === userLocale.id
         ) {
-
           return 1; // `b` comes first if content.project_country is 'A'
         } else {
-
           return a.content.project_country.localeCompare(
             b.content.project_country
           ); // Sort by name if content.project_country is the same or not 'A'
@@ -478,7 +444,7 @@ export default {
 
     setPage: function (pageNumber) {
       this.projectsFiltered.currentPage = pageNumber;
-      this.fetchFilteredProject();
+      this.fetchFilteredProject;
     },
     paginate: function () {
       var itemsPerPage = this.projectsFiltered.itemPerPage;
@@ -651,7 +617,7 @@ export default {
               <div class="search-box">
                 <div class="input-group">
                   <SearchProject
-                    :search="fetchFilteredProject"
+                    :search="filterProjects"
                     v-model="searchText"
                   />
                   <div class="input-group-append">
