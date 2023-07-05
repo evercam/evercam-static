@@ -1,5 +1,6 @@
 <script setup>
 const props = defineProps({ blok: Object });
+const resolvedContent = computed(() => renderRichText(props.blok.content));
 /** Setup Form */
 onMounted(() => {
   var salesIQFieldsArray = [
@@ -103,33 +104,46 @@ onMounted(() => {
     );
   }
   var f = document.createElement("iframe");
-f.src = 'https://forms.zohopublic.com/Evercam/form/LandingPageContactFormSGBACKUP/formperma/FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI?zf_rszfm=1';
-f.style.border = "none";
-f.style.height = "721px";
-f.style.width = "100%";
-f.style.transition = "all 0.5s ease";
+  f.src =
+    "https://forms.zohopublic.com/Evercam/form/LandingPageContactFormSGBACKUP/formperma/FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI?zf_rszfm=1";
+  f.style.border = "none";
+  f.style.height = "721px";
+  f.style.width = "100%";
+  f.style.transition = "all 0.5s ease";
 
-var d = document.getElementById("zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI");
-d.appendChild(f);
-window.addEventListener('message', function () {
-  var evntData = event.data;
-  if (evntData && evntData.constructor == String) {
-    var zf_ifrm_data = evntData.split("|");
-    if (zf_ifrm_data.length == 2) {
-      var zf_perma = zf_ifrm_data[0];
-      var zf_ifrm_ht_nw = (parseInt(zf_ifrm_data[1], 10) + 15) + "px";
-      var iframe = document.getElementById("zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI").getElementsByTagName("iframe")[0];
-      if ((iframe.src).indexOf('formperma') > 0 && (iframe.src).indexOf(zf_perma) > 0) {
-        var prevIframeHeight = iframe.style.height;
-        if (prevIframeHeight != zf_ifrm_ht_nw) {
-          iframe.style.height = zf_ifrm_ht_nw;
+  var d = document.getElementById(
+    "zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI"
+  );
+  d.appendChild(f);
+  window.addEventListener(
+    "message",
+    function () {
+      var evntData = event.data;
+      if (evntData && evntData.constructor == String) {
+        var zf_ifrm_data = evntData.split("|");
+        if (zf_ifrm_data.length == 2) {
+          var zf_perma = zf_ifrm_data[0];
+          var zf_ifrm_ht_nw = parseInt(zf_ifrm_data[1], 10) + 15 + "px";
+          var iframe = document
+            .getElementById(
+              "zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI"
+            )
+            .getElementsByTagName("iframe")[0];
+          if (
+            iframe.src.indexOf("formperma") > 0 &&
+            iframe.src.indexOf(zf_perma) > 0
+          ) {
+            var prevIframeHeight = iframe.style.height;
+            if (prevIframeHeight != zf_ifrm_ht_nw) {
+              iframe.style.height = zf_ifrm_ht_nw;
+            }
+          }
         }
       }
-    }
-  }
-}, false);
+    },
+    false
+  );
 });
-
 </script>
 
 <template>
@@ -137,52 +151,14 @@ window.addEventListener('message', function () {
     <div class="container">
       <div class="row">
         <div class="col-md-6 slideLeft pr-md-5">
-          <h2>Get in touch</h2>
-          <p>
-            Call us on <a href="tel:+353 1 919 4500">+353 1 919 4500</a> or
-            complete the form and we can arrange a live demo.
-          </p>
-          <p>
-            After a quick chat, we can organize a price estimate and a site
-            visit.
-          </p>
-          <ul class="row">
-            <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c4.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c4.png" alt="Logo Image" />
-            </li>
-            <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c5.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c5.png" alt="Logo Image" />
-            </li>
-            <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c6.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c6.png" alt="Logo Image" />
-            </li>
-            <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c10.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c10.png" alt="Logo Image" />
-            </li>
-            <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c11.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c11.png" alt="Logo Image" />
-            </li>
-            <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c12.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c12.png" alt="Logo Image" />
-            </li>
-            <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c2.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c2.png" alt="Logo Image" />
-            </li>
-            <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c1.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c1.png" alt="Logo Image" />
-            </li>
-            <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c3.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c3.png" alt="Logo Image" />
-            </li>
+          <div v-html="resolvedContent"></div>
+          <ul v-if="blok.brand_list" class="row">
+            <LogoIndividual
+              v-for="blok in blok.brand_list"
+              :blok="blok"
+              :key="blok.uuid"
+              :class="props.blok.list_class"
+            />
           </ul>
         </div>
         <div class="col-md-6 form-iframe-wrapper">
@@ -191,8 +167,11 @@ window.addEventListener('message', function () {
               <p role="status" aria-live="polite" aria-atomic="true"></p>
               <ul></ul>
             </div>
-            <div style="overflow: hidden;">
-              <div id="zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI" style="transform: scale(1.14);"></div>
+            <div style="overflow: hidden">
+              <div
+                id="zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI"
+                style="transform: scale(1.14)"
+              ></div>
             </div>
             <!--<form
               action="/#wpcf7-f27498-o1"
@@ -419,6 +398,6 @@ window.addEventListener('message', function () {
 
 <style scoped>
 .templateWidth {
-  padding: 0!important;
+  padding: 0 !important;
 }
 </style>

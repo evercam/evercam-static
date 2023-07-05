@@ -977,3 +977,22 @@ a#download-files:focus {
     align-items: center;
     justify-content: flex-end;
 }
+
+/* End Carousel Styling */
+
+/* Contact Styling */
+@media screen and (min-width: 992px) {
+    #ask-us .form-iframe-wrapper {
+        padding-top: 0 !important;
+    }
+}
+
+#ask-us h1:before {
+    content: "";
+    width: 6px;
+    height: 58px;
+    background: #c4161c;
+    top: 14px;
+    left: 0;
+    position: absolute;
+}
