@@ -996,3 +996,8 @@ a#download-files:focus {
     left: 0;
     position: absolute;
 }
+
+#send-us li p {
+    margin-bottom: 0;
+    text-align: left !important;
+}
