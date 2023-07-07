@@ -1,12 +1,16 @@
 <script setup>
 const props = defineProps({ blok: Object });
 const resolvedDescription = computed(() => renderRichText(props.blok.description));
+
+// check for route & change class if route is "brand"
+const imgClass = useRoute().path.includes("brand") ? "brand-img" : "icon-big";
+
 </script>
 
 <template v-editable="blok">
   <div class="col-md-4">
     <img
-      class="icon-big"
+      :class="imgClass"
       :src="blok.image.filename"
       alt=""
     />

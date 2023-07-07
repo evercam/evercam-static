@@ -977,3 +977,8 @@ a#download-files:focus {
     align-items: center;
     justify-content: flex-end;
 }
+
+.brand-img {
+    margin-left: 25%;
+    margin-right: 25%;
+}
