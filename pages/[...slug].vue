@@ -1,5 +1,5 @@
 <script setup>
-const { slug } = useRoute().params;
+const { slug } = useRoute().params
 const { locale } = useI18n()
 
 const story = await useAsyncStoryblok(
