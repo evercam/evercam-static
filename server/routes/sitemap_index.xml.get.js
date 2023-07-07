@@ -1,14 +1,9 @@
-import getBlogPosts from "../../config/get-story.js";
+import getAllPosts from "../../utils/get-story.js";
 
 export default defineCachedEventHandler(async (event) => {
       const runtimeConfig = useRuntimeConfig();
-    // perform async getBlogPosts() logic every 1 day
 
-
-
-    const routes = await getBlogPosts();
-
-    //   console.log("These are all the Blog routes", routes);
+    const routes = await getAllPosts();
 
     const timestamp = new Date().toISOString();
     const sitemap = [
@@ -17,7 +12,8 @@ export default defineCachedEventHandler(async (event) => {
         ...routes.map(
             route => [
                 '<url>',
-                `  <loc>${runtimeConfig.public.siteUrl}${route.full_slug}</loc>`,
+                `   <loc>${runtimeConfig.public.siteUrl}${route.full_slug}</loc>`,
+                `   <lastmod>${timestamp}</lastmod>`,
                 '</url>',
             ].join(''),
         ),

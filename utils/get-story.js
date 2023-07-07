@@ -1,7 +1,7 @@
 // const storyblokApi = useStoryblokApi();
 import { apiPlugin } from "@storyblok/vue";
 
-export default async function getBlogPosts() {
+export default async function getAllPosts() {
   const { storyblokApi } = apiPlugin({
     apiOptions: { accessToken: process.env.STORYBLOK_API_KEY }
   });
