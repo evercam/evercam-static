@@ -1,14 +1,11 @@
 <script setup>
-import { headerList } from "../config/navigation-list";
+import { navigationList } from "../utils/navigation-list";
 const props = defineProps({
   blok: Object,
   phone_number: String,
 });
 
-
-// const switchLocalePath = useSwitchLocalePath();
 const urlPath = useRoute().path;
-const localePath = useLocalePath();
 const { locale, locales } = useI18n();
 
 const currentLocale = computed(() => {
@@ -21,16 +18,16 @@ const telLink = computed(() => `tel:+${phoneNumber}`);
 
 <script>
 export default {
-  data() {
-    return {
-      menuActive: false,
-    };
-  },
-  methods: {
-    onClickLocale() {
-      this.menuActive = !this.menuActive;
+    data() {
+        return {
+            menuActive: false,
+        };
     },
-  },
+    methods: {
+        onClickLocale() {
+            this.menuActive = !this.menuActive;
+        },
+    },
 };
 </script>
 
@@ -40,7 +37,7 @@ export default {
       <div id="navbar" class="d-md-flex">
         <ul class="nav-list">
           <li
-            v-for="(item, i) in headerList"
+            v-for="(item, i) in navigationList().headerList"
             :key="i"
             class="dropdown"
             :class="{ active: urlPath.includes(item.href) }"
