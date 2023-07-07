@@ -1,5 +1,5 @@
 <script setup>
-import { listCameras, listProductivity, listFeatures, listAbout, listPartners, listApp, listSocials } from "../config/navigation-list";
+import { navigationList } from "../utils/navigation-list";
 const props = defineProps({
   blok: Object
 });
@@ -380,7 +380,7 @@ const localePath = useLocalePath();
           <h3>Construction Cameras</h3>
           <ul class="">
             <li
-              v-for="(item, i) in listCameras"
+              v-for="(item, i) in navigationList().listCameras"
               :key="i"
               class="dropdown"
               :id="item.id"
@@ -391,7 +391,7 @@ const localePath = useLocalePath();
           <h3>Productivity</h3>
           <ul class="">
             <li
-              v-for="(item, i) in listProductivity"
+              v-for="(item, i) in navigationList().listProductivity"
               :key="i"
               class="dropdown"
               :id="item.id"
@@ -404,7 +404,7 @@ const localePath = useLocalePath();
           <h3>About</h3>
           <ul class="">
             <li
-              v-for="(item, i) in listAbout"
+              v-for="(item, i) in navigationList().listAbout"
               :key="i"
               class="dropdown"
               :id="item.id"
@@ -415,7 +415,7 @@ const localePath = useLocalePath();
           <h3>Partners</h3>
           <ul class="">
             <li
-              v-for="(item, i) in listPartners"
+              v-for="(item, i) in navigationList().listPartners"
               :key="i"
               class="dropdown"
               :id="item.id"
@@ -428,7 +428,7 @@ const localePath = useLocalePath();
           <h3>Features</h3>
           <ul class="">
             <li
-              v-for="(item, i) in listFeatures"
+              v-for="(item, i) in navigationList().listFeatures"
               :key="i"
               class="dropdown"
               :id="item.id"
@@ -444,7 +444,7 @@ const localePath = useLocalePath();
         <div class="row">
           <div class="col-md-3 align-self-center slideLeft">
             <a
-              v-for="(item, i) in listApp"
+              v-for="(item, i) in navigationList().listApp"
               :key="i"
               :href="item.href || 'javascript:void(0)'"
               target="_blank"
@@ -794,7 +794,7 @@ const localePath = useLocalePath();
             class="col-md-4 align-self-center slideRight mobile-social-icons"
           >
             <ul class="social-links">
-              <li v-for="(item, i) in listSocials" :key="i">
+              <li v-for="(item, i) in navigationList().listSocials" :key="i">
                 <a
                   :href="item.href || 'javascript:void(0)'"
                   target="_blank"
