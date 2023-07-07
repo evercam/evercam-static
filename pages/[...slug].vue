@@ -17,10 +17,6 @@ useServerSeoMeta({
   ogDescription: () => story.value.content.metadata?.description,
 })
 
-// defineOgImageStatic({
-//   title: () => story.value.content.metadata?.title,
-//   description: () => story.value.content.metadata?.description,
-// })
 </script>
 
 <template>
