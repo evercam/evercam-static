@@ -308,7 +308,7 @@ header .language-dropdown .glob-icon.country span {
 #inner-page .row {
     border-bottom: 1px solid #c4161c;
     padding-bottom: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 0px;
 }
 
 @media screen and (min-width: 200px) {
@@ -976,4 +976,22 @@ a#download-files:focus {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+#inner-page {
+    padding: 40px 0 0 0;
+}
+
+.partner {
+    position: relative;
+    padding-bottom: 550px;
+}
+
+.partner>.text-center {
+    margin: 20px 0;
+}
+
+.no-map {
+    position: relative;
+    padding-bottom: 20px;
 }
