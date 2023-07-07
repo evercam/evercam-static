@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-const localeDomains = require('./config/locale-domains')
+const localeDomains = require('./utils/locale-domains')
 
 export default defineNuxtConfig({
     modules: [
