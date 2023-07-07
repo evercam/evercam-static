@@ -3,12 +3,12 @@ const { slug } = useRoute().params
 const { locale } = useI18n()
 
 const story = await useAsyncStoryblok(
-  slug && slug.length > 0 ? slug.join('/') : 'home',
+  slug && slug.length > 0 ? slug.join("/") : "home",
   {
-    version: 'draft',
+    version: "draft",
     language: locale.value,
-   }
-);
+  }
+)
 
 useServerSeoMeta({
   title: () => story.value.content.metadata?.title,
@@ -16,7 +16,6 @@ useServerSeoMeta({
   description: () => story.value.content.metadata?.description,
   ogDescription: () => story.value.content.metadata?.description,
 })
-
 </script>
 
 <template>
