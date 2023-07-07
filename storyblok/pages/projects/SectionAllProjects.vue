@@ -23,7 +23,7 @@ body {
 
 <script>
 import { Loader } from "@googlemaps/js-api-loader";
-import mapStyleJson from "../../../config/map-style";
+import mapStyleJson from "../../../utils/map-style";
 
 export default {
   data() {
