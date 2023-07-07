@@ -1,9 +1,16 @@
 <script setup>
-defineProps({ blok: Object });
+import { navigationList } from "../utils/navigation-list";
+const props = defineProps({
+  blok: Object,
+  phone_number: String,
+  address_details: String,
+  address_link: String,
+});
 /** Multilanguage Configuration */
 const localePath = useLocalePath();
-const { locale, locales } = useI18n();
-const switchLocalePath = useSwitchLocalePath();
+
+const phoneNumber = props.phone_number || "";
+const telLink = computed(() => `tel:+${phoneNumber}`);
 </script>
 
 <style>
@@ -91,7 +98,7 @@ const switchLocalePath = useSwitchLocalePath();
             </a>
           </div>
           <div class="col-6 text-right">
-            <a href="/contact" class="btn-style">Book a demo</a>
+            <a :href="localePath('/contact')" class="btn-style">Book a demo</a>
           </div>
         </div>
       </div>
@@ -99,31 +106,17 @@ const switchLocalePath = useSwitchLocalePath();
         <div class="col-md-3 slideRight order-md-4 footer-address">
           <h3>Contact</h3>
           <p>
-            <a href="https://goo.gl/maps/jhDWBGdppEBUpckF9" target="_blank"
-              >6-7 Granby Row, Dublin 1, Ireland</a
-            >
+            <a :href="props.address_link" target="_blank">{{
+              props.address_details
+            }}</a>
             <br />
-            <a href="tel:+35319194500">+353 1 919 4500</a>
+            <!-- phoneNumber -->
+            <a :href="telLink">+{{ phoneNumber }}</a>
             <!-- <br>-->
-            <!--<a href="mailto:"></a>-->
           </p>
           <h3>Other Locations</h3>
-          <ul>
-            <!-- <li><a href="">IE</a></li>
-            <li><a href="https://evercam.uk">UK</a></li>
-            <li><a href="https://evercam.sg">SG</a></li>
-            <li><a href="https://evercam.com.au">AU</a></li>
-            <li><a href="https://evercam.com">US</a></li>
-            <li><a href="https://evercam.pl">PL</a></li> -->
-            <li v-for="{ code, name } in locales"
-                :key="code">
-              <NuxtLink
-                :to="switchLocalePath(code)"
-              >
-                {{ name.replace('en-','') }}
-              </NuxtLink>
-            </li>
-          </ul>
+          <AvailableLocales />
+
           <div class="accordion d-md-none" id="accordion">
             <div class="card">
               <div class="card-header" id="headingOne">
@@ -149,16 +142,16 @@ const switchLocalePath = useSwitchLocalePath();
                 <div class="card-body">
                   <ul class="">
                     <li id="li-405" class="dropdown">
-                      <a href="/pricing">Pricing</a>
+                      <a :href="localePath('/pricing')">Pricing</a>
                     </li>
                     <li id="li-568" class="dropdown">
-                      <a href="/blog">Blog</a>
+                      <a :href="localePath('/blog')">Blog</a>
                     </li>
                     <li id="li-406" class="dropdown">
-                      <a href="/contact">Contact Us</a>
+                      <a :href="localePath('/contact')">Contact Us</a>
                     </li>
                     <li id="li-559" class="dropdown">
-                      <a href="/tutorials">Tutorials</a>
+                      <a :href="localePath('/tutorials')">Tutorials</a>
                     </li>
                   </ul>
                 </div>
@@ -189,21 +182,25 @@ const switchLocalePath = useSwitchLocalePath();
                   <ul class="">
                     <li id="li-29063" class="dropdown">
                       <a
-                        href="/features/evercam-construction-project-management-software-integrations"
+                        :href="
+                          localePath(
+                            '/features/evercam-construction-project-management-software-integrations'
+                          )
+                        "
                         >Software Integrations</a
                       >
                     </li>
                     <li id="li-29064" class="dropdown">
-                      <a href="/project-management"
+                      <a :href="localePath('/project-management')"
                         >Project Management</a
                       >
                     </li>
                     <li id="li-29065" class="dropdown">
-                      <a href="/marketing">Marketing</a>
+                      <a :href="localePath('/marketing')">Marketing</a>
                     </li>
                     <li id="li-29066" class="dropdown">
                       <a
-                        href="https://evercam.io/machine-learning-for-construction"
+                        :href="localePath('/machine-learning-for-construction')"
                         >A.I. for Construction</a
                       >
                     </li>
@@ -235,54 +232,68 @@ const switchLocalePath = useSwitchLocalePath();
                 <div class="card-body">
                   <ul class="">
                     <li id="li-29056" class="dropdown">
-                      <a
-                        href="/features/construction-time-lapse"
+                      <a :href="localePath('/features/construction-time-lapse')"
                         >Time-lapse</a
                       >
                     </li>
                     <li id="li-29057" class="dropdown">
                       <a
-                        href="/features/live-view-of-construction-site"
+                        :href="
+                          localePath('/features/live-view-of-construction-site')
+                        "
                         >Live View</a
                       >
                     </li>
                     <li id="li-29058" class="dropdown">
                       <a
-                        href="/features/recordings-with-evercam-construction-site-security-cameras"
+                        :href="
+                          localePath(
+                            '/features/recordings-with-evercam-construction-site-security-cameras'
+                          )
+                        "
                         >Recordings</a
                       >
                     </li>
                     <li id="li-28138" class="dropdown">
-                      <a href="/features/gate-report"
+                      <a :href="localePath('/features/gate-report')"
                         >Gate Report</a
                       >
                     </li>
                     <li id="li-29059" class="dropdown">
                       <a
-                        href="/features/x-ray-tool-for-construction-site-projects"
+                        :href="
+                          localePath(
+                            '/features/x-ray-tool-for-construction-site-projects'
+                          )
+                        "
                         >X-Ray</a
                       >
                     </li>
                     <li id="li-492" class="dropdown">
-                      <a href="/features/bim-time-lapse-integration"
+                      <a
+                        :href="
+                          localePath('/features/bim-time-lapse-integration')
+                        "
                         >BIM Integration</a
                       >
                     </li>
                     <li id="li-29060" class="dropdown">
-                      <a href="/features/the-measuring-tool"
+                      <a :href="localePath('/features/the-measuring-tool')"
                         >Measuring Tool</a
                       >
                     </li>
                     <li id="li-29062" class="dropdown">
                       <a
-                        href="/features/the-compare-tool-for-construction-sites"
+                        :href="
+                          localePath(
+                            '/features/the-compare-tool-for-construction-sites'
+                          )
+                        "
                         >Compare Tool</a
                       >
                     </li>
                     <li id="li-29061" class="dropdown">
-                      <a href="/features/edit-tool"
-                        >Edit Tool</a
-                      >
+                      <a :href="localePath('/features/edit-tool')">Edit Tool</a>
                     </li>
                   </ul>
                 </div>
@@ -312,14 +323,12 @@ const switchLocalePath = useSwitchLocalePath();
                 <div class="card-body">
                   <ul class="">
                     <li id="li-25747" class="dropdown">
-                      <a href="/become-an-installer"
+                      <a :href="localePath('/become-an-installer')"
                         >Become An Installer</a
                       >
                     </li>
                     <li id="li-1705" class="dropdown">
-                      <a href="/partners"
-                        >Find An Installer</a
-                      >
+                      <a :href="localePath('/partners')">Find An Installer</a>
                     </li>
                   </ul>
                 </div>
@@ -349,10 +358,10 @@ const switchLocalePath = useSwitchLocalePath();
                 <div class="card-body">
                   <ul class="">
                     <li id="li-376" class="dropdown">
-                      <a href="/terms">Terms &amp; Conditions</a>
+                      <a :href="localePath('/terms')">Terms &amp; Conditions</a>
                     </li>
                     <li id="li-34950" class="dropdown">
-                      <a href="/trust">Trust</a>
+                      <a :href="localePath('/trust')">Trust</a>
                     </li>
                     <li id="li-30377" class="dropdown">
                       <a
@@ -362,13 +371,13 @@ const switchLocalePath = useSwitchLocalePath();
                       >
                     </li>
                     <li id="li-24896" class="dropdown">
-                      <a href="/about">About</a>
+                      <a :href="localePath('/about')">About</a>
                     </li>
                     <li id="li-29228" class="dropdown">
                       <a href="https://jobs.evercam.io/jobs/Careers">Careers</a>
                     </li>
                     <li id="li-31853" class="dropdown">
-                      <a href="/testimonials">Testimonials</a>
+                      <a :href="localePath('/testimonials')">Testimonials</a>
                     </li>
                   </ul>
                 </div>
@@ -379,106 +388,61 @@ const switchLocalePath = useSwitchLocalePath();
         <div class="col-md-3 d-md-block d-none slideLeft">
           <h3>Construction Cameras</h3>
           <ul class="">
-            <li id="li-405" class="dropdown">
-              <a href="/pricing">Pricing</a>
-            </li>
-            <li id="li-568" class="dropdown"><a href="/blog">Blog</a></li>
-            <li id="li-406" class="dropdown">
-              <a href="/contact">Contact Us</a>
-            </li>
-            <li id="li-559" class="dropdown">
-              <a href="/tutorials">Tutorials</a>
+            <li
+              v-for="(item, i) in navigationList().listCameras"
+              :key="i"
+              class="dropdown"
+              :id="item.id"
+            >
+              <a :href="item.href || 'javascript:void(0)'">{{ item.label }}</a>
             </li>
           </ul>
           <h3>Productivity</h3>
           <ul class="">
-            <li id="li-29063" class="dropdown">
-              <a
-                href="/features/evercam-construction-project-management-software-integrations"
-                >Software Integrations</a
-              >
-            </li>
-            <li id="li-29064" class="dropdown">
-              <a href="/project-management">Project Management</a>
-            </li>
-            <li id="li-29065" class="dropdown">
-              <a href="/marketing">Marketing</a>
-            </li>
-            <li id="li-29066" class="dropdown">
-              <a href="/machine-learning-for-construction"
-                >A.I. for Construction</a
-              >
+            <li
+              v-for="(item, i) in navigationList().listProductivity"
+              :key="i"
+              class="dropdown"
+              :id="item.id"
+            >
+              <a :href="item.href || 'javascript:void(0)'">{{ item.label }}</a>
             </li>
           </ul>
         </div>
         <div class="col-md-3 d-md-block d-none slideUp">
           <h3>About</h3>
           <ul class="">
-            <li id="li-376" class="dropdown">
-              <a href="/terms">Terms &amp; Conditions</a>
-            </li>
-            <li id="li-34950" class="dropdown"><a href="/trust">Trust</a></li>
-            <li id="li-30377" class="dropdown">
-              <a href="https://jobs.evercam.io/jobs/Careers" target="_blank"
-                >Job Opportunities</a
-              >
-            </li>
-            <li id="li-24896" class="dropdown"><a href="/about">About</a></li>
-            <li id="li-29228" class="dropdown">
-              <a href="https://jobs.evercam.io/jobs/Careers">Careers</a>
-            </li>
-            <li id="li-31853" class="dropdown">
-              <a href="/testimonials">Testimonials</a>
+            <li
+              v-for="(item, i) in navigationList().listAbout"
+              :key="i"
+              class="dropdown"
+              :id="item.id"
+            >
+              <a :href="item.href || 'javascript:void(0)'">{{ item.label }}</a>
             </li>
           </ul>
           <h3>Partners</h3>
           <ul class="">
-            <li id="li-25747" class="dropdown">
-              <a href="/become-an-installer">Become An Installer</a>
-            </li>
-            <li id="li-1705" class="dropdown">
-              <a href="/partners">Find An Installer</a>
+            <li
+              v-for="(item, i) in navigationList().listPartners"
+              :key="i"
+              class="dropdown"
+              :id="item.id"
+            >
+              <a :href="item.href || 'javascript:void(0)'">{{ item.label }}</a>
             </li>
           </ul>
-          <!-- <h3>OTHER</h3>
-                         -->
         </div>
         <div class="col-md-3 d-md-block d-none slideUp">
           <h3>Features</h3>
           <ul class="">
-            <li id="li-29056" class="dropdown">
-              <a href="/features/construction-time-lapse">Time-lapse</a>
-            </li>
-            <li id="li-29057" class="dropdown">
-              <a href="/features/live-view-of-construction-site">Live View</a>
-            </li>
-            <li id="li-29058" class="dropdown">
-              <a
-                href="/features/recordings-with-evercam-construction-site-security-cameras"
-                >Recordings</a
-              >
-            </li>
-            <li id="li-28138" class="dropdown">
-              <a href="/features/gate-report">Gate Report</a>
-            </li>
-            <li id="li-29059" class="dropdown">
-              <a href="/features/x-ray-tool-for-construction-site-projects"
-                >X-Ray</a
-              >
-            </li>
-            <li id="li-492" class="dropdown">
-              <a href="/features/bim-time-lapse-integration">BIM Integration</a>
-            </li>
-            <li id="li-29060" class="dropdown">
-              <a href="/features/the-measuring-tool">Measuring Tool</a>
-            </li>
-            <li id="li-29062" class="dropdown">
-              <a href="/features/the-compare-tool-for-construction-sites"
-                >Compare Tool</a
-              >
-            </li>
-            <li id="li-29061" class="dropdown">
-              <a href="/features/edit-tool">Edit Tool</a>
+            <li
+              v-for="(item, i) in navigationList().listFeatures"
+              :key="i"
+              class="dropdown"
+              :id="item.id"
+            >
+              <a :href="item.href || 'javascript:void(0)'">{{ item.label }}</a>
             </li>
           </ul>
         </div>
@@ -489,27 +453,18 @@ const switchLocalePath = useSwitchLocalePath();
         <div class="row">
           <div class="col-md-3 align-self-center slideLeft">
             <a
-              href="https://play.google.com/store/apps/details?id=io.evercam.androidapp"
+              v-for="(item, i) in navigationList().listApp"
+              :key="i"
+              :href="item.href || 'javascript:void(0)'"
               target="_blank"
               rel="noopener"
-              ><img
-                class="ls-is-cached lazyloaded"
-                src="https://evercam.io/wp-content/themes/evercam/img/google_play_download.png"
-                data-src="https://evercam.io/wp-content/themes/evercam/img/google_play_download.png"
-                alt="Google Paly"
-              /><span class="sr-only">Google Play</span></a
             >
-            <a
-              href="https://itunes.apple.com/ie/app/evercam-play-ip-camera-viewer/id983189658?mt=8"
-              target="_blank"
-              rel="noopener"
-              ><img
+              <img
                 class="ls-is-cached lazyloaded"
-                src="https://evercam.io/wp-content/themes/evercam/img/ios-logo.png"
-                data-src="https://evercam.io/wp-content/themes/evercam/img/ios-logo.png"
-                alt="IOS"
-              /><span class="sr-only">Apple Store</span></a
-            >
+                :src="item.image_src"
+                :alt="item.label"
+              /><span class="sr-only">{{item.label}}</span>
+            </a>
           </div>
           <div class="col-md-5 align-self-center slideUp">
             <div id="customForm">
@@ -848,94 +803,15 @@ const switchLocalePath = useSwitchLocalePath();
             class="col-md-4 align-self-center slideRight mobile-social-icons"
           >
             <ul class="social-links">
-              <li>
+              <li v-for="(item, i) in navigationList().listSocials" :key="i">
                 <a
-                  href="https://wa.me/353894481651"
+                  :href="item.href || 'javascript:void(0)'"
                   target="_blank"
                   rel="noopener"
-                  >
-                  <font-awesome-icon icon="fa-brands fa-whatsapp" />
-                  <span class="sr-only">Whatsapp </span></a
                 >
-              </li>
-              <li>
-                <a
-                  href="https://github.com/evercam"
-                  target="_blank"
-                  rel="noopener"
-                  >
-                  <font-awesome-icon icon="fa-brands fa-github" />
-                  <span
-                    class="sr-only"
-                    >Github
-                  </span>
-                  </a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.linkedin.com/company/evercam"
-                  target="_blank"
-                  rel="noopener"
-                  >
-                  <font-awesome-icon icon="fa-brands fa-linkedin-in" />
-                  <span class="sr-only">Linkedin </span></a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://twitter.com/evrcm"
-                  target="_blank"
-                  rel="noopener"
-                  >
-                  <font-awesome-icon icon="fa-brands fa-twitter" />
-                  <span class="sr-only">Twitter </span></a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.facebook.com/evrcm/"
-                  target="_blank"
-                  rel="noopener"
-                  >
-                  <font-awesome-icon icon="fa-brands fa-facebook-f" />
-                  <span
-                    class="sr-only"
-                    >Facebook
-                  </span></a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://vimeo.com/evercam"
-                  target="_blank"
-                  rel="noopener"
-                  >
-                  <font-awesome-icon icon="fa-brands fa-vimeo-v" />
-                  <span class="sr-only">Vimeo </span>
-                  </a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.youtube.com/user/evrcm"
-                  target="_blank"
-                  rel="noopener"
-                  >
-                  <font-awesome-icon icon="fa-brands fa-youtube" />
-                  <span class="sr-only">Youtube </span></a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.instagram.com/EvercamConstructionCameras/"
-                  target="_blank"
-                  rel="noopener"
-                  >
-                  <font-awesome-icon icon="fa-brands fa-instagram" />
-                  <span class="sr-only">Instagram </span>
-                  </a
-                >
+                  <font-awesome-icon :icon="item.icon" />
+                  <span class="sr-only">{{ item.label }} </span>
+                </a>
               </li>
             </ul>
           </div>
