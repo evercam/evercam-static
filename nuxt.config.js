@@ -32,6 +32,9 @@ export default defineNuxtConfig({
     //         device: 'mobile',
     //     }
     // },
+    sitemap: {
+        enabled: false,
+    },
     linkChecker: {
         failOn404: false,
     },
