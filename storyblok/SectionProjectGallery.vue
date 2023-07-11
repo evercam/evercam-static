@@ -1,9 +1,9 @@
 <script>
 // If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
-import { Carousel, Slide, Navigation } from "vue3-carousel";
+import { Carousel, Slide, Navigation } from "vue3-carousel"
 
 export default defineComponent({
-  name: 'Basic',
+  name: "Basic",
   components: {
     Carousel,
     Slide,
@@ -13,18 +13,18 @@ export default defineComponent({
 </script>
 
 <script setup>
-const props = defineProps({ blok: Object });
-const projects = ref(null);
-const storyblokApi = useStoryblokApi();
+const props = defineProps({ blok: Object })
+const projects = ref(null)
+const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
   starts_with: "projects",
   is_startpage: false,
-});
-projects.value = data.stories;
+})
+projects.value = data.stories
 
 const thumbnailPlaceholder =
-  "https://a.storyblok.com/f/208852/674x380/bf71efc381/image_thumbnail.jpg";
+  "https://a.storyblok.com/f/208852/674x380/bf71efc381/image_thumbnail.jpg"
 </script>
 
 <template>

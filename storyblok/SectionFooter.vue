@@ -1,16 +1,16 @@
 <script setup>
-import { navigationList } from "../utils/navigation-list";
+import { navigationList } from "../utils/navigation-list"
 const props = defineProps({
   blok: Object,
   phone_number: String,
   address_details: String,
   address_link: String,
-});
+})
 /** Multilanguage Configuration */
-const localePath = useLocalePath();
+const localePath = useLocalePath()
 
-const phoneNumber = props.phone_number || "";
-const telLink = computed(() => `tel:+${phoneNumber}`);
+const phoneNumber = props.phone_number || ""
+const telLink = computed(() => `tel:+${phoneNumber}`)
 </script>
 
 <style>
@@ -463,7 +463,7 @@ const telLink = computed(() => `tel:+${phoneNumber}`);
                 class="ls-is-cached lazyloaded"
                 :src="item.image_src"
                 :alt="item.label"
-              /><span class="sr-only">{{item.label}}</span>
+              /><span class="sr-only">{{ item.label }}</span>
             </a>
           </div>
           <div class="col-md-5 align-self-center slideUp">

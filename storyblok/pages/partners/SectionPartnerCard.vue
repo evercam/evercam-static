@@ -1,9 +1,11 @@
 <script setup>
-const props = defineProps({ blok: Object });
+const props = defineProps({ blok: Object })
 
-const description = computed(() => renderRichText(props.blok.description));
+const description = computed(() => renderRichText(props.blok.description))
 
-const checkMap = props.blok.google_maps_embed ? "col-lg-6 partner" : "col-lg-6 partner no-map";
+const checkMap = props.blok.google_maps_embed
+  ? "col-lg-6 partner"
+  : "col-lg-6 partner no-map"
 </script>
 
 <template>
@@ -27,13 +29,15 @@ const checkMap = props.blok.google_maps_embed ? "col-lg-6 partner" : "col-lg-6 p
     </p>
     <p>
       <strong>Contact:</strong><br />
-      {{blok.address}}
+      {{ blok.address }}
       <br />
-      <a v-if="blok.phone" :href="`tel://+`+ blok.phone">+{{blok.phone}}</a><br />
-      <a v-if="blok.email" :href="`mailto:`+ blok.email"
-        >{{blok.email}}</a
+      <a v-if="blok.phone" :href="`tel://+` + blok.phone">+{{ blok.phone }}</a
       ><br />
-      <a v-if="blok.partner_website" :href="blok.partner_website">{{blok.name}}</a>
+      <a v-if="blok.email" :href="`mailto:` + blok.email">{{ blok.email }}</a
+      ><br />
+      <a v-if="blok.partner_website" :href="blok.partner_website">{{
+        blok.name
+      }}</a>
     </p>
     <iframe
       v-if="blok.google_maps_embed"

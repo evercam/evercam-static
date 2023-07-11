@@ -1,12 +1,12 @@
 <script setup>
-defineProps({ blok: Object });
+defineProps({ blok: Object })
 
 /** Run the Script on Client */
 onMounted(() => {
   // console.log('brand-page class added');
-  document.body.classList.add("new-design","transparent-header","brand-page");
-  document.getElementById('marketing-banner').id = 'new-design-banner'
-});
+  document.body.classList.add("new-design", "transparent-header", "brand-page")
+  document.getElementById("marketing-banner").id = "new-design-banner"
+})
 </script>
 <template>
   <section v-editable="blok" id="brand">

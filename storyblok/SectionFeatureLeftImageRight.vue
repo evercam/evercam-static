@@ -1,30 +1,30 @@
 <script setup>
-const props = defineProps({ blok: Object });
-const resolvedFeatureName = computed(() => renderRichText(props.blok.title));
+const props = defineProps({ blok: Object })
+const resolvedFeatureName = computed(() => renderRichText(props.blok.title))
 const resolvedDescription = computed(() =>
   renderRichText(props.blok.description)
-);
+)
 
-const isPrice = props.blok.is_price;
+const isPrice = props.blok.is_price
 
-const videoSource = ["vimeo.com", "youtube.com", "mp4", ".mp4"];
-let assetSource = props.blok.asset.filename;
-let assetCheck = "";
-let isVideo = false;
-const fromYoutube = "www.youtube.com/watch";
-let isYoutube = assetSource.includes(fromYoutube);
+const videoSource = ["vimeo.com", "youtube.com", "mp4", ".mp4"]
+let assetSource = props.blok.asset.filename
+let assetCheck = ""
+let isVideo = false
+const fromYoutube = "www.youtube.com/watch"
+let isYoutube = assetSource.includes(fromYoutube)
 
 if (isYoutube) {
-  assetCheck = assetSource.replace("watch?v=", "embed/");
+  assetCheck = assetSource.replace("watch?v=", "embed/")
 } else {
-  assetCheck = assetSource;
+  assetCheck = assetSource
 }
 if (
   videoSource.some(function (v) {
-    return assetCheck.indexOf(v) > -1;
+    return assetCheck.indexOf(v) > -1
   })
 ) {
-  isVideo = true;
+  isVideo = true
 }
 </script>
 

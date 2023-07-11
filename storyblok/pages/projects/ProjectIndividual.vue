@@ -3,7 +3,7 @@
 // import SectionBreadcrumbLeftAll from "@/storyblok/SectionBreadcrumbLeftAll.vue";
 // import SectionRelatedProject from "@/storyblok/SectionRelatedProject.vue";
 // import ProjectDetailsList from "./ProjectDetailsList.vue";
-import ImageCompare from "image-compare-viewer";
+import ImageCompare from "image-compare-viewer"
 
 // export default {
 //   name: "app",
@@ -18,14 +18,14 @@ import ImageCompare from "image-compare-viewer";
 </script>
 
 <script setup>
-const props = defineProps({ blok: Object });
+const props = defineProps({ blok: Object })
 
-const resolvedRichText = computed(() => renderRichText(props.blok.content));
+const resolvedRichText = computed(() => renderRichText(props.blok.content))
 const resolvedRichText2 = computed(() =>
   renderRichText(props.blok.another_content)
-);
+)
 onMounted(() => {
-  const element = document.getElementById("image-compare");
+  const element = document.getElementById("image-compare")
   const options = {
     // UI Theme Defaults
 
@@ -54,11 +54,11 @@ onMounted(() => {
     verticalMode: false,
     startingPoint: 50,
     fluidMode: false,
-  };
+  }
 
   // Add your options object as the second argument
-  const viewer = new ImageCompare(element, options).mount();
-});
+  const viewer = new ImageCompare(element, options).mount()
+})
 
 const assetSource = props.blok.additional_video
 let assetCheck = ""
@@ -66,15 +66,15 @@ let assetCheck = ""
 const fromYoutube = "www.youtube.com/watch"
 let isYoutube = ""
 
-if(assetSource) {
-  isYoutube = assetSource.includes(fromYoutube);
+if (assetSource) {
+  isYoutube = assetSource.includes(fromYoutube)
 }
 
 // console.log("isYoutube", isYoutube)
 
 if (assetSource) {
   if (isYoutube) {
-    assetCheck = assetSource.replace('watch?v=','embed/')
+    assetCheck = assetSource.replace("watch?v=", "embed/")
     // console.log("This is the additional video", assetCheck)
   } else {
     assetCheck = assetSource

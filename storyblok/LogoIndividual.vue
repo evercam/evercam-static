@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({ blok: Object });
+const props = defineProps({ blok: Object })
 // const isLink = props.blok.
 </script>
 
