@@ -1,5 +1,5 @@
 <script setup>
-defineProps({ list: Object });
+defineProps({ list: Object })
 </script>
 
 <template>

@@ -1,10 +1,10 @@
 <script setup>
-defineProps({ blok: Object });
-const tutorials = ref(null);
-const page = ref(1);
-const currentPage = ref(1);
+defineProps({ blok: Object })
+const tutorials = ref(null)
+const page = ref(1)
+const currentPage = ref(1)
 
-const storyblokApi = useStoryblokApi();
+const storyblokApi = useStoryblokApi()
 const { data, refresh } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
   starts_with: "tutorials",
@@ -12,9 +12,9 @@ const { data, refresh } = await storyblokApi.get("cdn/stories", {
   sort_by: "first_published_at",
   per_page: 25,
   page: currentPage,
-});
+})
 
-tutorials.value = data.stories;
+tutorials.value = data.stories
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup>
-defineProps({ blok: Object });
+defineProps({ blok: Object })
 </script>
 
 <style>
@@ -22,8 +22,8 @@ body {
 </style>
 
 <script>
-import { Loader } from "@googlemaps/js-api-loader";
-import mapStyleJson from "../../../utils/map-style";
+import { Loader } from "@googlemaps/js-api-loader"
+import mapStyleJson from "../../../utils/map-style"
 
 export default {
   data() {
@@ -176,138 +176,138 @@ export default {
         },
       ],
       mapStyleJson: mapStyleJson,
-    };
+    }
   },
   computed: {
     selectedLocation() {
-      return this.locations.filter((location) => location.selected);
+      return this.locations.filter((location) => location.selected)
     },
     selectedCategory() {
-      return this.categories.filter((category) => category.selected);
+      return this.categories.filter((category) => category.selected)
     },
     fetchFilteredProject: function () {
       const selectedCategories = this.selectedCategory
         .filter((category) => category.id !== "")
-        .map((category) => category.id);
+        .map((category) => category.id)
       const selectedLocations = this.selectedLocation
         .filter((location) => location.id !== "")
-        .map((location) => location.id);
-      const searchQuery = this.searchText.toLowerCase();
+        .map((location) => location.id)
+      const searchQuery = this.searchText.toLowerCase()
 
       this.projectsFiltered.data = this.projects.data.filter((project) => {
         const categoryMatch = selectedCategories.includes(
           project.content.project_category
-        );
+        )
         const locationMatch = selectedLocations.includes(
           project.content.project_country
-        );
+        )
         const searchMatch = Object.values(project.content).some((value) => {
-          if (typeof value !== "string") return false;
-          return value.toLowerCase().includes(searchQuery);
-        });
-        return categoryMatch && locationMatch && searchMatch;
-      });
+          if (typeof value !== "string") return false
+          return value.toLowerCase().includes(searchQuery)
+        })
+        return categoryMatch && locationMatch && searchMatch
+      })
 
-      this.projectsFiltered.total = this.projectsFiltered.data.length;
-      this.paginate();
+      this.projectsFiltered.total = this.projectsFiltered.data.length
+      this.paginate()
 
       // reload google maps
-      this.loadGoogleMap();
+      this.loadGoogleMap()
     },
   },
   created() {
-    this.fetchAllProject();
+    this.fetchAllProject()
   },
   methods: {
     filterProjects() {
-      this.fetchFilteredProject;
+      this.fetchFilteredProject
     },
     switchTab(type) {
       if (type == "map") {
-        this.tabs.gridView = false;
-        this.tabs.mapView = true;
+        this.tabs.gridView = false
+        this.tabs.mapView = true
 
         if (!this.mapLoaded) {
-          this.loadGoogleMap();
-          this.mapLoaded = true;
+          this.loadGoogleMap()
+          this.mapLoaded = true
         }
       } else {
-        this.tabs.gridView = true;
-        this.tabs.mapView = false;
+        this.tabs.gridView = true
+        this.tabs.mapView = false
       }
     },
     loadGoogleMap: async function () {
       if (process.client) {
         const loader = await new Loader({
           apiKey: useRuntimeConfig().public.googleMapKey,
-        });
+        })
 
-        await loader.load();
+        await loader.load()
 
-        google.maps.event.clearInstanceListeners(window);
-        google.maps.event.clearInstanceListeners(document);
+        google.maps.event.clearInstanceListeners(window)
+        google.maps.event.clearInstanceListeners(document)
 
-        var latlng = new google.maps.LatLng(53.349804, -6.26031);
+        var latlng = new google.maps.LatLng(53.349804, -6.26031)
 
         this.map = new google.maps.Map(document.getElementById("map"), {
           center: latlng,
           zoom: 18,
           styles: this.mapStyleJson,
-        });
+        })
 
-        this.setMarkers();
+        this.setMarkers()
       }
     },
     parseLatLong(urlString) {
-      const url = new URL(urlString);
-      const params = new URLSearchParams(url.search);
+      const url = new URL(urlString)
+      const params = new URLSearchParams(url.search)
 
-      const qValue = params.get("q");
-      const [latitude, longitude] = qValue.split(",");
+      const qValue = params.get("q")
+      const [latitude, longitude] = qValue.split(",")
 
       return {
         lat: latitude,
         long: longitude,
-      };
+      }
     },
     setMarkers: function () {
-      var _this = this;
-      var marker, i;
-      var bounds = new google.maps.LatLngBounds();
+      var _this = this
+      var marker, i
+      var bounds = new google.maps.LatLngBounds()
 
       for (i = 0; i < this.projectsFiltered.data.length; i++) {
-        var title = this.projectsFiltered.data[i]["name"];
-        var lat = "";
-        var long = "";
+        var title = this.projectsFiltered.data[i]["name"]
+        var lat = ""
+        var long = ""
         var image =
-          this.projectsFiltered.data[i]["content"]["image_thumbnail"] ?? "";
-        var link = this.projectsFiltered.data[i]["full_slug"] ?? "";
-        var detail = this.projectsFiltered.data[i]["detail"] ?? "";
+          this.projectsFiltered.data[i]["content"]["image_thumbnail"] ?? ""
+        var link = this.projectsFiltered.data[i]["full_slug"] ?? ""
+        var detail = this.projectsFiltered.data[i]["detail"] ?? ""
 
         if (this.projectsFiltered.data[i].content.maps) {
           let tempData = this.parseLatLong(
             this.projectsFiltered.data[i].content.maps
-          );
+          )
 
-          lat = tempData.lat;
-          long = tempData.long;
+          lat = tempData.lat
+          long = tempData.long
         }
 
         if (lat && long && !isNaN(lat) && !isNaN(long)) {
-          var latlngset = new google.maps.LatLng(lat, long);
+          var latlngset = new google.maps.LatLng(lat, long)
           var marker = new google.maps.Marker({
             map: this.map,
             title: title,
             position: latlngset,
-          });
-          this.map.setCenter(marker.getPosition());
+          })
+          this.map.setCenter(marker.getPosition())
 
-          this.map.setCenter(bounds.getCenter());
+          this.map.setCenter(bounds.getCenter())
 
-          this.map.fitBounds(bounds);
-          this.map.setZoom(this.map.getZoom() - 1);
+          this.map.fitBounds(bounds)
+          this.map.setZoom(this.map.getZoom() - 1)
 
-          bounds.extend(marker.getPosition());
+          bounds.extend(marker.getPosition())
 
           var content =
             '<h3><a href="' +
@@ -318,9 +318,9 @@ export default {
             image +
             '"></div><p>' +
             detail +
-            "</p>";
+            "</p>"
 
-          var infowindow = new google.maps.InfoWindow();
+          var infowindow = new google.maps.InfoWindow()
 
           google.maps.event.addListener(
             marker,
@@ -328,35 +328,35 @@ export default {
             (function (marker, content, infowindow) {
               return function () {
                 if (_this.activeInfoWindow) {
-                  _this.activeInfoWindow.close();
+                  _this.activeInfoWindow.close()
                 }
                 infowindow.setOptions({
                   content: content,
-                });
-                infowindow.open(_this.map, marker);
-                _this.map.setCenter(marker.getPosition());
-                _this.activeInfoWindow = infowindow;
-              };
+                })
+                infowindow.open(_this.map, marker)
+                _this.map.setCenter(marker.getPosition())
+                _this.activeInfoWindow = infowindow
+              }
             })(marker, content, infowindow)
-          );
+          )
         }
       }
     },
     checkAllLocation() {
       if (!this.isCheckedAllLocation) {
-        return this.locations.map((location) => (location.selected = true));
+        return this.locations.map((location) => (location.selected = true))
       }
-      return this.locations.map((location) => (location.selected = false));
+      return this.locations.map((location) => (location.selected = false))
     },
     checkAllCategory() {
       if (!this.isCheckedAllCategory) {
-        return this.categories.map((category) => (category.selected = true));
+        return this.categories.map((category) => (category.selected = true))
       }
-      return this.categories.map((category) => (category.selected = false));
+      return this.categories.map((category) => (category.selected = false))
     },
     fetchAllProject: async function () {
-      const storyblokApi = useStoryblokApi();
-      const customPerPage = 50;
+      const storyblokApi = useStoryblokApi()
+      const customPerPage = 50
 
       const { headers } = await storyblokApi.get("cdn/stories", {
         version: useRoute().query._storyblok ? "draft" : "published",
@@ -364,13 +364,13 @@ export default {
         is_startpage: false,
         page: 1,
         per_page: 1,
-      });
+      })
 
-      this.projects.total = parseInt(headers.total);
+      this.projects.total = parseInt(headers.total)
       const totalPagination = this.calculatePagesCount(
         customPerPage,
         this.projects.total
-      );
+      )
 
       const dataPromises = Array.from({ length: totalPagination }, (_, i) =>
         storyblokApi
@@ -382,102 +382,101 @@ export default {
             page: i + 1,
           })
           .then(({ data }) => data.stories)
-      );
+      )
 
-      this.projects.data = (await Promise.all(dataPromises)).flat();
+      this.projects.data = (await Promise.all(dataPromises)).flat()
 
       // ****************************
       // Sort The Projects based on User Country
       // ****************************
-      this.sortProjectsByUserLocale();
+      this.sortProjectsByUserLocale()
 
       // ****************************
       // Count Categories & Country
       // ****************************
-      this.groupByCategoriesAndLocation();
+      this.groupByCategoriesAndLocation()
     },
     sortProjectsByUserLocale() {
       // Select Stories by User Country
       const userLocale = this.locations.find(
         (location) => location.code === this.$i18n.locale
-      );
+      )
 
       this.projects.data.sort((a, b) => {
         if (
           a.content.project_country === userLocale.id &&
           b.content.project_country !== userLocale.id
         ) {
-          return -1; // `a` comes first if content.project_country is 'A'
+          return -1 // `a` comes first if content.project_country is 'A'
         } else if (
           a.content.project_country !== userLocale.id &&
           b.content.project_country === userLocale.id
         ) {
-          return 1; // `b` comes first if content.project_country is 'A'
+          return 1 // `b` comes first if content.project_country is 'A'
         } else {
           return a.content.project_country.localeCompare(
             b.content.project_country
-          ); // Sort by name if content.project_country is the same or not 'A'
+          ) // Sort by name if content.project_country is the same or not 'A'
         }
-      });
+      })
     },
     groupByCategoriesAndLocation() {
       this.projects.data.map((story) => {
         // Group and find locations
         var locationIndex = this.locations.findIndex(
           (location) => location.id == story.content.project_country
-        );
+        )
 
         if (locationIndex >= 0) {
-          this.locations[locationIndex].total += 1;
+          this.locations[locationIndex].total += 1
         }
 
         // Group and find categories
         var categoryIndex = this.categories.findIndex(
           (category) => category.id == story.content.project_category
-        );
+        )
 
         if (categoryIndex >= 0) {
-          this.categories[categoryIndex].total += 1;
+          this.categories[categoryIndex].total += 1
         }
-      });
+      })
     },
 
     setPage: function (pageNumber) {
-      this.projectsFiltered.currentPage = pageNumber;
-      this.fetchFilteredProject;
+      this.projectsFiltered.currentPage = pageNumber
+      this.fetchFilteredProject
     },
     paginate: function () {
-      var itemsPerPage = this.projectsFiltered.itemPerPage;
-      var totalData = this.projectsFiltered.total;
-      var currentPage = this.projectsFiltered.currentPage;
-      var totalPage = this.calculatePagesCount(itemsPerPage, totalData);
+      var itemsPerPage = this.projectsFiltered.itemPerPage
+      var totalData = this.projectsFiltered.total
+      var currentPage = this.projectsFiltered.currentPage
+      var totalPage = this.calculatePagesCount(itemsPerPage, totalData)
 
-      this.projectsFiltered.totalPage = totalPage;
+      this.projectsFiltered.totalPage = totalPage
 
       if (
         !this.projectsFiltered.data ||
         this.projectsFiltered.data.length < 1
       ) {
-        return;
+        return
       }
 
       if (currentPage >= totalPage) {
-        currentPage = totalPage;
+        currentPage = totalPage
       }
 
-      var index = currentPage * itemsPerPage - itemsPerPage;
+      var index = currentPage * itemsPerPage - itemsPerPage
 
       this.projectsFiltered.data = this.projectsFiltered.data.slice(
         index,
         index + itemsPerPage
-      );
-
+      )
     },
     calculatePagesCount(perPage, totalProject) {
-      return totalProject < perPage ? 1 : Math.ceil(totalProject / perPage);
+      return totalProject < perPage ? 1 : Math.ceil(totalProject / perPage)
     },
   },
-};
+}
 </script>
 
 <template>

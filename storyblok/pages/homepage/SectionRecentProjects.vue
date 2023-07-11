@@ -1,9 +1,9 @@
 <script setup>
-defineProps({ blok: Object });
+defineProps({ blok: Object })
 
-const projects = ref(null);
-const storyblokApi = useStoryblokApi();
-const { locale } = useI18n();
+const projects = ref(null)
+const storyblokApi = useStoryblokApi()
+const { locale } = useI18n()
 
 /** Search by country */
 const { data } = await storyblokApi.get("cdn/stories", {
@@ -15,31 +15,31 @@ const { data } = await storyblokApi.get("cdn/stories", {
       in: projectBasedUrl(),
     },
   },
-});
+})
 
 function projectBasedUrl() {
-  switch(locale.value) {
+  switch (locale.value) {
     case "en-ie":
-      return "94332311-8c5a-447f-bf35-d01f8c6de53c,ba36f6fc-ee8d-4623-8ee9-37178297fe9f,03549e41-cad9-427f-8547-d99255e6eb40,f6547d6e-d16c-4c20-ab81-b919aa4c2a17,bca81fbe-0317-4d5b-bbe2-5ace823bb8b4";
+      return "94332311-8c5a-447f-bf35-d01f8c6de53c,ba36f6fc-ee8d-4623-8ee9-37178297fe9f,03549e41-cad9-427f-8547-d99255e6eb40,f6547d6e-d16c-4c20-ab81-b919aa4c2a17,bca81fbe-0317-4d5b-bbe2-5ace823bb8b4"
     case "en-sg":
-      return "99ca21c1-5030-4289-aa4b-ba9b2535b98b";
+      return "99ca21c1-5030-4289-aa4b-ba9b2535b98b"
     case "en-au":
-      return "ba36f6fc-ee8d-4623-8ee9-37178297fe9f";
+      return "ba36f6fc-ee8d-4623-8ee9-37178297fe9f"
     case "en-gb":
-      return "03549e41-cad9-427f-8547-d99255e6eb40";
+      return "03549e41-cad9-427f-8547-d99255e6eb40"
     case "en-us":
-      return "bca81fbe-0317-4d5b-bbe2-5ace823bb8b4";
+      return "bca81fbe-0317-4d5b-bbe2-5ace823bb8b4"
     case "pl":
-      return "f6547d6e-d16c-4c20-ab81-b919aa4c2a17";
+      return "f6547d6e-d16c-4c20-ab81-b919aa4c2a17"
   }
 }
 
-projects.value = data.stories;
+projects.value = data.stories
 </script>
 
 <script>
 // If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
-import { Carousel, Slide, Navigation } from "vue3-carousel";
+import { Carousel, Slide, Navigation } from "vue3-carousel"
 
 export default defineComponent({
   name: "Basic",
@@ -48,7 +48,7 @@ export default defineComponent({
     Slide,
     Navigation,
   },
-});
+})
 </script>
 
 <template>

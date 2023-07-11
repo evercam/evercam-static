@@ -1,20 +1,20 @@
 <script setup>
-const props = defineProps({ project: Object, slug: String });
+const props = defineProps({ project: Object, slug: String })
 
 const imageThumbnail = props.project.image_thumbnail
   ? props.project.image_thumbnail
-  : "https://a.storyblok.com/f/208852/674x380/538e670581/image_thumbnail.jpg";
+  : "https://a.storyblok.com/f/208852/674x380/538e670581/image_thumbnail.jpg"
 
-const urlPath = useRoute().path;
-let isProjectPages = false;
-let isBlogPages = false;
+const urlPath = useRoute().path
+let isProjectPages = false
+let isBlogPages = false
 
 if (urlPath.includes("projects")) {
-  isProjectPages = true;
+  isProjectPages = true
 }
 
 if (urlPath.includes("blog")) {
-  isBlogPages = true;
+  isBlogPages = true
 }
 </script>
 
@@ -27,10 +27,7 @@ if (urlPath.includes("blog")) {
     <div class="product-wrapper">
       <NuxtLink :to="'/' + slug">
         <div class="wrapper">
-          <img
-            class="img-responsive"
-            :src="imageThumbnail"
-          />
+          <img class="img-responsive" :src="imageThumbnail" />
         </div>
       </NuxtLink>
       <div class="content-wrapper">
@@ -52,7 +49,11 @@ if (urlPath.includes("blog")) {
           <span class="post-title">{{ project.name }}</span>
         </div>
         <div class="img-div">
-          <img v-if="imageThumbnail" :src="imageThumbnail" :alt=project.name />
+          <img
+            v-if="imageThumbnail"
+            :src="imageThumbnail"
+            :alt="project.name"
+          />
         </div>
       </div>
     </NuxtLink>

@@ -20,6 +20,7 @@ pnpm install
 ## Setting up domains for local development:
 
 1- Add the following to `/etc/hosts` :
+
 ```
 127.0.0.1    local.io
 127.0.0.1    local.sg
@@ -36,6 +37,7 @@ pnpm install
 ```
 
 2- Add the domains to your `.env`
+
 ```
 DOMAIN_UK=evercam.local.uk
 DOMAIN_SG=evercam.local.sg
@@ -43,11 +45,11 @@ DOMAIN_IE=evercam.local.io
 DOMAIN_AU=evercam.local.com.au
 DOMAIN_US=evercam.local.com
 DOMAIN_PL=evercam.local.pl
-``` 
+```
 
 ## Development Server
 
-Start the development server and access it on  http://evercam.local.io/
+Start the development server and access it on http://evercam.local.io/
 
 ```bash
 npm run dev

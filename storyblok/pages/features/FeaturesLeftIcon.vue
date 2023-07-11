@@ -1,6 +1,6 @@
 <script setup>
-const props = defineProps({ blok: Object });
-const resolvedContent = computed(() => renderRichText(props.blok.description));
+const props = defineProps({ blok: Object })
+const resolvedContent = computed(() => renderRichText(props.blok.description))
 </script>
 
 <template>

@@ -1,11 +1,9 @@
 <script setup>
-import LogoIndividual from "./LogoIndividual.vue";
-import TestimonialIndividual from "./TestimonialIndividual.vue";
+import LogoIndividual from "./LogoIndividual.vue"
+import TestimonialIndividual from "./TestimonialIndividual.vue"
 
-const props = defineProps({ blok: Object });
-const isBackground = props.blok.background
-  ? props.blok.background.filename
-  : "";
+const props = defineProps({ blok: Object })
+const isBackground = props.blok.background ? props.blok.background.filename : ""
 </script>
 
 <template>

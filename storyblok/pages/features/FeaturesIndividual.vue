@@ -1,9 +1,9 @@
 <script>
-import SectionNavigationTransparent from "@/storyblok/SectionNavigationTransparent.vue";
-import SectionBreadcrumbLeftAll from "@/storyblok/SectionBreadcrumbLeftAll.vue";
-import SectionAskUs from "@/storyblok/SectionAskUs.vue";
-import OtherFeaturesCard from "./OtherFeaturesCard.vue";
-import SectionContainerContent from "../../SectionContainerContent.vue";
+import SectionNavigationTransparent from "@/storyblok/SectionNavigationTransparent.vue"
+import SectionBreadcrumbLeftAll from "@/storyblok/SectionBreadcrumbLeftAll.vue"
+import SectionAskUs from "@/storyblok/SectionAskUs.vue"
+import OtherFeaturesCard from "./OtherFeaturesCard.vue"
+import SectionContainerContent from "../../SectionContainerContent.vue"
 
 export default {
   components: {
@@ -13,36 +13,36 @@ export default {
     OtherFeaturesCard,
     SectionContainerContent,
   },
-};
+}
 </script>
 
 <script setup>
-const props = defineProps({ blok: Object });
-const urlPath = useRoute().path;
+const props = defineProps({ blok: Object })
+const urlPath = useRoute().path
 
 const resolvedContentDescription = computed(() =>
   renderRichText(props.blok.content_description)
-);
+)
 
-const features = ref(null);
-const storyblokApi = useStoryblokApi();
+const features = ref(null)
+const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
   starts_with: "features",
   is_startpage: false,
-});
+})
 
 /**
  * Only show 3 Random Feature and exclude the Active Feature
  *  */
 
-const urlFix = urlPath.replace("/features/", "");
+const urlFix = urlPath.replace("/features/", "")
 
-const isHeaderForm = props.blok.is_header_form;
+const isHeaderForm = props.blok.is_header_form
 
 // console.log("Is Header have Form", isHeaderForm);
 
-features.value = data.stories.filter((e) => e.slug !== urlFix).slice(0, 3);
+features.value = data.stories.filter((e) => e.slug !== urlFix).slice(0, 3)
 
 // function shuffleArray(array) {
 //     for (var i = array.length - 1; i > 0; i--) {
@@ -62,45 +62,45 @@ features.value = data.stories.filter((e) => e.slug !== urlFix).slice(0, 3);
  * Richtext
  */
 
-const videoSource = ["vimeo", "youtube", "mp4", ".mp4"];
-const imageSource = ["webp", "png", "jpg", "jpeg", "gif"];
-let assetSource = "";
+const videoSource = ["vimeo", "youtube", "mp4", ".mp4"]
+const imageSource = ["webp", "png", "jpg", "jpeg", "gif"]
+let assetSource = ""
 
 if (props.blok.asset_heading.filename === "") {
-  assetSource = "";
+  assetSource = ""
 } else {
-  assetSource = props.blok.asset_heading.filename;
+  assetSource = props.blok.asset_heading.filename
 }
 
 if (props.blok.asset_heading.filename == null) {
-  assetSource = "";
+  assetSource = ""
 } else {
-  assetSource = props.blok.asset_heading.filename;
+  assetSource = props.blok.asset_heading.filename
 }
 
-let isVideo = false;
+let isVideo = false
 
 /**
  * Check if Youtube and make it embed
  */
 
-const fromYoutube = "www.youtube.com/watch";
-let isYoutube = assetSource.includes(fromYoutube);
-let assetCheck = "";
+const fromYoutube = "www.youtube.com/watch"
+let isYoutube = assetSource.includes(fromYoutube)
+let assetCheck = ""
 
 if (isYoutube) {
-  assetCheck = assetSource.replace("watch?v=", "embed/");
+  assetCheck = assetSource.replace("watch?v=", "embed/")
 } else {
-  assetCheck = assetSource;
+  assetCheck = assetSource
 }
 
 if (assetSource) {
   if (
     videoSource.some(function (v) {
-      return assetSource.indexOf(v) > -1;
+      return assetSource.indexOf(v) > -1
     })
   ) {
-    isVideo = true;
+    isVideo = true
   }
 }
 
@@ -108,29 +108,29 @@ if (assetSource) {
  * Build a function to check Feature Section with isVideo
  * const isVideo => function to check and pass true or false
  */
-let imageBackground = "";
+let imageBackground = ""
 // const imageBackground = props.blok.image_background ? props.blok.image_background.filename : "https://a.storyblok.com/f/208852/1920x1083/a5457bd6d0/image-features_placeholder.jpg";
 if (props.blok.image_background === "") {
   imageBackground =
-    "https://a.storyblok.com/f/208852/1920x1083/51ff3b2b72/home-banner-bg.webp";
+    "https://a.storyblok.com/f/208852/1920x1083/51ff3b2b72/home-banner-bg.webp"
 } else {
   // imageBackground = props.blok.image_background ? props.blok.image_background : "https://a.storyblok.com/f/208852/1920x1083/51ff3b2b72/home-banner-bg.webp";
-  imageBackground = props.blok.image_background;
+  imageBackground = props.blok.image_background
 }
 
 onMounted(() => {
   if (isHeaderForm) {
     // console.log("landing page is with form");
-    document.body.classList.add("landing-page-new-with-form");
+    document.body.classList.add("landing-page-new-with-form")
   }
-});
+})
 
-let button_cta = "";
+let button_cta = ""
 if (props.blok.button_cta.url !== "") {
-  button_cta = props.blok.button_cta.url;
+  button_cta = props.blok.button_cta.url
   // console.log("This is the button_cta", button_cta);
 } else {
-  button_cta = props.blok.button_cta.cached_url;
+  button_cta = props.blok.button_cta.cached_url
   // console.log("This is the button_cta", button_cta);
 }
 
@@ -140,59 +140,59 @@ if (props.blok.button_cta.url !== "") {
  */
 onNuxtReady(async () => {
   if (imageBackground) {
-    const img = imageBackground;
+    const img = imageBackground
 
     const getImageBrightness = (imgSrc, callback) => {
-      let img = document.createElement("img");
-      img.src = imgSrc;
-      img.crossOrigin = "Anonymous";
-      img.style.display = "none";
-      document.body.appendChild(img);
+      let img = document.createElement("img")
+      img.src = imgSrc
+      img.crossOrigin = "Anonymous"
+      img.style.display = "none"
+      document.body.appendChild(img)
 
-      let colorSum = 0;
+      let colorSum = 0
 
       img.onload = function () {
         // create canvas
-        let canvas = document.createElement("canvas");
-        canvas.width = this.width;
-        canvas.height = this.height;
+        let canvas = document.createElement("canvas")
+        canvas.width = this.width
+        canvas.height = this.height
 
-        let ctx = canvas.getContext("2d");
-        ctx.drawImage(this, 0, 0);
+        let ctx = canvas.getContext("2d")
+        ctx.drawImage(this, 0, 0)
 
-        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        let data = imageData.data;
-        let r, g, b, avg;
+        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        let data = imageData.data
+        let r, g, b, avg
 
         for (let x = 0, len = data.length; x < len; x += 4) {
-          r = data[x];
-          g = data[x + 1];
-          b = data[x + 2];
+          r = data[x]
+          g = data[x + 1]
+          b = data[x + 2]
 
-          avg = Math.floor((r + g + b) / 3);
-          colorSum += avg;
+          avg = Math.floor((r + g + b) / 3)
+          colorSum += avg
         }
 
-        let brightness = Math.floor(colorSum / (this.width * this.height));
-        callback(brightness);
-      };
-    };
+        let brightness = Math.floor(colorSum / (this.width * this.height))
+        callback(brightness)
+      }
+    }
 
     getImageBrightness(img, function (brightness) {
-      const navbar = document.getElementById("header-transparent");
+      const navbar = document.getElementById("header-transparent")
       if (brightness > 100) {
-        let heading = document.getElementsByClassName("h1-heading");
-        let paragraph = document.getElementsByClassName("p-heading");
-        navbar.setAttribute("style", "background-color:#111C27 !important");
+        let heading = document.getElementsByClassName("h1-heading")
+        let paragraph = document.getElementsByClassName("p-heading")
+        navbar.setAttribute("style", "background-color:#111C27 !important")
 
-        heading[0].style.color = "black";
-        paragraph[0].style.color = "black";
+        heading[0].style.color = "black"
+        paragraph[0].style.color = "black"
       } else {
-        navbar.setAttribute("style", "background-color:#111C27 !important");
+        navbar.setAttribute("style", "background-color:#111C27 !important")
       }
-    });
+    })
   }
-});
+})
 </script>
 
 <template>

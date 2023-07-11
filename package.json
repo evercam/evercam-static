@@ -6,10 +6,23 @@
     "dev-ssl": "NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt dev --https --ssl-cert localhost.pem --ssl-key localhost-key.pem",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    "postinstall": "nuxt prepare && husky install && chmod ug+x .husky/pre-commit",
+    "lint:fix": "eslint --fix",
+    "prettier:fix": "prettier --write --list-different",
     "start": "node .output/server/index.mjs"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.21.8",
+    "@nuxtjs/eslint-config-typescript": "^12.0.0",
+    "@typescript-eslint/parser": "^5.59.8",
+    "eslint": "^8.41.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^11.2.6",
+    "eslint-loader": "4.0.2",
+    "eslint-plugin-vue": "^7.11.1",
+    "prettier": "2.8.8",
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@nuxt/image-edge": "^1.0.0-27968280.9739e4d",
     "@nuxtjs/i18n": "^8.0.0-beta.11",
@@ -31,5 +44,11 @@
     "image-compare-viewer": "^1.5.0",
     "lodash": "^4.17.21",
     "vue3-carousel": "^0.3.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue,tsx,ts}": [
+      "yarn lint:fix",
+      "yarn prettier:fix"
+    ]
   }
 }
