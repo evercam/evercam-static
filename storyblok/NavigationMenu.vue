@@ -1,34 +1,34 @@
 <script setup>
-import { navigationList } from "../utils/navigation-list";
+import { navigationList } from "../utils/navigation-list"
 const props = defineProps({
   blok: Object,
   phone_number: String,
-});
+})
 
-const urlPath = useRoute().path;
-const { locale, locales } = useI18n();
+const urlPath = useRoute().path
+const { locale, locales } = useI18n()
 
 const currentLocale = computed(() => {
-  return locales.value.find((i) => i.code === locale.value);
-});
+  return locales.value.find((i) => i.code === locale.value)
+})
 
-const phoneNumber = props.phone_number || "";
-const telLink = computed(() => `tel:+${phoneNumber}`);
+const phoneNumber = props.phone_number || ""
+const telLink = computed(() => `tel:+${phoneNumber}`)
 </script>
 
 <script>
 export default {
-    data() {
-        return {
-            menuActive: false,
-        };
+  data() {
+    return {
+      menuActive: false,
+    }
+  },
+  methods: {
+    onClickLocale() {
+      this.menuActive = !this.menuActive
     },
-    methods: {
-        onClickLocale() {
-            this.menuActive = !this.menuActive;
-        },
-    },
-};
+  },
+}
 </script>
 
 <template>

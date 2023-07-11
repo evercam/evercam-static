@@ -1,9 +1,9 @@
 <script>
 // If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
-import { Carousel, Slide, Navigation } from "vue3-carousel";
+import { Carousel, Slide, Navigation } from "vue3-carousel"
 
 export default defineComponent({
-  name: 'Basic',
+  name: "Basic",
   components: {
     Carousel,
     Slide,
@@ -13,21 +13,26 @@ export default defineComponent({
 </script>
 
 <script setup>
-const props = defineProps({ blok: Object });
-const sliderType = props.blok.slider_option;
-const { locale, locales } = useI18n();
+const props = defineProps({ blok: Object })
+const sliderType = props.blok.slider_option
+const { locale, locales } = useI18n()
 
 // console.log("What is the Language", locale.value);
 
 const clientPhotoDefault =
-  "https://a.storyblok.com/f/208852/800x600/398723ac00/client_photo_placeholder.jpg";
+  "https://a.storyblok.com/f/208852/800x600/398723ac00/client_photo_placeholder.jpg"
 </script>
 
 <template>
   <section v-if="sliderType === 'testimonial_full'" class="black-bg gray-bg">
     <div class="container text-center">
       <div id="gray-slider" class="owl-carousel owl-loaded owl-drag">
-        <Carousel v-if="blok.testimonial_blok.length > 1" :items-to-show="1" :autoplay="4000" :wrap-around="true">
+        <Carousel
+          v-if="blok.testimonial_blok.length > 1"
+          :items-to-show="1"
+          :autoplay="4000"
+          :wrap-around="true"
+        >
           <Slide v-for="item in blok.testimonial_blok" :key="item">
             <div class="item">
               <h3>“{{ item.testimonial_details }}”</h3>
@@ -47,13 +52,15 @@ const clientPhotoDefault =
             </div>
           </Slide>
 
-          <template #addons>
-          </template>
+          <template #addons> </template>
         </Carousel>
       </div>
     </div>
   </section>
-  <section v-if="sliderType === 'testimonial_card_ie' && locale === 'en-ie'" class="story-section">
+  <section
+    v-if="sliderType === 'testimonial_card_ie' && locale === 'en-ie'"
+    class="story-section"
+  >
     <div id="testimonials" class="container">
       <h2>Success Stories</h2>
       <Carousel :items-to-show="1" :wrap-around="true">
@@ -96,7 +103,10 @@ const clientPhotoDefault =
       </Carousel>
     </div>
   </section>
-  <section v-if="sliderType === 'testimonial_card_au' && locale === 'en-sg'" class="story-section">
+  <section
+    v-if="sliderType === 'testimonial_card_au' && locale === 'en-sg'"
+    class="story-section"
+  >
     <div id="testimonials" class="container">
       <h2>Success Stories</h2>
       <Carousel :items-to-show="1" :wrap-around="true">

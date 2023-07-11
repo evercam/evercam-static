@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({ blok: Object });
+const props = defineProps({ blok: Object })
 /** Setup Form */
 onMounted(() => {
   var salesIQFieldsArray = [
@@ -15,14 +15,14 @@ onMounted(() => {
       formFieldType: 1,
       salesIQFieldName: "Phone",
     },
-  ];
+  ]
   function zf_validateandsubmitdata() {
-    var visitorinfo = {};
-    var elements = document.getElementById("form").elements;
+    var visitorinfo = {}
+    var elements = document.getElementById("form").elements
     for (var elmIdx = 0; elmIdx < elements.length; elmIdx++) {
-      var inpElem = elements[elmIdx];
-      var fieldLinkName = inpElem.getAttribute("name");
-      var fieldType = inpElem.getAttribute("fieldType");
+      var inpElem = elements[elmIdx]
+      var fieldLinkName = inpElem.getAttribute("name")
+      var fieldType = inpElem.getAttribute("fieldType")
       if (
         fieldType === "1" ||
         fieldType === "7" ||
@@ -30,45 +30,43 @@ onMounted(() => {
         fieldType === "11"
       ) {
         for (var idx = 0; idx < salesIQFieldsArray.length; idx++) {
-          var salesIQObj = salesIQFieldsArray[idx];
-          var zfFieldName = salesIQObj.formFieldName;
-          var salesIQFieldName = salesIQObj.salesIQFieldName;
+          var salesIQObj = salesIQFieldsArray[idx]
+          var zfFieldName = salesIQObj.formFieldName
+          var salesIQFieldName = salesIQObj.salesIQFieldName
           if (fieldType === "1") {
             if (fieldLinkName === zfFieldName) {
-              var salesIQValue = inpElem.value;
+              var salesIQValue = inpElem.value
               if (salesIQFieldName === "Phone") {
-                visitorinfo.contactnumber = salesIQValue;
+                visitorinfo.contactnumber = salesIQValue
               }
               if (salesIQFieldName === "Name") {
-                visitorinfo.name = salesIQValue;
+                visitorinfo.name = salesIQValue
               }
             }
           }
           if (fieldType === "7") {
-            var zfFldCompLinkName = salesIQObj.fieldCompLinkName;
+            var zfFldCompLinkName = salesIQObj.fieldCompLinkName
             if (fieldLinkName === zfFldCompLinkName) {
-              var salesIQValue = inpElem.value;
-              visitorinfo.name = salesIQValue;
+              var salesIQValue = inpElem.value
+              visitorinfo.name = salesIQValue
             }
           }
           if (fieldType === "9") {
             if (fieldLinkName === zfFieldName) {
-              var salesIQValue = inpElem.value;
-              visitorinfo.email = salesIQValue;
+              var salesIQValue = inpElem.value
+              visitorinfo.email = salesIQValue
             }
           }
           if (fieldType === "11") {
-            fieldLinkName = inpElem.getAttribute("compname");
+            fieldLinkName = inpElem.getAttribute("compname")
             if (fieldLinkName === zfFieldName) {
-              var phoneFormat = inpElem.getAttribute("phoneFormat");
-              var salesIQValue = "";
+              var phoneFormat = inpElem.getAttribute("phoneFormat")
+              var salesIQValue = ""
               if (phoneFormat === "1") {
                 salesIQValue = document.getElementById(
                   "international_" + fieldLinkName + "_countrycode"
-                ).value;
-                var isCodeEnabled = inpElem.getAttribute(
-                  "isCountryCodeEnabled"
-                );
+                ).value
+                var isCodeEnabled = inpElem.getAttribute("isCountryCodeEnabled")
                 if (
                   isCodeEnabled === "true" &&
                   salesIQValue != null &&
@@ -77,21 +75,21 @@ onMounted(() => {
                   salesIQValue =
                     document.getElementById(
                       "international_" + fieldLinkName + "_countrycodeval"
-                    ).value + salesIQValue;
+                    ).value + salesIQValue
                 }
               } else if (phoneFormat === "2") {
                 var countryCode = document.getElementById(
                   fieldLinkName + "_countrycode"
-                ).value;
+                ).value
                 var first = document.getElementById(
                   fieldLinkName + "_first"
-                ).value;
+                ).value
                 var last = document.getElementById(
                   fieldLinkName + "_second"
-                ).value;
-                salesIQValue = countryCode + first + last;
+                ).value
+                salesIQValue = countryCode + first + last
               }
-              visitorinfo.contactnumber = salesIQValue;
+              visitorinfo.contactnumber = salesIQValue
             }
           }
         }
@@ -100,36 +98,49 @@ onMounted(() => {
     parent.postMessage(
       JSON.stringify({ type: "zoho.salesiq.apimessage", visitor: visitorinfo }),
       "*"
-    );
+    )
   }
-  var f = document.createElement("iframe");
-f.src = 'https://forms.zohopublic.com/Evercam/form/LandingPageContactFormSGBACKUP/formperma/FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI?zf_rszfm=1';
-f.style.border = "none";
-f.style.height = "721px";
-f.style.width = "100%";
-f.style.transition = "all 0.5s ease";
+  var f = document.createElement("iframe")
+  f.src =
+    "https://forms.zohopublic.com/Evercam/form/LandingPageContactFormSGBACKUP/formperma/FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI?zf_rszfm=1"
+  f.style.border = "none"
+  f.style.height = "721px"
+  f.style.width = "100%"
+  f.style.transition = "all 0.5s ease"
 
-var d = document.getElementById("zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI");
-d.appendChild(f);
-window.addEventListener('message', function () {
-  var evntData = event.data;
-  if (evntData && evntData.constructor == String) {
-    var zf_ifrm_data = evntData.split("|");
-    if (zf_ifrm_data.length == 2) {
-      var zf_perma = zf_ifrm_data[0];
-      var zf_ifrm_ht_nw = (parseInt(zf_ifrm_data[1], 10) + 15) + "px";
-      var iframe = document.getElementById("zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI").getElementsByTagName("iframe")[0];
-      if ((iframe.src).indexOf('formperma') > 0 && (iframe.src).indexOf(zf_perma) > 0) {
-        var prevIframeHeight = iframe.style.height;
-        if (prevIframeHeight != zf_ifrm_ht_nw) {
-          iframe.style.height = zf_ifrm_ht_nw;
+  var d = document.getElementById(
+    "zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI"
+  )
+  d.appendChild(f)
+  window.addEventListener(
+    "message",
+    function () {
+      var evntData = event.data
+      if (evntData && evntData.constructor == String) {
+        var zf_ifrm_data = evntData.split("|")
+        if (zf_ifrm_data.length == 2) {
+          var zf_perma = zf_ifrm_data[0]
+          var zf_ifrm_ht_nw = parseInt(zf_ifrm_data[1], 10) + 15 + "px"
+          var iframe = document
+            .getElementById(
+              "zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI"
+            )
+            .getElementsByTagName("iframe")[0]
+          if (
+            iframe.src.indexOf("formperma") > 0 &&
+            iframe.src.indexOf(zf_perma) > 0
+          ) {
+            var prevIframeHeight = iframe.style.height
+            if (prevIframeHeight != zf_ifrm_ht_nw) {
+              iframe.style.height = zf_ifrm_ht_nw
+            }
+          }
         }
       }
-    }
-  }
-}, false);
-});
-
+    },
+    false
+  )
+})
 </script>
 
 <template>
@@ -148,40 +159,76 @@ window.addEventListener('message', function () {
           </p>
           <ul class="row">
             <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c4.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c4.png" alt="Logo Image" />
+              <img
+                class="lazyloaded"
+                src="https://evercam.io/wp-content/uploads/2021/02/c4.png"
+                data-src="https://evercam.io/wp-content/uploads/2021/02/c4.png"
+                alt="Logo Image"
+              />
             </li>
             <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c5.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c5.png" alt="Logo Image" />
+              <img
+                class="lazyloaded"
+                src="https://evercam.io/wp-content/uploads/2021/02/c5.png"
+                data-src="https://evercam.io/wp-content/uploads/2021/02/c5.png"
+                alt="Logo Image"
+              />
             </li>
             <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c6.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c6.png" alt="Logo Image" />
+              <img
+                class="lazyloaded"
+                src="https://evercam.io/wp-content/uploads/2021/02/c6.png"
+                data-src="https://evercam.io/wp-content/uploads/2021/02/c6.png"
+                alt="Logo Image"
+              />
             </li>
             <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c10.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c10.png" alt="Logo Image" />
+              <img
+                class="lazyloaded"
+                src="https://evercam.io/wp-content/uploads/2021/02/c10.png"
+                data-src="https://evercam.io/wp-content/uploads/2021/02/c10.png"
+                alt="Logo Image"
+              />
             </li>
             <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c11.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c11.png" alt="Logo Image" />
+              <img
+                class="lazyloaded"
+                src="https://evercam.io/wp-content/uploads/2021/02/c11.png"
+                data-src="https://evercam.io/wp-content/uploads/2021/02/c11.png"
+                alt="Logo Image"
+              />
             </li>
             <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c12.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c12.png" alt="Logo Image" />
+              <img
+                class="lazyloaded"
+                src="https://evercam.io/wp-content/uploads/2021/02/c12.png"
+                data-src="https://evercam.io/wp-content/uploads/2021/02/c12.png"
+                alt="Logo Image"
+              />
             </li>
             <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c2.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c2.png" alt="Logo Image" />
+              <img
+                class="lazyloaded"
+                src="https://evercam.io/wp-content/uploads/2021/02/c2.png"
+                data-src="https://evercam.io/wp-content/uploads/2021/02/c2.png"
+                alt="Logo Image"
+              />
             </li>
             <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c1.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c1.png" alt="Logo Image" />
+              <img
+                class="lazyloaded"
+                src="https://evercam.io/wp-content/uploads/2021/02/c1.png"
+                data-src="https://evercam.io/wp-content/uploads/2021/02/c1.png"
+                alt="Logo Image"
+              />
             </li>
             <li class="col-4 align-self-center">
-              <img class="lazyloaded" src="https://evercam.io/wp-content/uploads/2021/02/c3.png"
-                data-src="https://evercam.io/wp-content/uploads/2021/02/c3.png" alt="Logo Image" />
+              <img
+                class="lazyloaded"
+                src="https://evercam.io/wp-content/uploads/2021/02/c3.png"
+                data-src="https://evercam.io/wp-content/uploads/2021/02/c3.png"
+                alt="Logo Image"
+              />
             </li>
           </ul>
         </div>
@@ -191,8 +238,11 @@ window.addEventListener('message', function () {
               <p role="status" aria-live="polite" aria-atomic="true"></p>
               <ul></ul>
             </div>
-            <div style="overflow: hidden;">
-              <div id="zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI" style="transform: scale(1.14);"></div>
+            <div style="overflow: hidden">
+              <div
+                id="zf_div_FDPAYx9lS9-6zXYtyY_61NCXyXEbg4_5PeAYDM4aCbI"
+                style="transform: scale(1.14)"
+              ></div>
             </div>
             <!--<form
               action="/#wpcf7-f27498-o1"
@@ -419,6 +469,6 @@ window.addEventListener('message', function () {
 
 <style scoped>
 .templateWidth {
-  padding: 0!important;
+  padding: 0 !important;
 }
 </style>

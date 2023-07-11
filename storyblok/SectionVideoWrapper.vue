@@ -1,21 +1,21 @@
 <script setup>
-const props = defineProps({ blok: Object });
-const assetSource = props.blok.video_url;
+const props = defineProps({ blok: Object })
+const assetSource = props.blok.video_url
 
 /**
  * Check if Youtube and make it embed
  */
 
-const fromYoutube = "www.youtube.com/watch";
-let isYoutube = assetSource.includes(fromYoutube);
-let assetCheck = "";
+const fromYoutube = "www.youtube.com/watch"
+let isYoutube = assetSource.includes(fromYoutube)
+let assetCheck = ""
 
 if (isYoutube) {
-  assetCheck = assetSource.replace("watch?v=", "embed/");
+  assetCheck = assetSource.replace("watch?v=", "embed/")
   // console.log("This is assetCheck", assetCheck);
   // console.log("This is assetSource", assetSource);
 } else {
-  assetCheck = assetSource;
+  assetCheck = assetSource
 }
 </script>
 

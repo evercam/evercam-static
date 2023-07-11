@@ -1,25 +1,25 @@
 <script setup>
-const props = defineProps({ blok: Object });
-const projects = ref(null);
-const storyblokApi = useStoryblokApi();
+const props = defineProps({ blok: Object })
+const projects = ref(null)
+const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get("cdn/stories", {
   version: useRoute().query._storyblok ? "draft" : "published",
   starts_with: "projects",
   is_startpage: false,
   per_page: 15,
-});
-projects.value = data.stories;
+})
+projects.value = data.stories
 
-const urlPath = useRoute().path;
-const isProjects = urlPath.includes("/projects");
-const isBlog = urlPath.includes("/blog");
+const urlPath = useRoute().path
+const isProjects = urlPath.includes("/projects")
+const isBlog = urlPath.includes("/blog")
 
 function changeBlogtoProject(d) {
-  return d.replace("blog", "");
+  return d.replace("blog", "")
 }
 
 const thumbnailPlaceholder =
-  "https://a.storyblok.com/f/208852/674x380/bf71efc381/image_thumbnail.jpg";
+  "https://a.storyblok.com/f/208852/674x380/bf71efc381/image_thumbnail.jpg"
 </script>
 
 <template>

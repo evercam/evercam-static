@@ -1,15 +1,19 @@
 <script setup>
-const props = defineProps({ feature: Object, slug: String });
+const props = defineProps({ feature: Object, slug: String })
 const thumbnailAsset = props.feature.feature_thumbnail
   ? props.feature.feature_thumbnail.filename
-  : "https://a.storyblok.com/f/208852/1024x576/786f8fa4c3/other_timelapse.webp/m/250x0?cv=1681194645343";
+  : "https://a.storyblok.com/f/208852/1024x576/786f8fa4c3/other_timelapse.webp/m/250x0?cv=1681194645343"
 </script>
 
 <template>
   <div v-editable="feature" class="wrapper slide-up">
     <NuxtLink :to="'/' + slug" class="image-wrapper">
       <img v-if="thumbnailAsset" :src="thumbnailAsset" alt="" />
-      <img v-else src="https://a.storyblok.com/f/208852/1024x576/786f8fa4c3/other_timelapse.webp/m/250x0?cv=1681194645343" alt="" />
+      <img
+        v-else
+        src="https://a.storyblok.com/f/208852/1024x576/786f8fa4c3/other_timelapse.webp/m/250x0?cv=1681194645343"
+        alt=""
+      />
     </NuxtLink>
     <h3>
       {{ feature.name }}

@@ -1,10 +1,10 @@
 <script setup>
-import { navigationList } from "../utils/navigation-list";
+import { navigationList } from "../utils/navigation-list"
 const props = defineProps({
-  blok: Object
-});
+  blok: Object,
+})
 /** Multilanguage Configuration */
-const localePath = useLocalePath();
+const localePath = useLocalePath()
 </script>
 
 <style>
@@ -100,7 +100,9 @@ const localePath = useLocalePath();
         <div class="col-md-3 slideRight order-md-4 footer-address">
           <h3>Contact</h3>
           <p>
-            <a href="https://goo.gl/maps/jhDWBGdppEBUpckF9" target="_blank">6-7 Granby Row, Dublin 1, Ireland</a>
+            <a href="https://goo.gl/maps/jhDWBGdppEBUpckF9" target="_blank"
+              >6-7 Granby Row, Dublin 1, Ireland</a
+            >
             <br />
             <!-- phoneNumber -->
             <a href="tel:+353 1 919 4588">+353 1 919 4588</a>
@@ -454,7 +456,7 @@ const localePath = useLocalePath();
                 class="ls-is-cached lazyloaded"
                 :src="item.image_src"
                 :alt="item.label"
-              /><span class="sr-only">{{item.label}}</span>
+              /><span class="sr-only">{{ item.label }}</span>
             </a>
           </div>
           <div class="col-md-5 align-self-center slideUp">
