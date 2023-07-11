@@ -1,12 +1,10 @@
 <script setup>
 const props = defineProps({ blok: Object });
 const resolvedContent = computed(() => renderRichText(props.blok.content));
-const resolvedDetails = computed(() =>
-  renderRichText(props.blok.details)
-);
+const resolvedDetails = computed(() => renderRichText(props.blok.details));
 
-let sectionId = props.blok.id_option ? props.blok.id_option : "marketing-up";
 let containerClass = props.blok.container_class_option;
+let sectionId = props.blok.id_option ? props.blok.id_option : "marketing-up";
 
 const assetSource = props.blok.video
   ? props.blok.video
@@ -44,6 +42,14 @@ if (isYoutube) {
             :src="blok.url"
           ></iframe>
         </div>
+      </div>
+      <div v-if="blok.profile_list" class="row">
+        <ProfileIndividual
+          v-for="blok in blok.profile_list"
+          :key="blok.uuid"
+          :src="blok.photo"
+          :blok="blok"
+        />
       </div>
       <div v-if="blok.feature_list_card" class="container">
         <div class="row">

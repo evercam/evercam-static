@@ -3,12 +3,17 @@ const localeDomains = require('./utils/locale-domains')
 
 export default defineNuxtConfig({
     modules: [
-        ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_API_KEY }],
+        ['@storyblok/nuxt', {
+            accessToken: process.env.STORYBLOK_API_KEY,
+            useApiClient: true,
+            apiOptions: { cache: { type: 'memory' } },
+        }],
         // Activate unlight house only if want to check locally
         // '@unlighthouse/nuxt',
         '@nuxt/image-edge',
         '@nuxtjs/i18n',
         'nuxt-schema-org',
+        // 'nuxt-simple-sitemap',
         'nuxt-simple-robots',
         'nuxt-gtag'
     ],
@@ -27,6 +32,9 @@ export default defineNuxtConfig({
     //         device: 'mobile',
     //     }
     // },
+    sitemap: {
+        enabled: false,
+    },
     linkChecker: {
         failOn404: false,
     },
@@ -35,13 +43,15 @@ export default defineNuxtConfig({
     },
     nitro: {
         prerender: {
-            routes: ['/']
-        }
+            crawlLinks: true,
+            routes: ['/', '/sitemap_index.xml'],
+        },
     },
     robots: {
         sitemap: [
-            '/sitemap.xml',
+            '/sitemap_index.xml',
         ],
+        disallow: [],
     },
     i18n: {
         locales: localeDomains,
