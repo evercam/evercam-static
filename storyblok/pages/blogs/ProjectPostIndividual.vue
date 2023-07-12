@@ -1,17 +1,14 @@
 <script setup>
-const props = defineProps({ blog: Object, slug: String });
+const props = defineProps({ blog: Object, slug: String })
 
 const imageThumbnail = props.blog.asset_heading
-    ? props.blog.asset_heading.filename
-    : "https://a.storyblok.com/f/208852/674x380/538e670581/image_thumbnail.jpg";
-
+  ? props.blog.asset_heading.filename
+  : "https://a.storyblok.com/f/208852/674x380/538e670581/image_thumbnail.jpg"
 </script>
 
 <template>
   <div class="post-wrapper">
-    <a
-        :href="'/' + slug" class="item"
-    >
+    <a :href="'/' + slug" class="item">
       <div class="post-div">
         <div class="data">
           <span class="post-title">

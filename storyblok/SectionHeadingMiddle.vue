@@ -8,20 +8,20 @@ let sectionId = props.blok.id_option ? props.blok.id_option : "marketing-up";
 
 const assetSource = props.blok.video
   ? props.blok.video
-  : "https://player.vimeo.com/video/436930200?autoplay=0&amp;loop=1&amp;autopause=0&amp;title=0&amp;byline=0";
+  : "https://player.vimeo.com/video/436930200?autoplay=0&amp;loop=1&amp;autopause=0&amp;title=0&amp;byline=0"
 
 /**
  * Check if Youtube and make it embed
  */
 
-const fromYoutube = "www.youtube.com/watch";
-let isYoutube = assetSource.includes(fromYoutube);
-let assetCheck = "";
+const fromYoutube = "www.youtube.com/watch"
+let isYoutube = assetSource.includes(fromYoutube)
+let assetCheck = ""
 
 if (isYoutube) {
-  assetCheck = assetSource.replace("watch?v=", "embed/");
+  assetCheck = assetSource.replace("watch?v=", "embed/")
 } else {
-  assetCheck = assetSource;
+  assetCheck = assetSource
 }
 </script>
 
