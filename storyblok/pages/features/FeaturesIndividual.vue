@@ -553,8 +553,8 @@ onNuxtReady(async () => {
       </div>
     </div>
   </section> -->
-  <section>
-    <SectionAskUs />
+  <section v-for="blok in blok.contact_us">
+    <SectionAskUs :blok="blok" :key="blok.uuid" />
   </section>
   <section id="add-ons">
     <div class="container">
